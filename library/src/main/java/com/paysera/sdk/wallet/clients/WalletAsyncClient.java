@@ -6,12 +6,15 @@ import com.paysera.sdk.wallet.ClientServerTimeSynchronizationConfiguration;
 import com.paysera.sdk.wallet.entities.*;
 import com.paysera.sdk.wallet.entities.card.Card;
 import com.paysera.sdk.wallet.entities.client.Client;
+import com.paysera.sdk.wallet.entities.confirmations.Confirmation;
+import com.paysera.sdk.wallet.entities.confirmations.ConfirmationItem;
 import com.paysera.sdk.wallet.entities.locations.Location;
 import com.paysera.sdk.wallet.entities.locations.LocationCategory;
 import com.paysera.sdk.wallet.entities.requests.*;
 import com.paysera.sdk.wallet.entities.transfer.Transfer;
 import com.paysera.sdk.wallet.entities.transfer.TransferPassword;
 import com.paysera.sdk.wallet.filters.*;
+import com.paysera.sdk.wallet.filters.ConfirmationFilter;
 import com.paysera.sdk.wallet.helpers.DateHelper;
 import com.paysera.sdk.wallet.helpers.EnumHelper;
 import com.paysera.sdk.wallet.helpers.StringHelper;
@@ -421,7 +424,7 @@ public class WalletAsyncClient extends BaseAsyncClient {
     }
 
     public Task<MetadataAwareResponse<Transfer>> getTransfers(TransfersFilter filter) {
-       return this.execute(this.walletApiClient.getTransfers(filter.getCreditAccountNumber(), filter.getStatuses()));
+        return this.execute(this.walletApiClient.getTransfers(filter.getCreditAccountNumber(), filter.getStatuses()));
     }
 
     public Task<Transfer> provideTransferPassword(Long transferId, TransferPassword password) {
@@ -449,7 +452,7 @@ public class WalletAsyncClient extends BaseAsyncClient {
     }
 
     public Task<MetadataAwareResponse<Transaction>> getTransactions(
-            TransactionFilter transactionFilter
+        TransactionFilter transactionFilter
     ) {
         return this.execute(this.walletApiClient.getTransactions(
             transactionFilter.getStatus(),
@@ -458,4 +461,29 @@ public class WalletAsyncClient extends BaseAsyncClient {
             transactionFilter.getFrom()
         ));
     }
+
+    public Task<MetadataAwareResponse<Confirmation>> getConfirmations(
+        ConfirmationFilter confirmationFilter
+    ) {
+        return this.execute(this.walletApiClient.getConfirmations(
+            confirmationFilter.getLimit(),
+            confirmationFilter.getOffset(),
+            confirmationFilter.getOrderBy(),
+            confirmationFilter.getOrderDirection(),
+            confirmationFilter.getStatus()
+        ));
+    }
+
+    public Task<ConfirmationItem> getConfirmation(String identifier) {
+        return this.execute(this.walletApiClient.getConfirmation(identifier));
+    }
+
+    public Task<ConfirmationItem> acceptConfirmation(String identifier) {
+        return this.execute(this.walletApiClient.acceptConfirmation(identifier));
+    }
+
+    public Task<ConfirmationItem> rejectConfirmation(String identifier) {
+        return this.execute(this.walletApiClient.rejectConfirmation(identifier));
+    }
+
 }

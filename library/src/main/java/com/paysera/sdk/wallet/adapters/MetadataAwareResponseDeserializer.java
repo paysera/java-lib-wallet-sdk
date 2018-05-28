@@ -3,6 +3,7 @@ package com.paysera.sdk.wallet.adapters;
 import com.google.gson.*;
 import com.paysera.sdk.wallet.entities.*;
 import com.paysera.sdk.wallet.entities.card.Card;
+import com.paysera.sdk.wallet.entities.confirmations.ConfirmationItem;
 import com.paysera.sdk.wallet.entities.locations.Location;
 import com.paysera.sdk.wallet.entities.transfer.Transfer;
 
@@ -52,7 +53,11 @@ public class MetadataAwareResponseDeserializer implements JsonDeserializer<Metad
                 case "identification_requests":
                     List<IdentificationRequest> identificationRequests = createIdentificationRequests(context, entry.getValue().getAsJsonArray());
                     metadataAwareResponse.setItems(identificationRequests);
+                    break;
 
+                case "items":
+                    List<ConfirmationItem> confirmationItems = createConfirmationItems(context, entry.getValue().getAsJsonArray());
+                    metadataAwareResponse.setItems(confirmationItems);
             }
         }
         return metadataAwareResponse;
@@ -122,6 +127,14 @@ public class MetadataAwareResponseDeserializer implements JsonDeserializer<Metad
             reservationStatements.add((ReservationStatement) context.deserialize(reservationStatement, ReservationStatement.class));
         }
         return reservationStatements;
+    }
+
+    private List<ConfirmationItem> createConfirmationItems(JsonDeserializationContext context, JsonArray entries) {
+        List<ConfirmationItem> confirmationItems = new ArrayList<>();
+        for (JsonElement confirmationItem : entries) {
+            confirmationItems.add((ConfirmationItem) context.deserialize(confirmationItem, ConfirmationItem.class));
+        }
+        return confirmationItems;
     }
 
 }
