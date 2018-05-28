@@ -7,7 +7,6 @@ import com.paysera.sdk.wallet.entities.*;
 import com.paysera.sdk.wallet.entities.card.Card;
 import com.paysera.sdk.wallet.entities.client.Client;
 import com.paysera.sdk.wallet.entities.confirmations.Confirmation;
-import com.paysera.sdk.wallet.entities.confirmations.ConfirmationItem;
 import com.paysera.sdk.wallet.entities.locations.Location;
 import com.paysera.sdk.wallet.entities.locations.LocationCategory;
 import com.paysera.sdk.wallet.entities.requests.*;
@@ -474,15 +473,15 @@ public class WalletAsyncClient extends BaseAsyncClient {
         ));
     }
 
-    public Task<ConfirmationItem> getConfirmation(String identifier) {
+    public Task<Confirmation> getConfirmation(String identifier) {
         return this.execute(this.walletApiClient.getConfirmation(identifier));
     }
 
-    public Task<ConfirmationItem> acceptConfirmation(String identifier) {
+    public Task<Confirmation> acceptConfirmation(String identifier) {
         return this.execute(this.walletApiClient.acceptConfirmation(identifier));
     }
 
-    public Task<ConfirmationItem> rejectConfirmation(String identifier) {
+    public Task<Confirmation> rejectConfirmation(String identifier) {
         return this.execute(this.walletApiClient.rejectConfirmation(identifier));
     }
 

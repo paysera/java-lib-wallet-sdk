@@ -4,7 +4,6 @@ import com.paysera.sdk.wallet.entities.*;
 import com.paysera.sdk.wallet.entities.card.Card;
 import com.paysera.sdk.wallet.entities.client.Client;
 import com.paysera.sdk.wallet.entities.confirmations.Confirmation;
-import com.paysera.sdk.wallet.entities.confirmations.ConfirmationItem;
 import com.paysera.sdk.wallet.entities.locations.Location;
 import com.paysera.sdk.wallet.entities.locations.LocationCategory;
 import com.paysera.sdk.wallet.entities.requests.*;
@@ -364,17 +363,17 @@ public interface WalletApiClient {
     );
 
     @GET("confirmations/{identifier}")
-    Call<ConfirmationItem> getConfirmation(
+    Call<Confirmation> getConfirmation(
         @Path("identifier") String identifier
     );
 
     @GET("confirmations/{identifier}/confirm")
-    Call<ConfirmationItem> acceptConfirmation(
+    Call<Confirmation> acceptConfirmation(
         @Path("identifier") String identifier
     );
 
     @GET("confirmations/{identifier}/reject")
-    Call<ConfirmationItem> rejectConfirmation(
+    Call<Confirmation> rejectConfirmation(
         @Path("identifier") String identifier
     );
 
