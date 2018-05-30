@@ -17,50 +17,47 @@ public class MetadataAwareResponseDeserializer implements JsonDeserializer<Metad
     @Override
     public MetadataAwareResponse deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         MetadataAwareResponse metadataAwareResponse = new MetadataAwareResponse<>();
-
         for (Map.Entry<String, JsonElement> entry : json.getAsJsonObject().entrySet()) {
+            switch (entry.getKey()) {
+                case "statements":
+                    List<Statement> statements = createStatements(context, entry.getValue().getAsJsonArray());
+                    metadataAwareResponse.setItems(statements);
+                    break;
+                case "pending_payments":
+                    List<PendingPayment> pendingPayments = createPendingPayments(context, entry.getValue().getAsJsonArray());
+                    metadataAwareResponse.setItems(pendingPayments);
+                    break;
+                case "reservation_statements":
+                    List<ReservationStatement> reservationStatements = createReservationStatements(context, entry.getValue().getAsJsonArray());
+                    metadataAwareResponse.setItems(reservationStatements);
+                    break;
+                case "transfers":
+                    List<Transfer> transfers = createTransfers(context, entry.getValue().getAsJsonArray());
+                    metadataAwareResponse.setItems(transfers);
+                    break;
+                case "locations":
+                    List<Location> locations = createLocations(context, entry.getValue().getAsJsonArray());
+                    metadataAwareResponse.setItems(locations);
+                case "_metadata":
+                    metadataAwareResponse.setMetadata((Metadata) context.deserialize(json.getAsJsonObject().get("_metadata"), Metadata.class));
+                    break;
+                case "cards":
+                    List<Card> cards = createCards(context, entry.getValue().getAsJsonArray());
+                    metadataAwareResponse.setItems(cards);
+                    break;
+                case "transactions":
+                    List<Transaction> transactions = createTransactions(context, entry.getValue().getAsJsonArray());
+                    metadataAwareResponse.setItems(transactions);
+                    break;
+                case "identification_requests":
+                    List<IdentificationRequest> identificationRequests = createIdentificationRequests(context, entry.getValue().getAsJsonArray());
+                    metadataAwareResponse.setItems(identificationRequests);
+                    break;
+                case "items":
+                    List<Confirmation> confirmations = createConfirmations(context, entry.getValue().getAsJsonArray());
+                    metadataAwareResponse.setItems(confirmations);
+                    break;
 
-            if (entry.getKey().equals("_metadata")) {
-                metadataAwareResponse.setMetadata((Metadata) context.deserialize(json.getAsJsonObject().get("_metadata"), Metadata.class));
-            } else {
-                switch (typeOfT.getTypeName()) {
-                    case "com.paysera.sdk.wallet.entities.MetadataAwareResponse<com.paysera.sdk.wallet.entities.Statement>":
-                        List<Statement> statements = createStatements(context, entry.getValue().getAsJsonArray());
-                        metadataAwareResponse.setItems(statements);
-                        break;
-                    case "com.paysera.sdk.wallet.entities.MetadataAwareResponse<com.paysera.sdk.wallet.entities.PendingPayment>":
-                        List<PendingPayment> pendingPayments = createPendingPayments(context, entry.getValue().getAsJsonArray());
-                        metadataAwareResponse.setItems(pendingPayments);
-                        break;
-                    case "com.paysera.sdk.wallet.entities.MetadataAwareResponse<com.paysera.sdk.wallet.entities.ReservationStatement>":
-                        List<ReservationStatement> reservationStatements = createReservationStatements(context, entry.getValue().getAsJsonArray());
-                        metadataAwareResponse.setItems(reservationStatements);
-                        break;
-                    case "com.paysera.sdk.wallet.entities.MetadataAwareResponse<com.paysera.sdk.wallet.entities.transfer.Transfer>":
-                        List<Transfer> transfers = createTransfers(context, entry.getValue().getAsJsonArray());
-                        metadataAwareResponse.setItems(transfers);
-                        break;
-                    case "com.paysera.sdk.wallet.entities.MetadataAwareResponse<com.paysera.sdk.wallet.entities.locations.Location>":
-                        List<Location> locations = createLocations(context, entry.getValue().getAsJsonArray());
-                        metadataAwareResponse.setItems(locations);
-                        break;
-                    case "com.paysera.sdk.wallet.entities.MetadataAwareResponse<com.paysera.sdk.wallet.entities.card.Card>":
-                        List<Card> cards = createCards(context, entry.getValue().getAsJsonArray());
-                        metadataAwareResponse.setItems(cards);
-                        break;
-                    case "com.paysera.sdk.wallet.entities.MetadataAwareResponse<com.paysera.sdk.wallet.entities.Transaction>":
-                        List<Transaction> transactions = createTransactions(context, entry.getValue().getAsJsonArray());
-                        metadataAwareResponse.setItems(transactions);
-                        break;
-                    case "com.paysera.sdk.wallet.entities.MetadataAwareResponse<com.paysera.sdk.wallet.entities.IdentificationRequest>":
-                        List<IdentificationRequest> identificationRequests = createIdentificationRequests(context, entry.getValue().getAsJsonArray());
-                        metadataAwareResponse.setItems(identificationRequests);
-                        break;
-                    case "com.paysera.sdk.wallet.entities.MetadataAwareResponse<com.paysera.sdk.wallet.entities.confirmations.Confirmation>":
-                        List<Confirmation> confirmations = createConfirmations(context, entry.getValue().getAsJsonArray());
-                        metadataAwareResponse.setItems(confirmations);
-                        break;
-                }
             }
         }
         return metadataAwareResponse;
