@@ -17,6 +17,7 @@ public class MetadataAwareResponseDeserializer implements JsonDeserializer<Metad
     @Override
     public MetadataAwareResponse deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         MetadataAwareResponse metadataAwareResponse = new MetadataAwareResponse<>();
+
         for (Map.Entry<String, JsonElement> entry : json.getAsJsonObject().entrySet()) {
             switch (entry.getKey()) {
                 case "statements":
@@ -57,11 +58,6 @@ public class MetadataAwareResponseDeserializer implements JsonDeserializer<Metad
                     List<Confirmation> confirmations = createConfirmations(context, entry.getValue().getAsJsonArray());
                     metadataAwareResponse.setItems(confirmations);
                     break;
-
-            }
-        }
-        return metadataAwareResponse;
-    }
 
     private List<Transaction> createTransactions(JsonDeserializationContext context, JsonArray entries) {
         List<Transaction> transactions = new ArrayList<>();

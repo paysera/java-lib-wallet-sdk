@@ -377,4 +377,6 @@ public interface WalletApiClient {
         @Path("identifier") String identifier
     );
 
+    @POST("generator/code")
+    Call<Void> generateCode(@Body GenerateCodeRequest generateCodeRequest);
 }
