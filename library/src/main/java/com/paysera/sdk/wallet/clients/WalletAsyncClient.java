@@ -485,4 +485,8 @@ public class WalletAsyncClient extends BaseAsyncClient {
         return this.execute(this.walletApiClient.rejectConfirmation(identifier));
     }
 
+    public Task<Void> generateCode(GenerateCodeRequest generateCodeRequest) {
+        return this.execute(this.walletApiClient.generateCode(generateCodeRequest));
+    }
+
 }
