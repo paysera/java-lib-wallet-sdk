@@ -379,4 +379,10 @@ public interface WalletApiClient {
 
     @POST("generator/code")
     Call<Void> generateCode(@Body GenerateCodeRequest generateCodeRequest);
+
+    @PUT("transaction/{transactionKey}/reserve")
+    Call<Void> reserveTransaction(
+            @Path("transactionKey") String transactionKey,
+            @Body ReserveTransactionRequest reserveTransactionRequest
+    );
 }

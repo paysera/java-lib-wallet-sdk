@@ -488,4 +488,9 @@ public class WalletAsyncClient extends BaseAsyncClient {
     public Task<Void> generateCode(GenerateCodeRequest generateCodeRequest) {
         return this.execute(this.walletApiClient.generateCode(generateCodeRequest));
     }
+
+    public Task<Void> reserveTransaction(String transactionKey, ReserveTransactionRequest reserveTransactionRequest) {
+        return this.execute(this.walletApiClient.reserveTransaction(transactionKey, reserveTransactionRequest));
+    }
+
 }

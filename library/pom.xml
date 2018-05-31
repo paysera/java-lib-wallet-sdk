@@ -9,7 +9,7 @@
   <groupId>com.paysera.lib</groupId>
   <artifactId>wallet-sdk</artifactId>
 
-  <version>3.0.0</version>
+  <version>3.0.3</version>
 
   <properties>
     <com.squareup.retrofit.version>2.0.2</com.squareup.retrofit.version>
