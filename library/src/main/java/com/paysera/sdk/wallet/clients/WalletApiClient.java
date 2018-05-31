@@ -382,7 +382,7 @@ public interface WalletApiClient {
 
     @PUT("transaction/{transactionKey}/reserve")
     Call<Void> reserveTransaction(
-            @Path("transactionKey") String transactionKey,
-            @Body ReserveTransactionRequest reserveTransactionRequest
+        @Path("transactionKey") String transactionKey,
+        @Body ReserveTransactionRequest reserveTransactionRequest
     );
 }
