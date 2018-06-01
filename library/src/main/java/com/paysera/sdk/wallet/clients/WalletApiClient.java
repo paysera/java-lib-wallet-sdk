@@ -367,12 +367,12 @@ public interface WalletApiClient {
         @Path("identifier") String identifier
     );
 
-    @GET("confirmations/{identifier}/confirm")
+    @PUT("confirmations/{identifier}/confirm")
     Call<Confirmation> acceptConfirmation(
         @Path("identifier") String identifier
     );
 
-    @GET("confirmations/{identifier}/reject")
+    @PUT("confirmations/{identifier}/reject")
     Call<Confirmation> rejectConfirmation(
         @Path("identifier") String identifier
     );
