@@ -7,6 +7,7 @@ public class ConfirmationProperties {
     private String translationSlug;
     private Map<String, String> translationsParameters;
     private String code;
+    private String type;
 
     public String getTranslation() {
         return translation;
@@ -38,5 +39,13 @@ public class ConfirmationProperties {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }
