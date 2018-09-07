@@ -8,6 +8,7 @@ public class ConfirmationProperties {
     private Map<String, String> translationsParameters;
     private String code;
     private String type;
+    private Boolean acceptanceRequired;
 
     public String getTranslation() {
         return translation;
@@ -47,5 +48,13 @@ public class ConfirmationProperties {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public Boolean getAcceptanceRequired() {
+        return acceptanceRequired;
+    }
+
+    public void setAcceptanceRequired(Boolean acceptanceRequired) {
+        this.acceptanceRequired = acceptanceRequired;
     }
 }
