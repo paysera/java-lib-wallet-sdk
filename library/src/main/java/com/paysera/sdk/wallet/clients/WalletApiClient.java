@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.paysera.sdk.wallet.entities.transfer.TransferPassword;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -427,4 +428,13 @@ public interface WalletApiClient {
 
     @POST("auth-token/token")
     Call<AuthTokenResponse> createAuthToken();
+
+    @GET("spot/{id}")
+    Call<ResponseBody> getSpotById(@Path("id") int id);
+
+    @GET("code")
+    Call<ResponseBody> getSpotByCode(@Query("code") String code);
+
+    @PUT("spot/{spotId}/check-in")
+    Call<ResponseBody> checkinToSpot(@Path("spotId") int spotId);
 }

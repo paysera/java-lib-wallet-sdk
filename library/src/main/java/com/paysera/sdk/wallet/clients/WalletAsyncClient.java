@@ -21,6 +21,8 @@ import com.paysera.sdk.wallet.helpers.OkHTTPQueryStringConverter;
 import com.paysera.sdk.wallet.providers.TimestampProvider;
 import java.util.List;
 import java.util.Map;
+
+import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
 
 public class WalletAsyncClient extends BaseAsyncClient {
@@ -550,6 +552,18 @@ public class WalletAsyncClient extends BaseAsyncClient {
 
     public Task<Void> reserveTransaction(String transactionKey, ReserveTransactionRequest reserveTransactionRequest) {
         return this.execute(this.walletApiClient.reserveTransaction(transactionKey, reserveTransactionRequest));
+    }
+
+    public Task<ResponseBody> getSpotJsonById(int spotId) {
+        return this.execute(this.walletApiClient.getSpotById(spotId));
+    }
+
+    public Task<ResponseBody> getSpotByCode(String code) {
+        return this.execute(this.walletApiClient.getSpotByCode(code));
+    }
+
+    public Task<ResponseBody> checkinToSpot(int spotId) {
+        return this.execute(this.walletApiClient.checkinToSpot(spotId));
     }
 
 }
