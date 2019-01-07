@@ -554,7 +554,7 @@ public class WalletAsyncClient extends BaseAsyncClient {
         return this.execute(this.walletApiClient.reserveTransaction(transactionKey, reserveTransactionRequest));
     }
 
-    public Task<ResponseBody> getSpotJsonById(int spotId) {
+    public Task<ResponseBody> getSpotById(int spotId) {
         return this.execute(this.walletApiClient.getSpotById(spotId));
     }
 
