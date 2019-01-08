@@ -61,9 +61,6 @@ public interface WalletApiClient {
 
     // User endpoint
     @GET("user/me/wallets")
-    Call<List<Wallet>> getUserWallets();
-
-    @GET("user/me/wallets")
     Call<List<Wallet>> getUserWallets(@Query("inactive_included") Boolean isInactiveIncluded);
 
     @GET("user/{id}/questionnaire")
