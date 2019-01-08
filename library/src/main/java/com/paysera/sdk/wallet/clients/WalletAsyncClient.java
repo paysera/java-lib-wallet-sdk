@@ -75,6 +75,10 @@ public class WalletAsyncClient extends BaseAsyncClient {
         return this.execute(this.walletApiClient.getUserWallets());
     }
 
+    public Task<List<Wallet>> getUserWallets(Boolean isInactiveIncluded) {
+        return this.execute(this.walletApiClient.getUserWallets(isInactiveIncluded));
+    }
+
     public Task<Questionnaire> getUserQuestionnaire(Integer userId) {
         return this.execute(this.walletApiClient.getUserQuestionnaire(userId));
     }

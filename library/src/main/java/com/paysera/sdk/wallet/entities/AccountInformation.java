@@ -14,6 +14,10 @@ public class AccountInformation {
     public static final String TYPE_TECHNICAL = "technical";
     public static final String TYPE_CARD = "card";
 
+    public static final String STATUS_INACTIVE = "inactive";
+    public static final String STATUS_ACTIVE = "active";
+    public static final String STATUS_CLOSED = "closed";
+
     @SerializedName("number")
     private String accountNumber;
     private String ownerDisplayName;
@@ -24,6 +28,7 @@ public class AccountInformation {
     private String type;
     private List<String> ibans = new ArrayList<>();
     private AccountFlags flags;
+    private String status;
 
     public String getDescription() {
         return description;
@@ -95,5 +100,13 @@ public class AccountInformation {
 
     public void setFlags(AccountFlags flags) {
         this.flags = flags;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
