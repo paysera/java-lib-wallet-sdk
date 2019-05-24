@@ -8,19 +8,12 @@ import com.paysera.sdk.wallet.entities.locations.Location;
 import com.paysera.sdk.wallet.entities.locations.LocationCategory;
 import com.paysera.sdk.wallet.entities.requests.*;
 import com.paysera.sdk.wallet.entities.transfer.Transfer;
+import com.paysera.sdk.wallet.entities.transfer.TransferPassword;
+import retrofit2.Call;
+import retrofit2.http.*;
 
 import java.util.List;
 import java.util.Map;
-
-import com.paysera.sdk.wallet.entities.transfer.TransferPassword;
-import retrofit2.Call;
-import retrofit2.http.Body;
-import retrofit2.http.DELETE;
-import retrofit2.http.GET;
-import retrofit2.http.POST;
-import retrofit2.http.PUT;
-import retrofit2.http.Path;
-import retrofit2.http.Query;
 
 public interface WalletApiClient {
     // Misc endpoints
@@ -302,6 +295,12 @@ public interface WalletApiClient {
     @GET("transaction/{transactionKey}")
     Call<Transaction> getTransaction(
         @Path("transactionKey") String transactionKey
+    );
+
+    @GET("transaction/{transactionKey}")
+    Call<Transaction> getTransaction(
+        @Path("transactionKey") String transactionKey,
+        @Query("fields") String fields
     );
 
     @GET("transactions")

@@ -2,21 +2,18 @@ package com.paysera.sdk.wallet.entities;
 
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
+import com.paysera.sdk.wallet.adapters.DateUnixTimestampSecondsAdapter;
+import org.joda.money.CurrencyUnit;
+import org.joda.money.Money;
 
 import java.math.BigDecimal;
 import java.util.Date;
-
-import com.paysera.sdk.wallet.adapters.DateUnixTimestampSecondsAdapter;
-import com.paysera.sdk.wallet.adapters.WalletIdentifierAdapter;
-import org.joda.money.CurrencyUnit;
-import org.joda.money.Money;
 
 /**
  * @author Vytautas Gimbutas <v.gimbutas@evp.lt>
  */
 public class Payment {
 
-    @JsonAdapter(WalletIdentifierAdapter.class)
     @SerializedName("beneficiary")
     private WalletIdentifier beneficiaryIdentifier;
     @JsonAdapter(DateUnixTimestampSecondsAdapter.class)
@@ -25,6 +22,7 @@ public class Payment {
     private Date createdAt;
     private Integer price;
     private String currency;
+    private Integer cashback;
     private Integer id;
     private String transactionKey;
     private String status;
@@ -32,6 +30,15 @@ public class Payment {
     private boolean cancelable;
     @SerializedName("password")
     private PaymentPassword paymentPassword;
+
+    public Integer getCashback() {
+        return cashback;
+    }
+
+    public Payment setCashback(Integer cashback) {
+        this.cashback = cashback;
+        return this;
+    }
 
     public Payment setCancelable(boolean cancelable) {
         this.cancelable = cancelable;
@@ -141,5 +148,22 @@ public class Payment {
 
     public void setCurrency(String currency) {
         this.currency = currency;
+    }
+
+    @Override
+    public String toString() {
+        return "Payment{" +
+            "beneficiaryIdentifier=" + beneficiaryIdentifier +
+            ", freezeUntil=" + freezeUntil +
+            ", createdAt=" + createdAt +
+            ", price=" + price +
+            ", currency='" + currency + '\'' +
+            ", id=" + id +
+            ", transactionKey='" + transactionKey + '\'' +
+            ", status='" + status + '\'' +
+            ", description='" + description + '\'' +
+            ", cancelable=" + cancelable +
+            ", paymentPassword=" + paymentPassword +
+            '}';
     }
 }
