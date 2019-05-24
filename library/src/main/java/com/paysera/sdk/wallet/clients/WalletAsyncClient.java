@@ -16,12 +16,13 @@ import com.paysera.sdk.wallet.filters.*;
 import com.paysera.sdk.wallet.filters.ConfirmationFilter;
 import com.paysera.sdk.wallet.helpers.DateHelper;
 import com.paysera.sdk.wallet.helpers.EnumHelper;
-import com.paysera.sdk.wallet.helpers.StringHelper;
 import com.paysera.sdk.wallet.helpers.OkHTTPQueryStringConverter;
+import com.paysera.sdk.wallet.helpers.StringHelper;
 import com.paysera.sdk.wallet.providers.TimestampProvider;
+import retrofit2.Retrofit;
+
 import java.util.List;
 import java.util.Map;
-import retrofit2.Retrofit;
 
 public class WalletAsyncClient extends BaseAsyncClient {
 
@@ -504,6 +505,14 @@ public class WalletAsyncClient extends BaseAsyncClient {
 
     public Task<Transaction> getTransaction(String transactionKey) {
         return this.execute(this.walletApiClient.getTransaction(transactionKey));
+    }
+
+    public Task<Transaction> getTransaction(String transactionKey, List<String> fields) {
+        StringBuilder rString = new StringBuilder();
+        for (String item : fields) {
+            rString.append(',').append(item);
+        }
+        return this.execute(this.walletApiClient.getTransaction(transactionKey, rString.toString()));
     }
 
     public Task<Void> cancelTransaction(String transactionKey) {

@@ -40,4 +40,14 @@ public class Project {
     public void setWallet(Wallet wallet) {
         this.wallet = wallet;
     }
+
+    @Override
+    public String toString() {
+        return "Project{" +
+            "id=" + id +
+            ", title='" + title + '\'' +
+            ", description='" + description + '\'' +
+            ", wallet=" + wallet +
+            '}';
+    }
 }
