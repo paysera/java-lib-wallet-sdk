@@ -21,8 +21,8 @@ object GetTransaction {
 
         val credentials = Credentials()
 
-        credentials.accessToken = "jwDWbAqnMHMu5BD8"
-        credentials.macKey = "7IUbtZrcUmhiJKQjF6wf9YkHN1oiYXHJ"
+        credentials.accessToken = "enter_ac"
+        credentials.macKey = "enter_mc"
         credentials.validUntil = Date(System.currentTimeMillis() + 3000000)
 
         val timestampProvider = TimestampProvider()
@@ -66,7 +66,7 @@ object GetTransaction {
         fields.add("project.wallet")
 
 
-        val task = walletClient.getTransaction("9MwP2JuWJg2TbObSMFaq0j7tR0N3QZIB", fields).continueWith {
+        val task = walletClient.getTransaction("enter_key_here", fields).continueWith {
             println("${it.result}")
             System.exit(0)
         }
