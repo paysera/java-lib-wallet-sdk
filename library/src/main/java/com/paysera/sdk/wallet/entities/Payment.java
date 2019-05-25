@@ -3,6 +3,7 @@ package com.paysera.sdk.wallet.entities;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.paysera.sdk.wallet.adapters.DateUnixTimestampSecondsAdapter;
+import com.paysera.sdk.wallet.helpers.MoneyHelper;
 import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
 
@@ -31,12 +32,9 @@ public class Payment {
     @SerializedName("password")
     private PaymentPassword paymentPassword;
 
-    public Monet getCashbackMoney() {
+    public Money getCashbackMoney() {
         if (cashback != null) {
-            return Money.of(
-                this.currency,
-                new BigDecimal(this.cashback).divide(new BigDecimal(100))
-            );
+            return MoneyHelper.createFromCents(this.currency, this.cashback);
         } else {
             return null;
         }
@@ -80,10 +78,7 @@ public class Payment {
     }
 
     public Money getPriceMoney() {
-        return Money.of(
-            CurrencyUnit.of(this.currency),
-            new BigDecimal(this.price).divide(new BigDecimal(100))
-        );
+        return MoneyHelper.createFromCents(this.currency, this.price);
     }
 
     public Integer getId() {
