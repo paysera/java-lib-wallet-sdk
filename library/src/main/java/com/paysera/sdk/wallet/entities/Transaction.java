@@ -94,18 +94,4 @@ public class Transaction {
     public void setValidForPaymentCardDebit(Boolean validForPaymentCardDebit) {
         this.validForPaymentCardDebit = validForPaymentCardDebit;
     }
-
-    @Override
-    public String toString() {
-        return "Transaction{" +
-            "transactionKey='" + transactionKey + '\'' +
-            ", validForPaymentCardDebit=" + validForPaymentCardDebit +
-            ", payments=" + payments +
-            ", project=" + project +
-            ", autoConfirm=" + autoConfirm +
-            ", locationId=" + locationId +
-            ", projectId=" + projectId +
-            ", status='" + status + '\'' +
-            '}';
-    }
 }

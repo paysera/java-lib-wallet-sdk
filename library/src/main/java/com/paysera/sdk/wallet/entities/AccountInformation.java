@@ -109,20 +109,4 @@ public class AccountInformation {
     public void setStatus(String status) {
         this.status = status;
     }
-
-    @Override
-    public String toString() {
-        return "AccountInformation{" +
-            "accountNumber='" + accountNumber + '\'' +
-            ", userId=" + userId +
-            ", ownerType='" + ownerType + '\'' +
-            ", ownerTitle='" + ownerTitle + '\'' +
-            ", ownerDisplayName='" + ownerDisplayName + '\'' +
-            ", type='" + type + '\'' +
-            ", ibans=" + ibans +
-            ", flags=" + flags +
-            ", status='" + status + '\'' +
-            ", description='" + description + '\'' +
-            '}';
-    }
 }

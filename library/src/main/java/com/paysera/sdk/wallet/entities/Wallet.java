@@ -35,13 +35,4 @@ public class Wallet {
     public void setAccountInformation(AccountInformation accountInformation) {
         this.accountInformation = accountInformation;
     }
-
-    @Override
-    public String toString() {
-        return "Wallet{" +
-            "id=" + id +
-            ", ownerId=" + ownerId +
-            ", accountInformation=" + accountInformation +
-            '}';
-    }
 }

@@ -46,14 +46,4 @@ public class WalletIdentifier {
     public void setId(Integer id) {
         this.id = id;
     }
-
-    @Override
-    public String toString() {
-        return "WalletIdentifier{" +
-            "id=" + id +
-            ", wallet=" + wallet +
-            ", email='" + email + '\'' +
-            ", phone='" + phone + '\'' +
-            '}';
-    }
 }

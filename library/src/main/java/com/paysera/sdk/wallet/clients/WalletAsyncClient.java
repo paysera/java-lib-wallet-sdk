@@ -508,11 +508,7 @@ public class WalletAsyncClient extends BaseAsyncClient {
     }
 
     public Task<Transaction> getTransaction(String transactionKey, List<String> fields) {
-        StringBuilder rString = new StringBuilder();
-        for (String item : fields) {
-            rString.append(',').append(item);
-        }
-        return this.execute(this.walletApiClient.getTransaction(transactionKey, rString.toString()));
+        return this.execute(this.walletApiClient.getTransaction(transactionKey, fields.join(',')));
     }
 
     public Task<Void> cancelTransaction(String transactionKey) {

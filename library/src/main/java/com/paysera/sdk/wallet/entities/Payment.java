@@ -31,8 +31,15 @@ public class Payment {
     @SerializedName("password")
     private PaymentPassword paymentPassword;
 
-    public Integer getCashback() {
-        return cashback;
+    public Monet getCashbackMoney() {
+        if (cashback != null) {
+            return Money.of(
+                this.currency,
+                new BigDecimal(this.cashback).divide(new BigDecimal(100))
+            );
+        } else {
+            return null;
+        }
     }
 
     public Payment setCashback(Integer cashback) {
@@ -148,22 +155,5 @@ public class Payment {
 
     public void setCurrency(String currency) {
         this.currency = currency;
-    }
-
-    @Override
-    public String toString() {
-        return "Payment{" +
-            "beneficiaryIdentifier=" + beneficiaryIdentifier +
-            ", freezeUntil=" + freezeUntil +
-            ", createdAt=" + createdAt +
-            ", price=" + price +
-            ", currency='" + currency + '\'' +
-            ", id=" + id +
-            ", transactionKey='" + transactionKey + '\'' +
-            ", status='" + status + '\'' +
-            ", description='" + description + '\'' +
-            ", cancelable=" + cancelable +
-            ", paymentPassword=" + paymentPassword +
-            '}';
     }
 }
