@@ -1,5 +1,7 @@
 package com.paysera.sdk.wallet.entities;
 
+import com.paysera.sdk.wallet.entities.allowances.TransactionAllowance;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +21,7 @@ public class Transaction {
     private Integer projectId;
     private String status;
     private String type;
+    private TransactionAllowance allowance;
 
     public Integer getId() {
         return id;
@@ -111,5 +114,9 @@ public class Transaction {
 
     public String getType() {
         return type;
+    }
+
+    public TransactionAllowance getAllowance() {
+        return allowance;
     }
 }
