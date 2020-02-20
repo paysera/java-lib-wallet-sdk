@@ -1,8 +1,10 @@
 package com.paysera.sdk.wallet.entities;
 
+import com.google.gson.annotations.JsonAdapter;
+import com.paysera.sdk.wallet.adapters.DateUnixTimestampSecondsAdapter;
 import com.paysera.sdk.wallet.entities.allowances.TransactionAllowance;
-
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -22,6 +24,8 @@ public class Transaction {
     private String status;
     private String type;
     private TransactionAllowance allowance;
+    @JsonAdapter(DateUnixTimestampSecondsAdapter.class)
+    private Date createdAt;
 
     public Integer getId() {
         return id;
@@ -118,5 +122,9 @@ public class Transaction {
 
     public TransactionAllowance getAllowance() {
         return allowance;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
     }
 }

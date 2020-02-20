@@ -1,8 +1,5 @@
 package com.paysera.sdk.wallet.entities.allowances;
 
-import com.google.gson.annotations.JsonAdapter;
-import com.google.gson.annotations.SerializedName;
-import com.paysera.sdk.wallet.adapters.MoneyAdapter;
 import com.paysera.sdk.wallet.helpers.MoneyHelper;
 import org.joda.money.Money;
 
