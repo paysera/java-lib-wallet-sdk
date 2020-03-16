@@ -66,7 +66,7 @@ public interface WalletApiClient {
         @Path("id") Integer userId
     );
 
-    @GET("user/me/projects")
+    @GET("user/me/projects?fields=*,wallet")
     Call<List<Project>> getUserProjects();
 
     @GET("user/{id}/projects")
