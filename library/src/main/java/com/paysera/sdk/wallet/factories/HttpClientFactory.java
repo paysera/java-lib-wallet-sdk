@@ -61,6 +61,7 @@ public class HttpClientFactory {
 
         final OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         httpClient.certificatePinner(certificatePinnerBuilder.build());
+        httpClient.retryOnConnectionFailure(false);
         httpClient.addInterceptor(new Interceptor() {
             @Override
             public okhttp3.Response intercept(Interceptor.Chain chain) throws IOException {
