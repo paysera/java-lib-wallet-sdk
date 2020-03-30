@@ -2,13 +2,13 @@ package com.paysera.sdk.wallet.entities;
 
 import com.google.gson.annotations.JsonAdapter;
 import com.paysera.sdk.wallet.adapters.DateUnixTimestampSecondsAdapter;
-import com.paysera.sdk.wallet.adapters.MoneyCentsAdapter;
+import com.paysera.sdk.wallet.adapters.MoneyDecimalAdapter;
 import org.joda.money.Money;
 import java.util.Date;
 
 public class ReservationStatement {
 
-    @JsonAdapter(MoneyCentsAdapter.class)
+    @JsonAdapter(MoneyDecimalAdapter.class)
     private Money amount;
     @JsonAdapter(DateUnixTimestampSecondsAdapter.class)
     private Date date;
