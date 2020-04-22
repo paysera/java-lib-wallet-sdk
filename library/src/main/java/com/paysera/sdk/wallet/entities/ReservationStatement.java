@@ -17,6 +17,7 @@ public class ReservationStatement {
     private Integer transferId;
     private OtherParty otherParty;
     private String referenceNumber;
+    private String direction;
 
     public Money getAmount() {
         return amount;
@@ -72,5 +73,13 @@ public class ReservationStatement {
 
     public void setReferenceNumber(String referenceNumber) {
         this.referenceNumber = referenceNumber;
+    }
+
+    public String getDirection() {
+        return direction;
+    }
+
+    public void setDirection(String direction) {
+        this.direction = direction;
     }
 }

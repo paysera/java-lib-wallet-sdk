@@ -46,6 +46,8 @@ public class MoneyDecimalAdapter extends TypeAdapter<Money> {
                 amount = in.nextString();
             } else if (nextName.equals("currency")) {
                 currency = in.nextString();
+            } else {
+                in.skipValue();
             }
         }
         return Money.of(CurrencyUnit.of(currency), new BigDecimal(amount), roundingMode);
