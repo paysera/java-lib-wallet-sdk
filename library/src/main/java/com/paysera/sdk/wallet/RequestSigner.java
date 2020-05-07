@@ -125,7 +125,7 @@ public class RequestSigner {
 
             macDigest = mac.doFinal(macStringBuilder.toString().getBytes());
         } else {
-            macDigest = macDigestGeneratorInterface.generate(macStringBuilder);
+            macDigest = macDigestGeneratorInterface.generate(secret.getBytes(), macStringBuilder.toString().getBytes());
         }
 
         return new String(Base64.encodeBase64(macDigest));

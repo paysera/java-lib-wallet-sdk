@@ -1,5 +1,5 @@
 package com.paysera.sdk.wallet;
 
 public interface MacDigestGeneratorInterface {
-    byte[] generate(StringBuilder data);
+    byte[] generate(byte[] key, byte[] data);
 }
