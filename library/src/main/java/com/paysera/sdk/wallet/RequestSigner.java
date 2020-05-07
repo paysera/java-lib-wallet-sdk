@@ -14,11 +14,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RequestSigner {
+
     private NonceGeneratorInterface nonceGenerator;
+    private MacDigestGeneratorInterface macDigestGeneratorInterface;
     private OkHTTPQueryStringConverter okHTTPQueryStringConverter;
 
-    public RequestSigner(NonceGeneratorInterface nonceGenerator, OkHTTPQueryStringConverter okHTTPQueryStringConverter) {
+    public RequestSigner(
+        NonceGeneratorInterface nonceGenerator,
+        MacDigestGeneratorInterface macDigestGeneratorInterface,
+        OkHTTPQueryStringConverter okHTTPQueryStringConverter
+    ) {
         this.nonceGenerator = nonceGenerator;
+        this.macDigestGeneratorInterface = macDigestGeneratorInterface;
         this.okHTTPQueryStringConverter = okHTTPQueryStringConverter;
     }
 
@@ -108,13 +115,19 @@ public class RequestSigner {
             .append(ext)
             .append("\n");
 
-        Mac mac = Mac.getInstance("HmacSHA256");
-        SecretKeySpec secretKey = new SecretKeySpec(secret.getBytes(), "HmacSHA256");
+        byte[] macDigest;
 
-        mac.init(secretKey);
+        if (macDigestGeneratorInterface == null) {
+            Mac mac = Mac.getInstance("HmacSHA256");
+            SecretKeySpec secretKey = new SecretKeySpec(secret.getBytes(), "HmacSHA256");
 
-        byte[] HMACdigest = mac.doFinal(macStringBuilder.toString().getBytes());
+            mac.init(secretKey);
 
-        return new String(Base64.encodeBase64(HMACdigest));
+            macDigest = mac.doFinal(macStringBuilder.toString().getBytes());
+        } else {
+            macDigest = macDigestGeneratorInterface.generate(macStringBuilder);
+        }
+
+        return new String(Base64.encodeBase64(macDigest));
     }
 }

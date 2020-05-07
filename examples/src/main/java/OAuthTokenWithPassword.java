@@ -58,7 +58,7 @@ public class OAuthTokenWithPassword {
         httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
         OkHTTPQueryStringConverter okHTTPQueryStringConverter = new OkHTTPQueryStringConverter();
-        RequestSigner requestSigner = new RequestSigner(new NonceGenerator(), okHTTPQueryStringConverter);
+        RequestSigner requestSigner = new RequestSigner(new NonceGenerator(), null, okHTTPQueryStringConverter);
         RetrofitFactory retrofitFactory = new RetrofitFactory(new Router());
 
         HttpClientFactory httpClientFactory =
