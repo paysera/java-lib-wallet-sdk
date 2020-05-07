@@ -4,9 +4,6 @@ import com.paysera.sdk.wallet.helpers.OkHTTPQueryStringConverter;
 import okhttp3.HttpUrl;
 import okhttp3.Request;
 import org.apache.commons.codec.binary.Base64;
-
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -115,18 +112,10 @@ public class RequestSigner {
             .append(ext)
             .append("\n");
 
-        byte[] macDigest;
-
-        if (macDigestGeneratorInterface == null) {
-            Mac mac = Mac.getInstance("HmacSHA256");
-            SecretKeySpec secretKey = new SecretKeySpec(secret.getBytes(), "HmacSHA256");
-
-            mac.init(secretKey);
-
-            macDigest = mac.doFinal(macStringBuilder.toString().getBytes());
-        } else {
-            macDigest = macDigestGeneratorInterface.generate(secret.getBytes(), macStringBuilder.toString().getBytes());
-        }
+        byte[] macDigest = macDigestGeneratorInterface.generate(
+            secret.getBytes(),
+            macStringBuilder.toString().getBytes()
+        );
 
         return new String(Base64.encodeBase64(macDigest));
     }
