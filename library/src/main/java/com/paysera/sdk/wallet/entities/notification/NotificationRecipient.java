@@ -16,6 +16,16 @@ abstract public class NotificationRecipient {
 
     public abstract String getType();
 
+    protected Boolean androidSingleChannel;
+
+    public Boolean getAndroidSingleChannel() {
+        return androidSingleChannel;
+    }
+
+    public void setAndroidSingleChannel(Boolean androidSingleChannel) {
+        this.androidSingleChannel = androidSingleChannel;
+    }
+
     @Override
     public boolean equals(Object object) {
         return
