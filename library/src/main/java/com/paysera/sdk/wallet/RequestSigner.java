@@ -4,9 +4,6 @@ import com.paysera.sdk.wallet.helpers.OkHTTPQueryStringConverter;
 import okhttp3.HttpUrl;
 import okhttp3.Request;
 import org.apache.commons.codec.binary.Base64;
-
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -14,11 +11,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RequestSigner {
+
     private NonceGeneratorInterface nonceGenerator;
+    private MacDigestGeneratorInterface macDigestGeneratorInterface;
     private OkHTTPQueryStringConverter okHTTPQueryStringConverter;
 
-    public RequestSigner(NonceGeneratorInterface nonceGenerator, OkHTTPQueryStringConverter okHTTPQueryStringConverter) {
+    public RequestSigner(
+        NonceGeneratorInterface nonceGenerator,
+        MacDigestGeneratorInterface macDigestGeneratorInterface,
+        OkHTTPQueryStringConverter okHTTPQueryStringConverter
+    ) {
         this.nonceGenerator = nonceGenerator;
+        this.macDigestGeneratorInterface = macDigestGeneratorInterface;
         this.okHTTPQueryStringConverter = okHTTPQueryStringConverter;
     }
 
@@ -108,13 +112,11 @@ public class RequestSigner {
             .append(ext)
             .append("\n");
 
-        Mac mac = Mac.getInstance("HmacSHA256");
-        SecretKeySpec secretKey = new SecretKeySpec(secret.getBytes(), "HmacSHA256");
+        byte[] macDigest = macDigestGeneratorInterface.generate(
+            secret.getBytes(),
+            macStringBuilder.toString().getBytes()
+        );
 
-        mac.init(secretKey);
-
-        byte[] HMACdigest = mac.doFinal(macStringBuilder.toString().getBytes());
-
-        return new String(Base64.encodeBase64(HMACdigest));
+        return new String(Base64.encodeBase64(macDigest));
     }
 }
