@@ -14,7 +14,7 @@ public interface OAuthClient {
         @Field("code") String code
     );
 
-    @POST("tokens/{accessToken}/activate")
+    @PUT("tokens/{accessToken}/activate")
     Call<Credentials> activate(
         @Path("accessToken") String accessToken
     );
