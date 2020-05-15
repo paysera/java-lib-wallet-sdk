@@ -114,14 +114,16 @@ public class AccessTokenRefresher {
                 } else if (activeCredentials.getRefreshToken() != null) {
                     this.oAuthAsyncClient
                             .refreshToken(this.activeCredentials.getRefreshToken(), grantType, scopes, code)
-                            .continueWith(new Continuation<Credentials, Void>() {
+                            .continueWithTask(new Continuation<Credentials, Task<Credentials>>() {
                                 @Override
-                                public Void then(Task<Credentials> task) throws Exception {
+                                public Task<Credentials> then(Task<Credentials> task) throws Exception {
                                     synchronized (AccessTokenRefresher.this) {
                                         if (!task.isFaulted()) {
                                             Credentials renewedCredentials = task.getResult();
                                             accessTokenRefreshedAt = new Date();
                                             updateInactiveCredentials(renewedCredentials);
+
+                                            return AccessTokenRefresher.this.oAuthAsyncClient.activate(inactiveCredentials.getAccessToken());
                                         } else {
                                             WalletApiException walletApiException = (WalletApiException) task.getError();
                                             if (walletApiException.getStatusCode() != null && walletApiException.isInvalidGrantError()) {
@@ -133,34 +135,26 @@ public class AccessTokenRefresher {
                                     }
                                     return null;
                                 }
-                            }).onSuccess(new Continuation<Void, Void>() {
+                            }).continueWith(new Continuation<Credentials, Void>() {
                                 @Override
-                                public Void then(Task<Void> task) throws Exception {
-                                    AccessTokenRefresher.this.oAuthAsyncClient
-                                            .activate(inactiveCredentials.getAccessToken())
-                                            .continueWith(new Continuation<Credentials, Void>() {
-                                                @Override
-                                                public Void then(Task<Credentials> task) throws Exception {
-                                                    synchronized (AccessTokenRefresher.this) {
-                                                        AccessTokenRefresher.this.accessTokenRefreshTask = null;
-                                                        if (!task.isFaulted()) {
-                                                            Credentials renewedCredentials = task.getResult();
-                                                            accessTokenRefreshedAt = new Date();
-                                                            updateActiveCredentials(renewedCredentials);
+                                public Void then(Task<Credentials> task) throws Exception {
+                                    synchronized (AccessTokenRefresher.this) {
+                                        AccessTokenRefresher.this.accessTokenRefreshTask = null;
+                                        if (!task.isFaulted()) {
+                                            Credentials renewedCredentials = task.getResult();
+                                            accessTokenRefreshedAt = new Date();
+                                            updateActiveCredentials(renewedCredentials);
 
-                                                            taskCompletionSource.setResult(task.getResult());
-                                                        } else {
-                                                            WalletApiException walletApiException = (WalletApiException) task.getError();
-                                                            if (walletApiException.getStatusCode() != null && walletApiException.isInvalidGrantError()) {
-                                                                accessTokenRefresherDelegate.onRefreshTokenInvalid();
-                                                            }
+                                            taskCompletionSource.setResult(task.getResult());
+                                        } else {
+                                            WalletApiException walletApiException = (WalletApiException) task.getError();
+                                            if (walletApiException.getStatusCode() != null && walletApiException.isInvalidGrantError()) {
+                                                accessTokenRefresherDelegate.onRefreshTokenInvalid();
+                                            }
 
-                                                            taskCompletionSource.setError(task.getError());
-                                                        }
-                                                    }
-                                                    return null;
-                                                }
-                                            });
+                                            taskCompletionSource.setError(task.getError());
+                                        }
+                                    }
                                     return null;
                                 }
                             });
