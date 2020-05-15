@@ -14,7 +14,6 @@ public interface OAuthClient {
         @Field("code") String code
     );
 
-    @FormUrlEncoded
     @POST("tokens/{accessToken}/activate")
     Call<Credentials> activate(
         @Path("accessToken") String accessToken
