@@ -50,7 +50,7 @@ public class AccessTokenRefresher {
 
         switch (grantType) {
             case REFRESH_TOKEN: {
-                if (activeCredentials != null) {
+                if (activeCredentials.getRefreshToken() != null) {
                     this.oAuthAsyncClient
                             .refreshToken(this.activeCredentials.getRefreshToken(), grantType, scopes, code)
                             .continueWith(new Continuation<Credentials, Void>() {
@@ -82,7 +82,7 @@ public class AccessTokenRefresher {
                  break;
             }
             case REFRESH_TOKEN_WITH_ACTIVATION: {
-                if (inactiveCredentials != null) {
+                if (inactiveCredentials.getAccessToken() != null) {
                     this.oAuthAsyncClient
                             .activate(inactiveCredentials.getAccessToken())
                             .continueWith(new Continuation<Credentials, Void>() {
@@ -108,7 +108,7 @@ public class AccessTokenRefresher {
                                     return null;
                                 }
                             });
-                } else if (activeCredentials != null) {
+                } else if (activeCredentials.getRefreshToken() != null) {
                     this.oAuthAsyncClient
                             .refreshToken(this.activeCredentials.getRefreshToken(), grantType, scopes, code)
                             .continueWith(new Continuation<Credentials, Void>() {
