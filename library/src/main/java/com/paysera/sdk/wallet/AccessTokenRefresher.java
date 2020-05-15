@@ -16,6 +16,7 @@ public class AccessTokenRefresher {
     private AccessTokenRefresherDelegate accessTokenRefresherDelegate;
     private Credentials activeCredentials;
     private Credentials inactiveCredentials;
+    private GrantType grantType;
     private Task<Credentials> accessTokenRefreshTask;
     private Date accessTokenRefreshedAt;
 
@@ -23,12 +24,14 @@ public class AccessTokenRefresher {
         OAuthAsyncClient oAuthAsyncClient,
         AccessTokenRefresherDelegate accessTokenRefresherDelegate,
         Credentials activeCredentials,
-        Credentials inactiveCredentials
+        Credentials inactiveCredentials,
+        GrantType grantType
     ) {
         this.oAuthAsyncClient = oAuthAsyncClient;
         this.accessTokenRefresherDelegate = accessTokenRefresherDelegate;
         this.activeCredentials = activeCredentials;
         this.inactiveCredentials = inactiveCredentials;
+        this.grantType = grantType;
     }
 
     public synchronized boolean isAccessTokenRefreshing() {
@@ -144,7 +147,7 @@ public class AccessTokenRefresher {
                                                             }
                                                             return null;
                                                         }
-                                                    });
+                                                    }).waitForCompletion();
                                         } else {
                                             WalletApiException walletApiException = (WalletApiException) task.getError();
                                             if (walletApiException.getStatusCode() != null && walletApiException.isInvalidGrantError()) {

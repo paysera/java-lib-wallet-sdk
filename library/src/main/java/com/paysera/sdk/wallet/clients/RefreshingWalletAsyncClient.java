@@ -24,6 +24,7 @@ import retrofit2.Retrofit;
 public class RefreshingWalletAsyncClient extends WalletAsyncClient {
     private final AccessTokenRefresher accessTokenRefresher;
     private Queue<WalletApiCall> callQueue = new LinkedList<>();
+    private GrantType grantType;
 
     public RefreshingWalletAsyncClient(
         TimestampProvider timestampProvider,
@@ -32,7 +33,8 @@ public class RefreshingWalletAsyncClient extends WalletAsyncClient {
         WalletApiClient walletApiClient,
         AccessTokenRefresher accessTokenRefresher,
         Retrofit retrofit,
-        OkHTTPQueryStringConverter okHTTPQueryStringConverter
+        OkHTTPQueryStringConverter okHTTPQueryStringConverter,
+        GrantType grantType
     ) {
         super(
             timestampProvider,
@@ -43,6 +45,7 @@ public class RefreshingWalletAsyncClient extends WalletAsyncClient {
             okHTTPQueryStringConverter
         );
         this.accessTokenRefresher = accessTokenRefresher;
+        this.grantType = grantType;
     }
 
     @Override
@@ -131,7 +134,7 @@ public class RefreshingWalletAsyncClient extends WalletAsyncClient {
     }
 
     public Task<Credentials> refreshAccessToken() {
-        return this.refreshAccessToken(GrantType.REFRESH_TOKEN, null, null);
+        return this.refreshAccessToken(grantType, null, null);
     }
     
     public Task<Credentials> refreshAccessToken(GrantType grantType, List<String> scopes, String code) {
