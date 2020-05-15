@@ -4,6 +4,7 @@ import com.paysera.sdk.wallet.entities.Credentials;
 
 public interface AccessTokenRefresherDelegate {
 
-    void onAccessTokenRefreshed(Credentials credentials, String code);
+    void activeCredentialsDidUpdate(Credentials credentials);
+    void inactiveCredentialsDidUpdate(Credentials credentials);
     void onRefreshTokenInvalid();
 }

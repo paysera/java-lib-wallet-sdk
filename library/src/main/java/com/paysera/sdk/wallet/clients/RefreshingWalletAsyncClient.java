@@ -9,6 +9,7 @@ import com.paysera.sdk.wallet.OkHttpRequestWalletApiCall;
 import com.paysera.sdk.wallet.RetrofitWalletApiCall;
 import com.paysera.sdk.wallet.WalletApiCall;
 import com.paysera.sdk.wallet.entities.Credentials;
+import com.paysera.sdk.wallet.enums.GrantType;
 import com.paysera.sdk.wallet.exceptions.WalletApiException;
 import com.paysera.sdk.wallet.helpers.OkHTTPQueryStringConverter;
 import com.paysera.sdk.wallet.providers.TimestampProvider;
@@ -130,11 +131,11 @@ public class RefreshingWalletAsyncClient extends WalletAsyncClient {
     }
 
     public Task<Credentials> refreshAccessToken() {
-        return this.refreshAccessToken(null, null);
+        return this.refreshAccessToken(GrantType.REFRESH_TOKEN, null, null);
     }
     
-    public Task<Credentials> refreshAccessToken(List<String> scopes, String code) {
-        return this.accessTokenRefresher.refreshAccessToken(scopes, code)
+    public Task<Credentials> refreshAccessToken(GrantType grantType, List<String> scopes, String code) {
+        return this.accessTokenRefresher.refreshAccessToken(grantType, scopes, code)
             .continueWithTask(new Continuation<Credentials, Task<Credentials>>() {
                 @Override public Task<Credentials> then(Task<Credentials> task) throws Exception {
                     if (task.isFaulted()) {
