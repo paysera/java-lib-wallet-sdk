@@ -16,7 +16,6 @@ public class AccessTokenRefresher {
     private AccessTokenRefresherDelegate accessTokenRefresherDelegate;
     private Credentials activeCredentials;
     private Credentials inactiveCredentials;
-    private GrantType grantType;
     private Task<Credentials> accessTokenRefreshTask;
     private Date accessTokenRefreshedAt;
 
@@ -24,14 +23,12 @@ public class AccessTokenRefresher {
         OAuthAsyncClient oAuthAsyncClient,
         AccessTokenRefresherDelegate accessTokenRefresherDelegate,
         Credentials activeCredentials,
-        Credentials inactiveCredentials,
-        GrantType grantType
+        Credentials inactiveCredentials
     ) {
         this.oAuthAsyncClient = oAuthAsyncClient;
         this.accessTokenRefresherDelegate = accessTokenRefresherDelegate;
         this.activeCredentials = activeCredentials;
         this.inactiveCredentials = inactiveCredentials;
-        this.grantType = grantType;
     }
 
     public synchronized boolean isAccessTokenRefreshing() {
@@ -152,7 +149,7 @@ public class AccessTokenRefresher {
 
     private void handleRefreshTokenError(TaskCompletionSource<Credentials> taskCompletionSource, Task<Credentials> task) {
         WalletApiException walletApiException = (WalletApiException) task.getError();
-        if (walletApiException.getStatusCode() != null && walletApiException.isInvalidGrantError()) {
+        if (walletApiException.isInvalidGrantError()) {
             accessTokenRefresherDelegate.onRefreshTokenInvalid();
         } else if (walletApiException.getStatusCode() != null && walletApiException.getStatusCode() >= 400 && walletApiException.getStatusCode() < 500) {
             updateInactiveCredentials(null);
