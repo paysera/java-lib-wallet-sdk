@@ -102,7 +102,6 @@ public class AccessTokenRefresher {
                                     synchronized (AccessTokenRefresher.this) {
                                         if (!task.isFaulted()) {
                                             Credentials renewedCredentials = task.getResult();
-                                            accessTokenRefreshedAt = new Date();
                                             updateInactiveCredentials(renewedCredentials);
                                             return AccessTokenRefresher.this.oAuthAsyncClient.activate(inactiveCredentials.getAccessToken());
                                         } else {
