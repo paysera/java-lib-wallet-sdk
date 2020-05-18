@@ -1,7 +1,6 @@
 package com.paysera.sdk.wallet.normalizers;
 
 import com.paysera.sdk.wallet.entities.IdentifierAware;
-import com.paysera.sdk.wallet.entities.notification.FirebaseNotificationRecipient;
 import com.paysera.sdk.wallet.entities.notification.NotificationRecipient;
 import com.paysera.sdk.wallet.entities.notification.WindowsNotificationRecipient;
 import com.paysera.sdk.wallet.exceptions.NormalizerException;
@@ -46,9 +45,6 @@ public class NotificationRecipientNormalizer implements
             );
             data.put("uri", ((WindowsNotificationRecipient) entity).getUri());
         }
-        if (entity instanceof FirebaseNotificationRecipient) {
-            data.put("android_single_channel", ((FirebaseNotificationRecipient) entity).getAndroidSingleChannel());
-        }
 
         if (entity instanceof IdentifierAware) {
             data.put("identifier", ((IdentifierAware) entity).getIdentifier());
@@ -76,12 +72,6 @@ public class NotificationRecipientNormalizer implements
 
             if (data.has("tile_id")) {
                 ((WindowsNotificationRecipient) notificationRecipient).setTileIdentifier(data.getString("tile_id"));
-            }
-        }
-
-        if (notificationRecipient instanceof FirebaseNotificationRecipient) {
-            if (data.has("tile_id")) {
-                ((FirebaseNotificationRecipient) notificationRecipient).setAndroidSingleChannel(data.getBoolean("android_single_channel"));
             }
         }
 
