@@ -43,8 +43,7 @@ public class OAuthAsyncClient extends BaseAsyncClient {
     }
 
     public Task<Credentials> activate(String accessToken) {
-        return this.execute(
-            this.oAuthClient.activate(accessToken));
+        return this.execute(this.oAuthClient.activate(accessToken));
     }
 
     public Task<Credentials> exchangeCredentialsForAccessToken(String username, String password,
