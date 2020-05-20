@@ -19,9 +19,10 @@ public class WalletApiException extends WalletSdkException {
     public static final String ERROR_CODE_PASSWORD_TOO_SHORT = "password_too_short";
     public static final String ERROR_CODE_PASSWORD_TOO_RISKY = "password_too_risky";
 
-    public static final String ERROR_DESCRIPTION_EXPIRED_TOKEN = "Refresh token expired";
-    public static final String ERROR_DESCRIPTION_NO_SUCH_TOKEN = "No such refresh token";
-    public static final String ERROR_DESCRIPTION_TOKEN_INVALID = "Refresh token status invalid";
+    public static final String ERROR_DESCRIPTION_EXPIRED_TOKEN = "Token has expired";
+    public static final String ERROR_DESCRIPTION_REFRESH_TOKEN_EXPIRED = "Refresh token expired";
+    public static final String ERROR_DESCRIPTION_NO_SUCH_REFRESH_TOKEN = "No such refresh token";
+    public static final String ERROR_DESCRIPTION_REFRESH_TOKEN_INVALID = "Refresh token status invalid";
 
     private static final String ERROR_DESCRIPTION_TIMESTAMP_IS_IN_THE_FUTURE = "Timestamp is in future";
     private static final String ERROR_DESCRIPTION_TIMESTAMP_LIFETIME_EXCEEDED = "Timestamp lifetime exceeded";
@@ -84,8 +85,9 @@ public class WalletApiException extends WalletSdkException {
     public Boolean isAccessTokenExpiredError() {
         return isInvalidGrantError() && (
             errorDescription.equals(WalletApiException.ERROR_DESCRIPTION_EXPIRED_TOKEN)
-                || errorDescription.equals(WalletApiException.ERROR_DESCRIPTION_NO_SUCH_TOKEN)
-                || errorDescription.equals(WalletApiException.ERROR_DESCRIPTION_TOKEN_INVALID)
+                || errorDescription.equals(WalletApiException.ERROR_DESCRIPTION_REFRESH_TOKEN_EXPIRED)
+                || errorDescription.equals(WalletApiException.ERROR_DESCRIPTION_NO_SUCH_REFRESH_TOKEN)
+                || errorDescription.equals(WalletApiException.ERROR_DESCRIPTION_REFRESH_TOKEN_INVALID)
         );
     }
 
