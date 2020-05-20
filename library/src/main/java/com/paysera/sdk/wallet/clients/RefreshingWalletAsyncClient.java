@@ -112,10 +112,7 @@ public class RefreshingWalletAsyncClient extends WalletAsyncClient {
 
                     WalletApiException walletApiException = (WalletApiException) task.getError();
 
-                    if (
-                           walletApiException.isAccessTokenExpiredError()
-                        && accessTokenRefresher != null
-                        ) {
+                    if (walletApiException.isTokenExpired() && accessTokenRefresher != null) {
                         synchronized (accessTokenRefresher) {
                             if (accessTokenRefresher.hasAccessTokenBeenRecentlyRefreshed()) {
                                 performWalletApiCall(walletApiCall);

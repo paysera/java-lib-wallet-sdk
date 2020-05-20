@@ -149,7 +149,7 @@ public class AccessTokenRefresher {
 
     private void handleRefreshTokenError(TaskCompletionSource<Credentials> taskCompletionSource, Task<Credentials> task) {
         WalletApiException walletApiException = (WalletApiException) task.getError();
-        if (walletApiException.isInvalidGrantError()) {
+        if (walletApiException.isRefreshTokenExpiredError()) {
             accessTokenRefresherDelegate.onRefreshTokenInvalid();
         } else if (walletApiException.getStatusCode() != null && walletApiException.getStatusCode() >= 400 && walletApiException.getStatusCode() < 500) {
             updateInactiveCredentials(null);

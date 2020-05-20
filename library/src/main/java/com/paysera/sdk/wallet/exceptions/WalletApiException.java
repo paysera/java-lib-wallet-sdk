@@ -82,13 +82,17 @@ public class WalletApiException extends WalletSdkException {
                 || this.errorCode.equals(WalletApiException.ERROR_CODE_INVALID_TIMESTAMP);
     }
 
-    public Boolean isAccessTokenExpiredError() {
+    public Boolean isRefreshTokenExpiredError() {
         return isInvalidGrantError() && (
-            errorDescription.equals(WalletApiException.ERROR_DESCRIPTION_EXPIRED_TOKEN)
-                || errorDescription.equals(WalletApiException.ERROR_DESCRIPTION_REFRESH_TOKEN_EXPIRED)
+            errorDescription.equals(WalletApiException.ERROR_DESCRIPTION_REFRESH_TOKEN_EXPIRED)
                 || errorDescription.equals(WalletApiException.ERROR_DESCRIPTION_NO_SUCH_REFRESH_TOKEN)
                 || errorDescription.equals(WalletApiException.ERROR_DESCRIPTION_REFRESH_TOKEN_INVALID)
         );
+    }
+
+    public Boolean isTokenExpired() {
+        return isInvalidGrantError()
+            && errorDescription.equals(WalletApiException.ERROR_DESCRIPTION_EXPIRED_TOKEN);
     }
 
     public Boolean isInvalidGrantError() {
