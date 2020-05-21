@@ -80,7 +80,7 @@ public class NotificationRecipientNormalizer implements
         }
 
         if (notificationRecipient instanceof FirebaseNotificationRecipient) {
-            if (data.has("tile_id")) {
+            if (data.has("android_single_channel")) {
                 ((FirebaseNotificationRecipient) notificationRecipient).setAndroidSingleChannel(data.getBoolean("android_single_channel"));
             }
         }

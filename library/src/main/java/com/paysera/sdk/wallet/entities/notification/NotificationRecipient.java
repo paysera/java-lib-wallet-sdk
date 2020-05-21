@@ -5,6 +5,7 @@ package com.paysera.sdk.wallet.entities.notification;
  */
 abstract public class NotificationRecipient {
     protected String identifier;
+    protected Boolean androidSingleChannel;
 
     public String getIdentifier() {
         return identifier;
@@ -15,8 +16,6 @@ abstract public class NotificationRecipient {
     }
 
     public abstract String getType();
-
-    protected Boolean androidSingleChannel;
 
     public Boolean getAndroidSingleChannel() {
         return androidSingleChannel;
