@@ -99,6 +99,17 @@ public class NotificationSubscriber {
         ;
     }
 
+    public NotificationEvent getGeneralNotificationEvent() {
+        for (NotificationEvent event : events) {
+            if (event.eventName.equals(NotificationEvent.EVENT_NAME_ALERT)
+                    && event.objectName.equals(NotificationEvent.OBJECT_NAME_INFORMATION)
+            ) {
+                return event;
+            }
+        }
+        return null;
+    }
+
     public NotificationEvent getTransactionRequestEvent() {
         for (NotificationEvent event : events) {
             if (event.eventName.equals(NotificationEvent.EVENT_NAME_CREATED)
