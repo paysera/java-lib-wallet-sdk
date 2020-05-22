@@ -17,7 +17,7 @@ abstract public class NotificationRecipient {
 
     public abstract String getType();
 
-    public Boolean getAndroidSingleChannel() {
+    public Boolean isAndroidSingleChannel() {
         return androidSingleChannel;
     }
 

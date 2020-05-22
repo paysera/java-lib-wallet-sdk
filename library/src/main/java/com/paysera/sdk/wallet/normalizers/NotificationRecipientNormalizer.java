@@ -47,7 +47,7 @@ public class NotificationRecipientNormalizer implements
             data.put("uri", ((WindowsNotificationRecipient) entity).getUri());
         }
         if (entity instanceof FirebaseNotificationRecipient) {
-            data.put("android_single_channel", ((FirebaseNotificationRecipient) entity).getAndroidSingleChannel());
+            data.put("android_single_channel", ((FirebaseNotificationRecipient) entity).isAndroidSingleChannel());
         }
 
         if (entity instanceof IdentifierAware) {
