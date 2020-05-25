@@ -53,8 +53,6 @@ public class NotificationSubscriberNormalizer implements NormalizerInterface<Not
 
         if (data.has("id")) {
             notificationSubscriber.setId(data.getInt("id"));
-        } else {
-            notificationSubscriber.setId(null);
         }
 
         notificationSubscriber.setStatus(data.getString("status"));

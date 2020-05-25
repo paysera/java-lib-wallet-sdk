@@ -90,7 +90,7 @@ public class NotificationSubscriber {
     @Override
     public boolean equals(Object object) {
         return
-               object instanceof NotificationSubscriber
+                object instanceof NotificationSubscriber
             && this.getPrivacyLevel().equals(((NotificationSubscriber) object).getPrivacyLevel())
             && this.getLocale().equals(((NotificationSubscriber) object).getLocale())
             && this.getRecipient().equals(((NotificationSubscriber) object).getRecipient())
@@ -101,8 +101,9 @@ public class NotificationSubscriber {
 
     public NotificationEvent getGeneralNotificationEvent() {
         for (NotificationEvent event : events) {
-            if (event.eventName.equals(NotificationEvent.EVENT_NAME_ALERT)
-                    && event.objectName.equals(NotificationEvent.OBJECT_NAME_INFORMATION)
+            if (
+                   event.eventName.equals(NotificationEvent.EVENT_NAME_ALERT)
+                && event.objectName.equals(NotificationEvent.OBJECT_NAME_INFORMATION)
             ) {
                 return event;
             }
@@ -112,8 +113,9 @@ public class NotificationSubscriber {
 
     public NotificationEvent getTransactionRequestEvent() {
         for (NotificationEvent event : events) {
-            if (event.eventName.equals(NotificationEvent.EVENT_NAME_CREATED)
-                    && event.objectName.equals(NotificationEvent.OBJECT_NAME_TRANSACTION_REQUEST)
+            if (
+                   event.eventName.equals(NotificationEvent.EVENT_NAME_CREATED)
+                && event.objectName.equals(NotificationEvent.OBJECT_NAME_TRANSACTION_REQUEST)
             ) {
                 return event;
             }
@@ -123,8 +125,9 @@ public class NotificationSubscriber {
 
     public NotificationEvent getConfirmationEvent() {
         for (NotificationEvent event : events) {
-            if (event.eventName.equals(NotificationEvent.EVENT_NAME_CREATED)
-                    && event.objectName.equals(NotificationEvent.OBJECT_NAME_CONFIRMATION)
+            if (
+                   event.eventName.equals(NotificationEvent.EVENT_NAME_CREATED)
+                && event.objectName.equals(NotificationEvent.OBJECT_NAME_CONFIRMATION)
             ) {
                 return event;
             }
@@ -134,8 +137,9 @@ public class NotificationSubscriber {
 
     public NotificationEvent getUserSignUpEvent() {
         for (NotificationEvent event : events) {
-            if (event.eventName.equals(NotificationEvent.EVENT_NAME_REGISTERED)
-                    && event.objectName.equals(NotificationEvent.OBJECT_NAME_USER)
+            if (
+                   event.eventName.equals(NotificationEvent.EVENT_NAME_REGISTERED)
+                && event.objectName.equals(NotificationEvent.OBJECT_NAME_USER)
             ) {
                 return event;
             }
@@ -146,8 +150,9 @@ public class NotificationSubscriber {
     public List<NotificationEvent> getWalletEvents() {
         List<NotificationEvent> walletEvents = new ArrayList<>();
         for (NotificationEvent event : events) {
-            if (event.objectName.equals(NotificationEvent.OBJECT_NAME_PENDING_PAYMENT)
-                    || event.objectName.equals(NotificationEvent.OBJECT_NAME_STATEMENT)
+            if (
+                   event.objectName.equals(NotificationEvent.OBJECT_NAME_PENDING_PAYMENT)
+                || event.objectName.equals(NotificationEvent.OBJECT_NAME_STATEMENT)
             ) {
                 walletEvents.add(event);
             }
