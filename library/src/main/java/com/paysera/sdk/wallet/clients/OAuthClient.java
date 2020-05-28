@@ -2,11 +2,7 @@ package com.paysera.sdk.wallet.clients;
 
 import com.paysera.sdk.wallet.entities.Credentials;
 import retrofit2.Call;
-import retrofit2.http.DELETE;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.POST;
-import retrofit2.http.Query;
+import retrofit2.http.*;
 
 public interface OAuthClient {
     @FormUrlEncoded
@@ -16,6 +12,11 @@ public interface OAuthClient {
         @Field("refresh_token") String refreshToken,
         @Field("scope") String scopes,
         @Field("code") String code
+    );
+
+    @PUT("tokens/{accessToken}/activate")
+    Call<Credentials> activate(
+        @Path("accessToken") String accessToken
     );
 
     @FormUrlEncoded

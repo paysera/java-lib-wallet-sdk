@@ -51,7 +51,10 @@ public class NotificationSubscriberNormalizer implements NormalizerInterface<Not
     public NotificationSubscriber mapToEntity(JSONObject data) throws NormalizerException {
         NotificationSubscriber notificationSubscriber = new NotificationSubscriber();
 
-        notificationSubscriber.setId(data.getInt("id"));
+        if (data.has("id")) {
+            notificationSubscriber.setId(data.getInt("id"));
+        }
+
         notificationSubscriber.setStatus(data.getString("status"));
         notificationSubscriber.setPrivacyLevel(data.getString("privacy_level"));
 

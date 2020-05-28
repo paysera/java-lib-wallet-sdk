@@ -1,9 +1,6 @@
 import bolts.Continuation;
 import bolts.Task;
-import com.paysera.sdk.wallet.ClientServerTimeSynchronizationConfiguration;
-import com.paysera.sdk.wallet.NonceGenerator;
-import com.paysera.sdk.wallet.RequestSigner;
-import com.paysera.sdk.wallet.Router;
+import com.paysera.sdk.wallet.*;
 import com.paysera.sdk.wallet.clients.PublicWalletApiClient;
 import com.paysera.sdk.wallet.clients.WalletApiClient;
 import com.paysera.sdk.wallet.clients.WalletAsyncClient;
@@ -45,7 +42,7 @@ public class GetWalletBalance {
         httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
         OkHTTPQueryStringConverter okHTTPQueryStringConverter = new OkHTTPQueryStringConverter();
-        RequestSigner requestSigner = new RequestSigner(new NonceGenerator(), okHTTPQueryStringConverter);
+        RequestSigner requestSigner = new RequestSigner(new NonceGenerator(), new MacDigestGenerator(), okHTTPQueryStringConverter);
         RetrofitFactory retrofitFactory = new RetrofitFactory(new Router());
 
         HttpClientFactory httpClientFactory =

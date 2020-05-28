@@ -312,6 +312,8 @@ public interface WalletApiClient {
 
     @GET("transactions")
     Call<MetadataAwareResponse<Transaction>> getTransactions(
+        @Query("project_id") Integer projectId,
+        @Query("location_id") Integer locationId,
         @Query("status") String status,
         @Query("limit") Integer limit,
         @Query("offset") Integer offset,

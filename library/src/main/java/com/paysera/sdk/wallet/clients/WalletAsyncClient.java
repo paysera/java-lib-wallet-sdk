@@ -525,6 +525,8 @@ public class WalletAsyncClient extends BaseAsyncClient {
         TransactionFilter transactionFilter
     ) {
         return this.execute(this.walletApiClient.getTransactions(
+            transactionFilter.getProjectId(),
+            transactionFilter.getLocationId(),
             transactionFilter.getStatus(),
             transactionFilter.getLimit(),
             transactionFilter.getOffset(),

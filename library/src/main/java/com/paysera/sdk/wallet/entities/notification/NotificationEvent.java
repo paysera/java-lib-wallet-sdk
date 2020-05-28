@@ -12,6 +12,7 @@ public class NotificationEvent {
     public static final String OBJECT_NAME_PENDING_PAYMENT = "pending_payment";
     public static final String OBJECT_NAME_TRANSACTION_REQUEST = "transaction_request";
     public static final String OBJECT_NAME_INFORMATION = "information";
+    public static final String OBJECT_NAME_CONFIRMATION = "confirmation";
 
     public static final String EVENT_NAME_REGISTERED = "registered";
     public static final String EVENT_NAME_CREATED = "created";
