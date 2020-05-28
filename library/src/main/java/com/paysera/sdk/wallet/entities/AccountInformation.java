@@ -29,6 +29,7 @@ public class AccountInformation {
     private AccountFlags flags;
     private String status;
     private String description;
+    private String ownerCode;
 
     public String getDescription() {
         return description;
@@ -109,4 +110,6 @@ public class AccountInformation {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public String getOwnerCode() { return ownerCode; }
 }
