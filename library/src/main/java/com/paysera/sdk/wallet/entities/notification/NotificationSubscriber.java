@@ -90,12 +90,73 @@ public class NotificationSubscriber {
     @Override
     public boolean equals(Object object) {
         return
-               object instanceof NotificationSubscriber
+                object instanceof NotificationSubscriber
             && this.getPrivacyLevel().equals(((NotificationSubscriber) object).getPrivacyLevel())
             && this.getLocale().equals(((NotificationSubscriber) object).getLocale())
             && this.getRecipient().equals(((NotificationSubscriber) object).getRecipient())
             && this.getEvents().containsAll(((NotificationSubscriber) object).getEvents())
             && ((NotificationSubscriber) object).getEvents().containsAll(this.getEvents())
         ;
+    }
+
+    public NotificationEvent getGeneralNotificationEvent() {
+        for (NotificationEvent event : events) {
+            if (
+                   event.eventName.equals(NotificationEvent.EVENT_NAME_ALERT)
+                && event.objectName.equals(NotificationEvent.OBJECT_NAME_INFORMATION)
+            ) {
+                return event;
+            }
+        }
+        return null;
+    }
+
+    public NotificationEvent getTransactionRequestEvent() {
+        for (NotificationEvent event : events) {
+            if (
+                   event.eventName.equals(NotificationEvent.EVENT_NAME_CREATED)
+                && event.objectName.equals(NotificationEvent.OBJECT_NAME_TRANSACTION_REQUEST)
+            ) {
+                return event;
+            }
+        }
+        return null;
+    }
+
+    public NotificationEvent getConfirmationEvent() {
+        for (NotificationEvent event : events) {
+            if (
+                   event.eventName.equals(NotificationEvent.EVENT_NAME_CREATED)
+                && event.objectName.equals(NotificationEvent.OBJECT_NAME_CONFIRMATION)
+            ) {
+                return event;
+            }
+        }
+        return null;
+    }
+
+    public NotificationEvent getUserSignUpEvent() {
+        for (NotificationEvent event : events) {
+            if (
+                   event.eventName.equals(NotificationEvent.EVENT_NAME_REGISTERED)
+                && event.objectName.equals(NotificationEvent.OBJECT_NAME_USER)
+            ) {
+                return event;
+            }
+        }
+        return null;
+    }
+
+    public List<NotificationEvent> getWalletEvents() {
+        List<NotificationEvent> walletEvents = new ArrayList<>();
+        for (NotificationEvent event : events) {
+            if (
+                   event.objectName.equals(NotificationEvent.OBJECT_NAME_PENDING_PAYMENT)
+                || event.objectName.equals(NotificationEvent.OBJECT_NAME_STATEMENT)
+            ) {
+                walletEvents.add(event);
+            }
+        }
+        return walletEvents;
     }
 }

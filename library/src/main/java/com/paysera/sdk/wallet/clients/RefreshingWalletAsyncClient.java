@@ -9,6 +9,7 @@ import com.paysera.sdk.wallet.OkHttpRequestWalletApiCall;
 import com.paysera.sdk.wallet.RetrofitWalletApiCall;
 import com.paysera.sdk.wallet.WalletApiCall;
 import com.paysera.sdk.wallet.entities.Credentials;
+import com.paysera.sdk.wallet.enums.GrantType;
 import com.paysera.sdk.wallet.exceptions.WalletApiException;
 import com.paysera.sdk.wallet.helpers.OkHTTPQueryStringConverter;
 import com.paysera.sdk.wallet.providers.TimestampProvider;
@@ -23,6 +24,7 @@ import retrofit2.Retrofit;
 public class RefreshingWalletAsyncClient extends WalletAsyncClient {
     private final AccessTokenRefresher accessTokenRefresher;
     private Queue<WalletApiCall> callQueue = new LinkedList<>();
+    private GrantType grantType;
 
     public RefreshingWalletAsyncClient(
         TimestampProvider timestampProvider,
@@ -31,7 +33,8 @@ public class RefreshingWalletAsyncClient extends WalletAsyncClient {
         WalletApiClient walletApiClient,
         AccessTokenRefresher accessTokenRefresher,
         Retrofit retrofit,
-        OkHTTPQueryStringConverter okHTTPQueryStringConverter
+        OkHTTPQueryStringConverter okHTTPQueryStringConverter,
+        GrantType grantType
     ) {
         super(
             timestampProvider,
@@ -42,6 +45,7 @@ public class RefreshingWalletAsyncClient extends WalletAsyncClient {
             okHTTPQueryStringConverter
         );
         this.accessTokenRefresher = accessTokenRefresher;
+        this.grantType = grantType;
     }
 
     @Override
@@ -108,10 +112,7 @@ public class RefreshingWalletAsyncClient extends WalletAsyncClient {
 
                     WalletApiException walletApiException = (WalletApiException) task.getError();
 
-                    if (
-                           walletApiException.isAccessTokenExpiredError()
-                        && accessTokenRefresher != null
-                        ) {
+                    if (walletApiException.isTokenExpired() && accessTokenRefresher != null) {
                         synchronized (accessTokenRefresher) {
                             if (accessTokenRefresher.hasAccessTokenBeenRecentlyRefreshed()) {
                                 performWalletApiCall(walletApiCall);
@@ -130,11 +131,11 @@ public class RefreshingWalletAsyncClient extends WalletAsyncClient {
     }
 
     public Task<Credentials> refreshAccessToken() {
-        return this.refreshAccessToken(null, null);
+        return this.refreshAccessToken(grantType, null, null);
     }
     
-    public Task<Credentials> refreshAccessToken(List<String> scopes, String code) {
-        return this.accessTokenRefresher.refreshAccessToken(scopes, code)
+    public Task<Credentials> refreshAccessToken(GrantType grantType, List<String> scopes, String code) {
+        return this.accessTokenRefresher.refreshAccessToken(grantType, scopes, code)
             .continueWithTask(new Continuation<Credentials, Task<Credentials>>() {
                 @Override public Task<Credentials> then(Task<Credentials> task) throws Exception {
                     if (task.isFaulted()) {

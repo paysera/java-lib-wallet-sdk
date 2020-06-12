@@ -3,6 +3,7 @@ package com.paysera.sdk.wallet.clients;
 import bolts.Task;
 import com.paysera.sdk.wallet.ClientServerTimeSynchronizationConfiguration;
 import com.paysera.sdk.wallet.entities.Credentials;
+import com.paysera.sdk.wallet.enums.GrantType;
 import com.paysera.sdk.wallet.helpers.StringHelper;
 import com.paysera.sdk.wallet.helpers.OkHTTPQueryStringConverter;
 import com.paysera.sdk.wallet.providers.TimestampProvider;
@@ -30,15 +31,19 @@ public class OAuthAsyncClient extends BaseAsyncClient {
         this.oAuthClient = oAuthClient;
     }
 
-    public Task<Credentials> refreshToken(String refreshToken, List<String> scope, String code) {
+    public Task<Credentials> refreshToken(String refreshToken, GrantType grantType, List<String> scope, String code) {
 
-        return this.execute(this.oAuthClient.refreshToken("refresh_token", refreshToken,
+        return this.execute(this.oAuthClient.refreshToken(grantType.toString(), refreshToken,
             StringHelper.listToString(scope, " "), code));
     }
 
     public Task<Credentials> refreshToken(String refreshToken) {
         return this.execute(
             this.oAuthClient.refreshToken("refresh_token", refreshToken, null, null));
+    }
+
+    public Task<Credentials> activate(String accessToken) {
+        return this.execute(this.oAuthClient.activate(accessToken));
     }
 
     public Task<Credentials> exchangeCredentialsForAccessToken(String username, String password,
