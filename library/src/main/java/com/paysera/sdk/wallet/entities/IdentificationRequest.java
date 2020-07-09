@@ -14,18 +14,18 @@ public class IdentificationRequest {
     public static final String STATUS_PROCESSING = "processing";
     public static final String STATUS_REVIEWED = "reviewed";
 
-    private Integer id;
+    private Long id;
     private Integer userId;
     private String status;
     private FaceDocument facePhotoDocument;
     @SerializedName("identity_documents")
     private List<IdentityDocument> identityDocumentList = new ArrayList<>();
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
