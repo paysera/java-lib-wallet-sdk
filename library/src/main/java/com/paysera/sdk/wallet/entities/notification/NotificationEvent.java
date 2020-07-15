@@ -56,16 +56,12 @@ public class NotificationEvent {
         String objectName,
         String eventName,
         String androidChannel,
-        String priority,
-        Map<String, Object> parameters,
-        boolean silent
+        String priority
     ) {
         this.objectName = objectName;
         this.eventName = eventName;
-        this.parameters = parameters;
         this.androidChannel = androidChannel;
         this.priority = priority;
-        this.silent = silent;
     }
 
     public String getEventName() {
