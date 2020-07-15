@@ -122,8 +122,6 @@ public class NotificationEvent {
                object instanceof NotificationEvent
             && this.getEventName().equals(((NotificationEvent) object).getEventName())
             && this.getObjectName().equals(((NotificationEvent) object).getObjectName())
-            && this.getAndroidChannel().equals(((NotificationEvent) object).getAndroidChannel())
-            && this.getPriority().equals(((NotificationEvent) object).getPriority())
             && this.isSilent() == ((NotificationEvent) object).isSilent()
             && this.parameters.equals(((NotificationEvent) object).getParameters())
         ;
