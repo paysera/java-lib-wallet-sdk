@@ -20,6 +20,8 @@ public class NotificationEvent {
 
     protected String eventName;
     protected String objectName;
+    protected String androidChannel;
+    protected String priority;
     protected boolean silent = false;
     protected Map<String, Object> parameters = new HashMap<>();
 
@@ -50,6 +52,22 @@ public class NotificationEvent {
         this.silent = silent;
     }
 
+    public NotificationEvent(
+        String objectName,
+        String eventName,
+        String androidChannel,
+        String priority,
+        Map<String, Object> parameters,
+        boolean silent
+    ) {
+        this.objectName = objectName;
+        this.eventName = eventName;
+        this.parameters = parameters;
+        this.androidChannel = androidChannel;
+        this.priority = priority;
+        this.silent = silent;
+    }
+
     public String getEventName() {
         return eventName;
     }
@@ -64,6 +82,22 @@ public class NotificationEvent {
 
     public void setObjectName(String objectName) {
         this.objectName = objectName;
+    }
+
+    public String getAndroidChannel() {
+        return androidChannel;
+    }
+
+    public void setAndroidChannel(String androidChannel) {
+        this.androidChannel = androidChannel;
+    }
+
+    public String getPriority() {
+        return priority;
+    }
+
+    public void setPriority(String priority) {
+        this.priority = priority;
     }
 
     public boolean isSilent() {
@@ -92,6 +126,8 @@ public class NotificationEvent {
                object instanceof NotificationEvent
             && this.getEventName().equals(((NotificationEvent) object).getEventName())
             && this.getObjectName().equals(((NotificationEvent) object).getObjectName())
+            && this.getAndroidChannel().equals(((NotificationEvent) object).getAndroidChannel())
+            && this.getPriority().equals(((NotificationEvent) object).getPriority())
             && this.isSilent() == ((NotificationEvent) object).isSilent()
             && this.parameters.equals(((NotificationEvent) object).getParameters())
         ;
