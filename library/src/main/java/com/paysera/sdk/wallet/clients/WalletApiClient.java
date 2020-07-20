@@ -10,6 +10,8 @@ import com.paysera.sdk.wallet.entities.pos.Spot;
 import com.paysera.sdk.wallet.entities.requests.*;
 import com.paysera.sdk.wallet.entities.transfer.Transfer;
 import com.paysera.sdk.wallet.entities.transfer.TransferPassword;
+import okhttp3.RequestBody;
+import org.json.JSONObject;
 import retrofit2.Call;
 import retrofit2.http.*;
 
@@ -444,4 +446,30 @@ public interface WalletApiClient {
 
     @PUT("spot/{spotId}/check-in")
     Call<Spot> checkIntoSpot(@Path("spotId") Long spotId, @Query("fields") String fields);
+
+    @POST("user/me/identification-request")
+    Call<IdentificationRequest> createIdentificationRequest();
+
+    @POST("identification-request/{identificationRequestId}/identity-document")
+    Call<CreateDocumentIdentificationRequest> createDocumentIdentificationRequest(
+        @Path("identificationRequestId") Long identificationRequestId,
+        @Body JSONObject body
+    );
+
+    @PUT("identification-request/{identificationRequestId}/face-photo/image/{order}")
+    Call<Void> identificationRequestFileUpload(
+        @Path("identificationRequestId") Long identificationRequestId,
+        @Path("order") Integer order,
+        @Body RequestBody body
+    );
+
+    @PUT("identity-document/{identificationDocumentId}/image/{order}")
+    Call<Void> identificationDocumentFileUpload(
+        @Path("identificationDocumentId") Long identificationDocumentId,
+        @Path("order") Integer order,
+        @Body RequestBody body
+    );
+
+    @PUT("identification-request/{identificationRequestId}/submit")
+    Call<Void> submitIdentificationRequest(@Path("identificationRequestId") Long identificationRequestId);
 }

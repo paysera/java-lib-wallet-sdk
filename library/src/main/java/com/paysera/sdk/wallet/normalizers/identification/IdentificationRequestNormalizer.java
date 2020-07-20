@@ -19,7 +19,7 @@ public class IdentificationRequestNormalizer implements DenormalizerInterface<Id
     public IdentificationRequest mapToEntity(JSONObject data) throws NormalizerException {
         IdentificationRequest identificationRequest = new IdentificationRequest();
 
-        identificationRequest.setId(data.getInt("id"));
+        identificationRequest.setId(data.getLong("id"));
 
         identificationRequest.setStatus(data.getString("status"));
 
