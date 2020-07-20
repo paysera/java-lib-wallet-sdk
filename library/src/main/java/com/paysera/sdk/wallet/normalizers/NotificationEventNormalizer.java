@@ -5,7 +5,6 @@ import com.paysera.sdk.wallet.entities.notification.NotificationEvent;
 import com.paysera.sdk.wallet.exceptions.NormalizerException;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -39,6 +38,8 @@ public class NotificationEventNormalizer implements
         data.put("event", entity.getEventName());
         data.put("object", entity.getObjectName());
         data.put("silent", entity.isSilent());
+        data.put("android_channel", entity.getAndroidChannel());
+        data.put("priority", entity.getPriority());
 
         if (entity.getParameters().size() > 0) {
             data.put("parameters", new JSONObject(entity.getParameters()));
@@ -66,6 +67,8 @@ public class NotificationEventNormalizer implements
         }
 
         event.setSilent(data.getBoolean("silent"));
+        event.setAndroidChannel(data.getString("android_channel"));
+        event.setPriority(data.getString("priority"));
 
         if (data.has("parameters")) {
             HashMap<String, Object> parameters = this.jsonSerializer.fromJson(

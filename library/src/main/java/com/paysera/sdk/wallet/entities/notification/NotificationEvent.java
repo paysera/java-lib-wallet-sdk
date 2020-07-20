@@ -20,6 +20,8 @@ public class NotificationEvent {
 
     protected String eventName;
     protected String objectName;
+    protected String androidChannel;
+    protected String priority;
     protected boolean silent = false;
     protected Map<String, Object> parameters = new HashMap<>();
 
@@ -50,6 +52,32 @@ public class NotificationEvent {
         this.silent = silent;
     }
 
+    public NotificationEvent(
+        String objectName,
+        String eventName,
+        String androidChannel,
+        String priority
+    ) {
+        this.objectName = objectName;
+        this.eventName = eventName;
+        this.androidChannel = androidChannel;
+        this.priority = priority;
+    }
+
+    public NotificationEvent(
+        String objectName,
+        String eventName,
+        String androidChannel,
+        String priority,
+        Map<String, Object> parameters
+    ) {
+        this.objectName = objectName;
+        this.eventName = eventName;
+        this.androidChannel = androidChannel;
+        this.priority = priority;
+        this.parameters = parameters;
+    }
+
     public String getEventName() {
         return eventName;
     }
@@ -64,6 +92,22 @@ public class NotificationEvent {
 
     public void setObjectName(String objectName) {
         this.objectName = objectName;
+    }
+
+    public String getAndroidChannel() {
+        return androidChannel;
+    }
+
+    public void setAndroidChannel(String androidChannel) {
+        this.androidChannel = androidChannel;
+    }
+
+    public String getPriority() {
+        return priority;
+    }
+
+    public void setPriority(String priority) {
+        this.priority = priority;
     }
 
     public boolean isSilent() {

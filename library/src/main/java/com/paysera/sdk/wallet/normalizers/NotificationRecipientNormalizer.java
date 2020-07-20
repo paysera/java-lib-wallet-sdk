@@ -46,9 +46,6 @@ public class NotificationRecipientNormalizer implements
             );
             data.put("uri", ((WindowsNotificationRecipient) entity).getUri());
         }
-        if (entity instanceof FirebaseNotificationRecipient) {
-            data.put("android_single_channel", ((FirebaseNotificationRecipient) entity).isAndroidSingleChannel());
-        }
 
         if (entity instanceof IdentifierAware) {
             data.put("identifier", ((IdentifierAware) entity).getIdentifier());
@@ -76,12 +73,6 @@ public class NotificationRecipientNormalizer implements
 
             if (data.has("tile_id")) {
                 ((WindowsNotificationRecipient) notificationRecipient).setTileIdentifier(data.getString("tile_id"));
-            }
-        }
-
-        if (notificationRecipient instanceof FirebaseNotificationRecipient) {
-            if (data.has("android_single_channel")) {
-                ((FirebaseNotificationRecipient) notificationRecipient).setAndroidSingleChannel(data.getBoolean("android_single_channel"));
             }
         }
 
