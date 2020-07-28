@@ -3,6 +3,7 @@ package com.paysera.sdk.wallet.entities.confirmations;
 import com.google.gson.annotations.SerializedName;
 import org.joda.money.Money;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ConfirmationTranslationParameters {
@@ -12,7 +13,7 @@ public class ConfirmationTranslationParameters {
     @SerializedName("%email%")
     private String email;
     @SerializedName("transfers_money_sums")
-    private List<Money> transfersMoneySums;
+    private List<Money> transfersMoneySums = new ArrayList<>();
     @SerializedName("beneficiary_account")
     private String beneficiaryAccount;
     @SerializedName("transfers_count")
