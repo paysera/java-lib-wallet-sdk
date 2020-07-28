@@ -3,7 +3,7 @@ package com.paysera.sdk.wallet.entities.confirmations;
 public class ConfirmationProperties {
     private String translation;
     private String translationSlug;
-    private ConfirmationTranslationParameters translationsParameters;
+    private ConfirmationTranslationParameters translationParameters;
     private String code;
     private String type;
     private Boolean acceptanceRequired;
@@ -24,12 +24,12 @@ public class ConfirmationProperties {
         this.translationSlug = translationSlug;
     }
 
-    public ConfirmationTranslationParameters getTranslationsParameters() {
-        return translationsParameters;
+    public ConfirmationTranslationParameters getTranslationParameters() {
+        return translationParameters;
     }
 
-    public void setTranslationsParameters(ConfirmationTranslationParameters translationsParameters) {
-        this.translationsParameters = translationsParameters;
+    public void setTranslationParameters(ConfirmationTranslationParameters translationsParameters) {
+        this.translationParameters = translationsParameters;
     }
 
     public String getCode() {
