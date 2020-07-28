@@ -1,9 +1,9 @@
 package com.paysera.sdk.wallet.entities.confirmations;
 
 import com.google.gson.annotations.SerializedName;
+import org.joda.money.Money;
 
 import java.util.List;
-import java.util.Map;
 
 public class ConfirmationTranslationParameters {
 
@@ -11,17 +11,8 @@ public class ConfirmationTranslationParameters {
     private String phone;
     @SerializedName("%email%")
     private String email;
-
-    public List<Map<String, String>> getTransfersMoneySums() {
-        return transfersMoneySums;
-    }
-
-    public void setTransfersMoneySums(List<Map<String, String>> transfersMoneySums) {
-        this.transfersMoneySums = transfersMoneySums;
-    }
-
     @SerializedName("transfers_money_sums")
-    private List<Map<String, String>> transfersMoneySums;
+    private List<Money> transfersMoneySums;
     @SerializedName("beneficiary_account")
     private String beneficiaryAccount;
     @SerializedName("transfers_count")
@@ -41,6 +32,14 @@ public class ConfirmationTranslationParameters {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<Money> getTransfersMoneySums() {
+        return transfersMoneySums;
+    }
+
+    public void setTransfersMoneySums(List<Money> transfersMoneySums) {
+        this.transfersMoneySums = transfersMoneySums;
     }
 
     public String getBeneficiaryAccount() {
