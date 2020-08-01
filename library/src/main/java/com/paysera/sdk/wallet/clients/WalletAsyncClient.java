@@ -588,26 +588,26 @@ public class WalletAsyncClient extends BaseAsyncClient {
     }
 
     public Task<Void> identificationRequestFileUpload(
-            Long identificationRequestId,
-            Integer order,
-            RequestBody requestBody
+        Long identificationRequestId,
+        Integer order,
+        RequestBody requestBody
     ) {
         return this.execute(this.walletApiClient.identificationRequestFileUpload(
-                identificationRequestId,
-                order,
-                requestBody
+            identificationRequestId,
+            order,
+            requestBody
         ));
     }
 
     public Task<Void> identificationDocumentFileUpload(
-            Long identificationDocumentId,
-            Integer order,
-            RequestBody requestBody
+        Long identificationDocumentId,
+        Integer order,
+        RequestBody requestBody
     ) {
         return this.execute(this.walletApiClient.identificationDocumentFileUpload(
-                identificationDocumentId,
-                order,
-                requestBody
+            identificationDocumentId,
+            order,
+            requestBody
         ));
     }
 
