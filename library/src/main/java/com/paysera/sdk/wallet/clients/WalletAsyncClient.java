@@ -20,6 +20,9 @@ import com.paysera.sdk.wallet.helpers.EnumHelper;
 import com.paysera.sdk.wallet.helpers.OkHTTPQueryStringConverter;
 import com.paysera.sdk.wallet.helpers.StringHelper;
 import com.paysera.sdk.wallet.providers.TimestampProvider;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import org.json.JSONObject;
 import retrofit2.Retrofit;
 
 import java.util.List;
@@ -572,5 +575,43 @@ public class WalletAsyncClient extends BaseAsyncClient {
 
     public Task<Spot> checkIntoSpot(Long spotId, String fields) {
         return this.execute(this.walletApiClient.checkIntoSpot(spotId, fields));
+    }
+
+    public Task<IdentificationRequest> createIdentificationRequest() {
+        return this.execute(this.walletApiClient.createIdentificationRequest());
+    }
+
+    public Task<CreateDocumentIdentificationRequest> createDocumentIdentificationRequest(Long requestId, String type) {
+        JSONObject body = new JSONObject();
+        body.put("type", type);
+        return this.execute(this.walletApiClient.createDocumentIdentificationRequest(requestId, body));
+    }
+
+    public Task<Void> identificationRequestFileUpload(
+        Long identificationRequestId,
+        Integer order,
+        RequestBody requestBody
+    ) {
+        return this.execute(this.walletApiClient.identificationRequestFileUpload(
+            identificationRequestId,
+            order,
+            requestBody
+        ));
+    }
+
+    public Task<Void> identificationDocumentFileUpload(
+        Long identificationDocumentId,
+        Integer order,
+        RequestBody requestBody
+    ) {
+        return this.execute(this.walletApiClient.identificationDocumentFileUpload(
+            identificationDocumentId,
+            order,
+            requestBody
+        ));
+    }
+
+    public Task<Void> submitIdentificationRequest(Long identificationRequestId) {
+        return this.execute(this.walletApiClient.submitIdentificationRequest(identificationRequestId));
     }
 }

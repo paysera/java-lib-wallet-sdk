@@ -1,11 +1,9 @@
 package com.paysera.sdk.wallet.entities.confirmations;
 
-import java.util.Map;
-
 public class ConfirmationProperties {
     private String translation;
     private String translationSlug;
-    private Map<String, String> translationsParameters;
+    private ConfirmationTranslationParameters translationParameters;
     private String code;
     private String type;
     private Boolean acceptanceRequired;
@@ -26,12 +24,12 @@ public class ConfirmationProperties {
         this.translationSlug = translationSlug;
     }
 
-    public Map<String, String> getTranslationsParameters() {
-        return translationsParameters;
+    public ConfirmationTranslationParameters getTranslationParameters() {
+        return translationParameters;
     }
 
-    public void setTranslationsParameters(Map<String, String> translationsParameters) {
-        this.translationsParameters = translationsParameters;
+    public void setTranslationParameters(ConfirmationTranslationParameters translationsParameters) {
+        this.translationParameters = translationsParameters;
     }
 
     public String getCode() {
