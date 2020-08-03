@@ -1,6 +1,8 @@
 package com.paysera.sdk.wallet.entities.confirmations;
 
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
+import com.paysera.sdk.wallet.adapters.ListMoneyAdapter;
 import org.joda.money.Money;
 
 import java.util.List;
@@ -12,6 +14,7 @@ public class ConfirmationTranslationParameters {
     @SerializedName("%email%")
     private String email;
     @SerializedName("transfers_money_sums")
+    @JsonAdapter(ListMoneyAdapter.class)
     private List<Money> transfersMoneySums;
     @SerializedName("beneficiary_account")
     private String beneficiaryAccount;

@@ -1,11 +1,8 @@
 package com.paysera.sdk.wallet.entities.confirmations;
 
-import com.google.gson.annotations.SerializedName;
-
 public class ConfirmationProperties {
     private String translation;
     private String translationSlug;
-    @SerializedName("translation_parameters")
     private ConfirmationTranslationParameters translationParameters;
     private String code;
     private String type;
