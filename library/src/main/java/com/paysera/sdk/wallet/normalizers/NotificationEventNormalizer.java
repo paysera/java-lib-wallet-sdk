@@ -67,10 +67,10 @@ public class NotificationEventNormalizer implements
         }
 
         event.setSilent(data.getBoolean("silent"));
-        if (data.get("android_channel") != null) {
+        if (!data.isNull("android_channel")) {
             event.setAndroidChannel(data.getString("android_channel"));
         }
-        if (data.get("priority") != null) {
+        if (!data.isNull("priority")) {
             event.setPriority(data.getString("priority"));
         }
 
