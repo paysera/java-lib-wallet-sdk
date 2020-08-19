@@ -67,8 +67,12 @@ public class NotificationEventNormalizer implements
         }
 
         event.setSilent(data.getBoolean("silent"));
-        event.setAndroidChannel(data.getString("android_channel"));
-        event.setPriority(data.getString("priority"));
+        if (!data.isNull("android_channel")) {
+            event.setAndroidChannel(data.getString("android_channel"));
+        }
+        if (!data.isNull("priority")) {
+            event.setPriority(data.getString("priority"));
+        }
 
         if (data.has("parameters")) {
             HashMap<String, Object> parameters = this.jsonSerializer.fromJson(
