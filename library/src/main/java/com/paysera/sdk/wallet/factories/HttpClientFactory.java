@@ -9,26 +9,25 @@ import okio.Buffer;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Logger;
 
 public class HttpClientFactory {
     private TimestampProvider timestampProvider;
     private RequestSigner requestSigner;
     private Logger logger;
-    private final List<String> hostnames = Arrays.asList("wallet-api.paysera.com", "wallet.paysera.com");
+    private List<String> certifiedHosts;
 
     public HttpClientFactory(
         RequestSigner requestSigner,
         Logger logger,
-        TimestampProvider timestampProvider
+        TimestampProvider timestampProvider,
+        List<String> certifiedHosts
     ) {
         this.requestSigner = requestSigner;
         this.logger = logger;
         this.timestampProvider = timestampProvider;
+        this.certifiedHosts = certifiedHosts;
     }
 
     public OkHttpClient createHttpClient(
@@ -47,16 +46,19 @@ public class HttpClientFactory {
         final String userAgent,
         final Map<String, String> parameters
     ) {
-        CertificatePinner.Builder certificatePinnerBuilder = new CertificatePinner.Builder();
-        for (String hostname : hostnames) {
-            certificatePinnerBuilder
-                .add(hostname, "sha256/K8WscGYwD51wz79WudzZPDSXFRYrKM+e78Y5YQZJG3k=")
-                .add(hostname, "sha256/9ay/M3fmRBbc/7R5Nqts0SuDQK8KjAHUSZlLCxEPsH0=")
-            ;
+        final OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+
+        if (!certifiedHosts.isEmpty()) {
+            CertificatePinner.Builder certificatePinnerBuilder = new CertificatePinner.Builder();
+            for (String hostname : certifiedHosts) {
+                certificatePinnerBuilder
+                    .add(hostname, "sha256/K8WscGYwD51wz79WudzZPDSXFRYrKM+e78Y5YQZJG3k=")
+                    .add(hostname, "sha256/9ay/M3fmRBbc/7R5Nqts0SuDQK8KjAHUSZlLCxEPsH0=")
+                ;
+            }
+            httpClient.certificatePinner(certificatePinnerBuilder.build());
         }
 
-        final OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-        httpClient.certificatePinner(certificatePinnerBuilder.build());
         httpClient.retryOnConnectionFailure(false);
         httpClient.addInterceptor(new Interceptor() {
             @Override

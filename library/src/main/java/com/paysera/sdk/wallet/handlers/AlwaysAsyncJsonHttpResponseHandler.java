@@ -10,6 +10,8 @@ import java.util.concurrent.Executor;
 public class AlwaysAsyncJsonHttpResponseHandler {
     private Executor executor = Task.UI_THREAD_EXECUTOR;
 
+    public AlwaysAsyncJsonHttpResponseHandler() { }
+
     public AlwaysAsyncJsonHttpResponseHandler(Executor executor) {
         this.executor = executor;
     }
