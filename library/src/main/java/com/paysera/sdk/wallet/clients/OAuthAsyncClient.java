@@ -2,6 +2,7 @@ package com.paysera.sdk.wallet.clients;
 
 import bolts.Task;
 import com.paysera.sdk.wallet.ClientServerTimeSynchronizationConfiguration;
+import com.paysera.sdk.wallet.base.BaseAsyncClient;
 import com.paysera.sdk.wallet.entities.Credentials;
 import com.paysera.sdk.wallet.enums.GrantType;
 import com.paysera.sdk.wallet.helpers.StringHelper;

@@ -1,10 +1,11 @@
-package com.paysera.sdk.wallet.clients;
+package com.paysera.sdk.wallet.base;
 
 import bolts.Continuation;
 import bolts.Task;
 import bolts.TaskCompletionSource;
 import com.paysera.sdk.wallet.ClientServerTimeSynchronizationConfiguration;
 import com.paysera.sdk.wallet.WalletApiResponse;
+import com.paysera.sdk.wallet.clients.PublicWalletApiClient;
 import com.paysera.sdk.wallet.entities.ServerInformation;
 import com.paysera.sdk.wallet.entities.WalletApiErrorProperty;
 import com.paysera.sdk.wallet.exceptions.WalletApiException;
