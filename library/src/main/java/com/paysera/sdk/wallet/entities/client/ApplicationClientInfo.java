@@ -24,6 +24,7 @@ public class ApplicationClientInfo {
     private String androidGfsid;
     private String androidPhoneFingerprint;
     private String webviewUserAgent;
+    private String deviceHash;
 
     public String getTitle() {
         return title;
@@ -175,5 +176,13 @@ public class ApplicationClientInfo {
 
     public void setWebviewUserAgent(String webviewUserAgent) {
         this.webviewUserAgent = webviewUserAgent;
+    }
+
+    public String getDeviceHash() {
+        return deviceHash;
+    }
+
+    public void setDeviceHash(String deviceHash) {
+        this.deviceHash = deviceHash;
     }
 }
