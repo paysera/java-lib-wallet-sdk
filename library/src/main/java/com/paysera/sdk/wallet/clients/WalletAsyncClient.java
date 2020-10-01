@@ -2,13 +2,16 @@ package com.paysera.sdk.wallet.clients;
 
 import bolts.Continuation;
 import bolts.Task;
+import com.google.gson.JsonObject;
 import com.paysera.sdk.wallet.ClientServerTimeSynchronizationConfiguration;
 import com.paysera.sdk.wallet.entities.*;
 import com.paysera.sdk.wallet.entities.card.Card;
 import com.paysera.sdk.wallet.entities.client.Client;
 import com.paysera.sdk.wallet.entities.confirmations.Confirmation;
+import com.paysera.sdk.wallet.entities.currencyConversion.Generator;
 import com.paysera.sdk.wallet.entities.locations.Location;
 import com.paysera.sdk.wallet.entities.locations.LocationCategory;
+import com.paysera.sdk.wallet.entities.notification.NotificationSubscriber;
 import com.paysera.sdk.wallet.entities.pos.Spot;
 import com.paysera.sdk.wallet.entities.requests.*;
 import com.paysera.sdk.wallet.entities.transfer.Transfer;
@@ -60,9 +63,8 @@ public class WalletAsyncClient extends BaseAsyncClient {
 
     public Task<CurrencyConversionCalculation> calculateCurrencyConversion(CurrencyConversionCalculation request) {
         return this.execute(this.walletApiClient.calculateCurrencyConversion(
-            request.getFromAmount(),
+            request.getFromAmountDecimal(),
             request.getFromCurrency(),
-            request.getToAmount(),
             request.getToCurrency(),
             request.getAccountNumber()
         ));
@@ -250,10 +252,16 @@ public class WalletAsyncClient extends BaseAsyncClient {
         return this.execute(this.walletApiClient.getCurrencies());
     }
 
-    public Task<Void> setUserAvatar(Integer userId, byte[] bytes) {
+    public Task<Void> setUserAvatar(Integer userId, RequestBody requestBody) {
         return this.execute(this.walletApiClient.setUserAvatar(
-            userId,
-            bytes
+                userId,
+                requestBody
+        ));
+    }
+
+    public Task<Void> setUserAvatar(RequestBody requestBody) {
+        return this.execute(this.walletApiClient.setUserAvatar(
+                requestBody
         ));
     }
 
@@ -613,5 +621,21 @@ public class WalletAsyncClient extends BaseAsyncClient {
 
     public Task<Void> submitIdentificationRequest(Long identificationRequestId) {
         return this.execute(this.walletApiClient.submitIdentificationRequest(identificationRequestId));
+    }
+
+    public Task<Generator> getGenerator(Integer generatorId) {
+        return this.execute(this.walletApiClient.getGenerator(generatorId));
+    }
+
+    public Task<Generator> createGenerator(JsonObject jsonObject) {
+        return this.execute(this.walletApiClient.createGenerator(jsonObject));
+    }
+
+    public Task<NotificationSubscriber> notificationsSubscribe(NotificationSubscriber notificationSubscriber) {
+        return this.execute(this.walletApiClient.notificationsSubscribe(notificationSubscriber));
+    }
+
+    public Task<NotificationSubscriber> notificationModify(Integer subscriberId, NotificationSubscriber notificationSubscriber) {
+        return this.execute(this.walletApiClient.notificationModify(subscriberId, notificationSubscriber));
     }
 }

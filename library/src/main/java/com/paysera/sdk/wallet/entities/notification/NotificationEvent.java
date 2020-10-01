@@ -1,5 +1,7 @@
 package com.paysera.sdk.wallet.entities.notification;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,7 +20,9 @@ public class NotificationEvent {
     public static final String EVENT_NAME_CREATED = "created";
     public static final String EVENT_NAME_ALERT = "alert";
 
+    @SerializedName("event")
     protected String eventName;
+    @SerializedName("object")
     protected String objectName;
     protected String androidChannel;
     protected String priority;

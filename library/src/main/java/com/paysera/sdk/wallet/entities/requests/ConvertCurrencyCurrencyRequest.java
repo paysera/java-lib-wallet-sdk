@@ -1,21 +1,13 @@
 package com.paysera.sdk.wallet.entities.requests;
 
 public class ConvertCurrencyCurrencyRequest {
-    private Integer fromAmount;
+    private String fromAmountDecimal;
     private String fromCurrency;
-    private Integer toAmount;
+    private String toAmountDecimal;
     private String toCurrency;
     private String accountNumber;
-    private Integer maxFromAmount;
-    private Integer minToAmount;
-
-    public Integer getFromAmount() {
-        return fromAmount;
-    }
-
-    public void setFromAmount(Integer fromAmount) {
-        this.fromAmount = fromAmount;
-    }
+    private String maxFromAmountDecimal;
+    private String minToAmountDecimal;
 
     public String getFromCurrency() {
         return fromCurrency;
@@ -23,14 +15,6 @@ public class ConvertCurrencyCurrencyRequest {
 
     public void setFromCurrency(String fromCurrency) {
         this.fromCurrency = fromCurrency;
-    }
-
-    public Integer getToAmount() {
-        return toAmount;
-    }
-
-    public void setToAmount(Integer toAmount) {
-        this.toAmount = toAmount;
     }
 
     public String getToCurrency() {
@@ -49,19 +33,35 @@ public class ConvertCurrencyCurrencyRequest {
         this.accountNumber = accountNumber;
     }
 
-    public Integer getMaxFromAmount() {
-        return maxFromAmount;
+    public String getFromAmountDecimal() {
+        return fromAmountDecimal;
     }
 
-    public void setMaxFromAmount(Integer maxFromAmount) {
-        this.maxFromAmount = maxFromAmount;
+    public void setFromAmountDecimal(String fromAmountDecimal) {
+        this.fromAmountDecimal = fromAmountDecimal;
     }
 
-    public Integer getMinToAmount() {
-        return minToAmount;
+    public String getToAmountDecimal() {
+        return toAmountDecimal;
     }
 
-    public void setMinToAmount(Integer minToAmount) {
-        this.minToAmount = minToAmount;
+    public void setToAmountDecimal(String toAmountDecimal) {
+        this.toAmountDecimal = toAmountDecimal;
+    }
+
+    public String getMaxFromAmountDecimal() {
+        return maxFromAmountDecimal;
+    }
+
+    public void setMaxFromAmountDecimal(String maxFromAmountDecimal) {
+        this.maxFromAmountDecimal = maxFromAmountDecimal;
+    }
+
+    public String getMinToAmountDecimal() {
+        return minToAmountDecimal;
+    }
+
+    public void setMinToAmountDecimal(String minToAmountDecimal) {
+        this.minToAmountDecimal = minToAmountDecimal;
     }
 }

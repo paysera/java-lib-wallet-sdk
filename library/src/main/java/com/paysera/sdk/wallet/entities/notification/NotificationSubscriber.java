@@ -19,6 +19,7 @@ public class NotificationSubscriber {
     protected List<NotificationEvent> events = new ArrayList<>();
     protected String locale;
     protected String privacyLevel;
+    protected String type;
 
     public Integer getId() {
         return id;
@@ -75,6 +76,14 @@ public class NotificationSubscriber {
 
     public boolean isHighPrivacyLevel() {
         return this.getPrivacyLevel().equals(PRIVACY_LEVEL_HIGH);
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public boolean hasEvent(NotificationEvent event) {

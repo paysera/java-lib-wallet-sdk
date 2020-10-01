@@ -1,25 +1,20 @@
 package com.paysera.sdk.wallet.entities;
 
-import com.paysera.sdk.wallet.helpers.MoneyHelper;
-import org.joda.money.Money;
-
 public class CurrencyConversionCalculation {
-    private Integer fromAmount;
+    private String fromAmountDecimal;
+    private String fromAmount;
     private String fromCurrency;
-    private Integer toAmount;
+    private String toAmountDecimal;
+    private String toAmount;
     private String toCurrency;
     private String accountNumber;
 
-    public Integer getFromAmount() {
-        return fromAmount;
+    public String getFromAmountDecimal() {
+        return fromAmountDecimal;
     }
 
-    public Money getFromAmountMoney() {
-        return MoneyHelper.createFromCents(fromCurrency, fromAmount);
-    }
-
-    public void setFromAmount(Integer fromAmount) {
-        this.fromAmount = fromAmount;
+    public void setFromAmountDecimal(String fromAmountDecimal) {
+        this.fromAmountDecimal = fromAmountDecimal;
     }
 
     public String getFromCurrency() {
@@ -30,16 +25,12 @@ public class CurrencyConversionCalculation {
         this.fromCurrency = fromCurrency;
     }
 
-    public Integer getToAmount() {
-        return toAmount;
+    public String getToAmountDecimal() {
+        return toAmountDecimal;
     }
 
-    public Money getToAmountMoney() {
-        return MoneyHelper.createFromCents(toCurrency, toAmount);
-    }
-
-    public void setToAmount(Integer toAmount) {
-        this.toAmount = toAmount;
+    public void setToAmountDecimal(String toAmountDecimal) {
+        this.toAmountDecimal = toAmountDecimal;
     }
 
     public String getToCurrency() {
@@ -56,5 +47,21 @@ public class CurrencyConversionCalculation {
 
     public void setAccountNumber(String accountNumber) {
         this.accountNumber = accountNumber;
+    }
+
+    public String getFromAmount() {
+        return fromAmount;
+    }
+
+    public void setFromAmount(String fromAmount) {
+        this.fromAmount = fromAmount;
+    }
+
+    public String getToAmount() {
+        return toAmount;
+    }
+
+    public void setToAmount(String toAmount) {
+        this.toAmount = toAmount;
     }
 }

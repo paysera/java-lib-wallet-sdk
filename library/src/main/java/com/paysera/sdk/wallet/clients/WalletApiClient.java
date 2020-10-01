@@ -1,11 +1,14 @@
 package com.paysera.sdk.wallet.clients;
 
+import com.google.gson.JsonObject;
 import com.paysera.sdk.wallet.entities.*;
 import com.paysera.sdk.wallet.entities.card.Card;
 import com.paysera.sdk.wallet.entities.client.Client;
 import com.paysera.sdk.wallet.entities.confirmations.Confirmation;
+import com.paysera.sdk.wallet.entities.currencyConversion.Generator;
 import com.paysera.sdk.wallet.entities.locations.Location;
 import com.paysera.sdk.wallet.entities.locations.LocationCategory;
+import com.paysera.sdk.wallet.entities.notification.NotificationSubscriber;
 import com.paysera.sdk.wallet.entities.pos.Spot;
 import com.paysera.sdk.wallet.entities.requests.*;
 import com.paysera.sdk.wallet.entities.transfer.Transfer;
@@ -42,9 +45,8 @@ public interface WalletApiClient {
     // Currency Conversion
     @GET("currency-conversion")
     Call<CurrencyConversionCalculation> calculateCurrencyConversion(
-        @Query("from_amount") Integer fromAmount,
+        @Query("from_amount_decimal") String fromAmountDecimal,
         @Query("from_currency") String fromCurrency,
-        @Query("to_amount") Integer toAmount,
         @Query("to_currency") String toCurrency,
         @Query("account_number") String accountNumber
     );
@@ -151,10 +153,10 @@ public interface WalletApiClient {
     );
 
     @PUT("user/{userId}/avatar")
-    Call<Void> setUserAvatar(@Path("userId") Integer userId, @Body byte[] bytes);
+    Call<Void> setUserAvatar(@Path("userId") Integer userId, @Body RequestBody avatar);
 
     @PUT("user/me/avatar")
-    Call<Void> setUserAvatar(@Body byte[] bytes);
+    Call<Void> setUserAvatar(@Body RequestBody avatar);
 
     @DELETE("user/{userId}/avatar")
     Call<Void> deleteUserAvatar(@Path("userId") Integer userId);
@@ -475,4 +477,18 @@ public interface WalletApiClient {
 
     @PUT("identification-request/{identificationRequestId}/submit")
     Call<Void> submitIdentificationRequest(@Path("identificationRequestId") Long identificationRequestId);
+
+    @GET("generator/{id}")
+    Call<Generator> getGenerator(@Path("id") Integer generatorId);
+
+    @POST("generator")
+    Call<Generator> createGenerator(@Body JsonObject body);
+
+    @POST("subscriber")
+    Call<NotificationSubscriber> notificationsSubscribe(@Body NotificationSubscriber notificationSubscriber);
+
+    @PUT("subscriber/{subscriberId}")
+    Call<NotificationSubscriber> notificationModify(
+            @Path("subscriberId") Integer subscriberId,
+            @Body NotificationSubscriber notificationSubscriber);
 }
