@@ -635,7 +635,13 @@ public class WalletAsyncClient extends BaseAsyncClient {
         return this.execute(this.walletApiClient.notificationsSubscribe(notificationSubscriber));
     }
 
-    public Task<NotificationSubscriber> notificationModify(Integer subscriberId, NotificationSubscriber notificationSubscriber) {
-        return this.execute(this.walletApiClient.notificationModify(subscriberId, notificationSubscriber));
+    public Task<NotificationSubscriber> notificationModify(
+            Integer subscriberId,
+            NotificationSubscriber notificationSubscriber
+    ) {
+        return this.execute(this.walletApiClient.notificationModify(
+                subscriberId,
+                notificationSubscriber
+        ));
     }
 }
