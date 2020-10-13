@@ -35,6 +35,12 @@ public class NotificationSubscriberNormalizer implements NormalizerInterface<Not
         }
 
         data.put("status", entity.getStatus());
+        if (entity.getRecipient().getType() == null) {
+            throw new NormalizerException("Recipient type is null");
+        }
+        if (entity.getType() == null) {
+            throw new NormalizerException("Type is null");
+        }
         data.put("type", entity.getRecipient().getType());
         data.put("recipient", this.notificationRecipientNormalizer.mapFromEntity(entity.getRecipient()));
         data.put("events", this.notificationEventNormalizer.mapFromEntity(entity.getEvents()));
@@ -67,7 +73,7 @@ public class NotificationSubscriberNormalizer implements NormalizerInterface<Not
             this.notificationRecipientNormalizer.mapToEntity(data.getJSONObject("recipient"))
         );
         notificationSubscriber.setLocale(data.getString("locale"));
-        notificationSubscriber.setType(notificationSubscriber.getRecipient().getType());
+        notificationSubscriber.setType(data.getString("type"));//notificationSubscriber.getRecipient().getType());
 
         return notificationSubscriber;
     }

@@ -79,6 +79,9 @@ public class NotificationRecipientNormalizer implements
         if (data.has("identifier")) {
             ((IdentifierAware) notificationRecipient).setIdentifier(data.getString("identifier"));
         }
+        if (data.has("type")) {
+            notificationRecipient.setType(data.getString("type"));
+        }
 
         return notificationRecipient;
     }
