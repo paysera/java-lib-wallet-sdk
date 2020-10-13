@@ -1,7 +1,6 @@
 package com.paysera.sdk.wallet.normalizers;
 
 import com.paysera.sdk.wallet.entities.IdentifierAware;
-import com.paysera.sdk.wallet.entities.notification.FirebaseNotificationRecipient;
 import com.paysera.sdk.wallet.entities.notification.NotificationRecipient;
 import com.paysera.sdk.wallet.entities.notification.WindowsNotificationRecipient;
 import com.paysera.sdk.wallet.exceptions.NormalizerException;
