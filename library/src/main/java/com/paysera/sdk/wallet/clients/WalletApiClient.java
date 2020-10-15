@@ -5,7 +5,7 @@ import com.paysera.sdk.wallet.entities.*;
 import com.paysera.sdk.wallet.entities.card.Card;
 import com.paysera.sdk.wallet.entities.client.Client;
 import com.paysera.sdk.wallet.entities.confirmations.Confirmation;
-import com.paysera.sdk.wallet.entities.currencyConversion.Generator;
+import com.paysera.sdk.wallet.entities.generator.Generator;
 import com.paysera.sdk.wallet.entities.locations.Location;
 import com.paysera.sdk.wallet.entities.locations.LocationCategory;
 import com.paysera.sdk.wallet.entities.notification.NotificationSubscriber;
@@ -485,10 +485,10 @@ public interface WalletApiClient {
     Call<Generator> createGenerator(@Body JsonObject body);
 
     @POST("subscriber")
-    Call<NotificationSubscriber> notificationsSubscribe(@Body NotificationSubscriber notificationSubscriber);
+    Call<NotificationSubscriber> createNotificationsSubscriber(@Body NotificationSubscriber notificationSubscriber);
 
     @PUT("subscriber/{subscriberId}")
-    Call<NotificationSubscriber> notificationModify(
+    Call<NotificationSubscriber> editNotificationsSubscriber(
             @Path("subscriberId") Integer subscriberId,
             @Body NotificationSubscriber notificationSubscriber);
 }

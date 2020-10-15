@@ -1,4 +1,4 @@
-package com.paysera.sdk.wallet.entities.currencyConversion;
+package com.paysera.sdk.wallet.entities.generator;
 
 import com.google.gson.annotations.SerializedName;
 

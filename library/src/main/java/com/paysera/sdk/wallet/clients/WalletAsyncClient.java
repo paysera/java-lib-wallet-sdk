@@ -8,7 +8,7 @@ import com.paysera.sdk.wallet.entities.*;
 import com.paysera.sdk.wallet.entities.card.Card;
 import com.paysera.sdk.wallet.entities.client.Client;
 import com.paysera.sdk.wallet.entities.confirmations.Confirmation;
-import com.paysera.sdk.wallet.entities.currencyConversion.Generator;
+import com.paysera.sdk.wallet.entities.generator.Generator;
 import com.paysera.sdk.wallet.entities.locations.Location;
 import com.paysera.sdk.wallet.entities.locations.LocationCategory;
 import com.paysera.sdk.wallet.entities.notification.NotificationSubscriber;
@@ -23,7 +23,6 @@ import com.paysera.sdk.wallet.helpers.EnumHelper;
 import com.paysera.sdk.wallet.helpers.OkHTTPQueryStringConverter;
 import com.paysera.sdk.wallet.helpers.StringHelper;
 import com.paysera.sdk.wallet.providers.TimestampProvider;
-import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import org.json.JSONObject;
 import retrofit2.Retrofit;
@@ -632,14 +631,14 @@ public class WalletAsyncClient extends BaseAsyncClient {
     }
 
     public Task<NotificationSubscriber> notificationsSubscribe(NotificationSubscriber notificationSubscriber) {
-        return this.execute(this.walletApiClient.notificationsSubscribe(notificationSubscriber));
+        return this.execute(this.walletApiClient.createNotificationsSubscriber(notificationSubscriber));
     }
 
     public Task<NotificationSubscriber> notificationModify(
             Integer subscriberId,
             NotificationSubscriber notificationSubscriber
     ) {
-        return this.execute(this.walletApiClient.notificationModify(
+        return this.execute(this.walletApiClient.editNotificationsSubscriber(
                 subscriberId,
                 notificationSubscriber
         ));
