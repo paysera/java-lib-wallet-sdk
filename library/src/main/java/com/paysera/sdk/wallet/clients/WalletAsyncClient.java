@@ -630,11 +630,11 @@ public class WalletAsyncClient extends BaseAsyncClient {
         return this.execute(this.walletApiClient.createGenerator(jsonObject));
     }
 
-    public Task<NotificationSubscriber> notificationsSubscribe(NotificationSubscriber notificationSubscriber) {
+    public Task<NotificationSubscriber> createNotificationsSubscriber(NotificationSubscriber notificationSubscriber) {
         return this.execute(this.walletApiClient.createNotificationsSubscriber(notificationSubscriber));
     }
 
-    public Task<NotificationSubscriber> notificationModify(
+    public Task<NotificationSubscriber> editNotificationsSubscriber(
             Integer subscriberId,
             NotificationSubscriber notificationSubscriber
     ) {
