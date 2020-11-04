@@ -17,7 +17,6 @@ import com.paysera.sdk.wallet.entities.requests.*;
 import com.paysera.sdk.wallet.entities.transfer.Transfer;
 import com.paysera.sdk.wallet.entities.transfer.TransferPassword;
 import com.paysera.sdk.wallet.filters.*;
-import com.paysera.sdk.wallet.filters.ConfirmationFilter;
 import com.paysera.sdk.wallet.helpers.DateHelper;
 import com.paysera.sdk.wallet.helpers.EnumHelper;
 import com.paysera.sdk.wallet.helpers.OkHTTPQueryStringConverter;
@@ -64,6 +63,7 @@ public class WalletAsyncClient extends BaseAsyncClient {
         return this.execute(this.walletApiClient.calculateCurrencyConversion(
             request.getFromAmountDecimal(),
             request.getFromCurrency(),
+            request.getToAmountDecimal(),
             request.getToCurrency(),
             request.getAccountNumber()
         ));

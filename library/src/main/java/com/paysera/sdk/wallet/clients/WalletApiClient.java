@@ -47,6 +47,7 @@ public interface WalletApiClient {
     Call<CurrencyConversionCalculation> calculateCurrencyConversion(
         @Query("from_amount_decimal") String fromAmountDecimal,
         @Query("from_currency") String fromCurrency,
+        @Query("to_amount_decimal") String toAmountDecimal,
         @Query("to_currency") String toCurrency,
         @Query("account_number") String accountNumber
     );
