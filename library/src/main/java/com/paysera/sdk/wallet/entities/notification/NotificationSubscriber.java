@@ -168,4 +168,16 @@ public class NotificationSubscriber {
         }
         return walletEvents;
     }
+
+    public NotificationEvent getCardTransactionSuccessfulEvent() {
+        for (NotificationEvent event : events) {
+            if (
+                    event.eventName.equals(NotificationEvent.EVENT_NAME_TRANSACTION_SUCCESSFUL)
+                && event.objectName.equals(NotificationEvent.OBJECT_NAME_CARD)
+            ) {
+                return event;
+            }
+        }
+        return null;
+    }
 }

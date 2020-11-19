@@ -15,10 +15,12 @@ public class NotificationEvent {
     public static final String OBJECT_NAME_TRANSACTION_REQUEST = "transaction_request";
     public static final String OBJECT_NAME_INFORMATION = "information";
     public static final String OBJECT_NAME_CONFIRMATION = "confirmation";
+    public static final String OBJECT_NAME_CARD = "card";
 
     public static final String EVENT_NAME_REGISTERED = "registered";
     public static final String EVENT_NAME_CREATED = "created";
     public static final String EVENT_NAME_ALERT = "alert";
+    public static final String EVENT_NAME_TRANSACTION_SUCCESSFUL = "transaction_successful";
 
     @SerializedName("event")
     protected String eventName;
