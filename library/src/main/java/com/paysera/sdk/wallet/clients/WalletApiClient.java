@@ -6,6 +6,7 @@ import com.paysera.sdk.wallet.entities.card.Card;
 import com.paysera.sdk.wallet.entities.client.Client;
 import com.paysera.sdk.wallet.entities.confirmations.Confirmation;
 import com.paysera.sdk.wallet.entities.generator.Generator;
+import com.paysera.sdk.wallet.entities.identitydocuments.PSSubmitIdentificationRequestResponse;
 import com.paysera.sdk.wallet.entities.locations.Location;
 import com.paysera.sdk.wallet.entities.locations.LocationCategory;
 import com.paysera.sdk.wallet.entities.notification.NotificationSubscriber;
@@ -477,7 +478,9 @@ public interface WalletApiClient {
     );
 
     @PUT("identification-request/{identificationRequestId}/submit")
-    Call<Void> submitIdentificationRequest(@Path("identificationRequestId") Long identificationRequestId);
+    Call<PSSubmitIdentificationRequestResponse> submitIdentificationRequest(
+        @Path("identificationRequestId") Long identificationRequestId
+    );
 
     @GET("generator/{id}")
     Call<Generator> getGenerator(@Path("id") Integer generatorId);
