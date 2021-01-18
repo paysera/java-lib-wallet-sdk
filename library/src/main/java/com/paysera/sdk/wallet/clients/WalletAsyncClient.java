@@ -9,7 +9,6 @@ import com.paysera.sdk.wallet.entities.card.Card;
 import com.paysera.sdk.wallet.entities.client.Client;
 import com.paysera.sdk.wallet.entities.confirmations.Confirmation;
 import com.paysera.sdk.wallet.entities.generator.Generator;
-import com.paysera.sdk.wallet.entities.identitydocuments.PSSubmitIdentificationRequestResponse;
 import com.paysera.sdk.wallet.entities.locations.Location;
 import com.paysera.sdk.wallet.entities.locations.LocationCategory;
 import com.paysera.sdk.wallet.entities.notification.NotificationSubscriber;
@@ -619,7 +618,7 @@ public class WalletAsyncClient extends BaseAsyncClient {
         ));
     }
 
-    public Task<PSSubmitIdentificationRequestResponse> submitIdentificationRequest(Long identificationRequestId) {
+    public Task<IdentificationRequest> submitIdentificationRequest(Long identificationRequestId) {
         return this.execute(this.walletApiClient.submitIdentificationRequest(identificationRequestId));
     }
 
