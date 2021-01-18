@@ -478,7 +478,7 @@ public interface WalletApiClient {
     );
 
     @PUT("identification-request/{identificationRequestId}/submit")
-    Call<PSSubmitIdentificationRequestResponse> submitIdentificationRequest(
+    Call<IdentificationRequest> submitIdentificationRequest(
         @Path("identificationRequestId") Long identificationRequestId
     );
 
