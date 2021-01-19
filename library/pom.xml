@@ -11,6 +11,17 @@
 
   <version>3.0.4</version>
 
+  <repositories>
+    <repository>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <id>bintray-babylonpartners-maven</id>
+      <name>bintray</name>
+      <url>https://dl.bintray.com/babylonpartners/maven</url>
+    </repository>
+  </repositories>
+
   <properties>
     <com.squareup.retrofit.version>2.0.2</com.squareup.retrofit.version>
     <org.slf4j.version>1.7.21</org.slf4j.version>
@@ -20,6 +31,7 @@
     <com.parse.bolts.version>1.4.0</com.parse.bolts.version>
     <com.squareup.okhttp3.version>3.10.0</com.squareup.okhttp3.version>
     <commons-codec.version>1.10</commons-codec.version>
+    <com.babylon.certificatetransparency.version>0.3.0</com.babylon.certificatetransparency.version>
   </properties>
 
   <dependencies>
@@ -62,6 +74,11 @@
       <groupId>com.squareup.okhttp3</groupId>
       <artifactId>okhttp</artifactId>
       <version>${com.squareup.okhttp3.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.babylon.certificatetransparency</groupId>
+      <artifactId>certificatetransparency</artifactId>
+      <version>${com.babylon.certificatetransparency.version}</version>
     </dependency>
 
 
