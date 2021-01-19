@@ -1,5 +1,6 @@
 package com.paysera.sdk.wallet.factories;
 
+import com.babylon.certificatetransparency.CTInterceptorBuilder;
 import com.paysera.sdk.wallet.RequestSigner;
 import com.paysera.sdk.wallet.entities.Credentials;
 import com.paysera.sdk.wallet.providers.TimestampProvider;
@@ -49,14 +50,11 @@ public class HttpClientFactory {
         final OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 
         if (!certifiedHosts.isEmpty()) {
-            CertificatePinner.Builder certificatePinnerBuilder = new CertificatePinner.Builder();
+            CTInterceptorBuilder builder = new CTInterceptorBuilder();
             for (String hostname : certifiedHosts) {
-                certificatePinnerBuilder
-                    .add(hostname, "sha256/K8WscGYwD51wz79WudzZPDSXFRYrKM+e78Y5YQZJG3k=")
-                    .add(hostname, "sha256/9ay/M3fmRBbc/7R5Nqts0SuDQK8KjAHUSZlLCxEPsH0=")
-                ;
+                builder.includeHost(hostname);
             }
-            httpClient.certificatePinner(certificatePinnerBuilder.build());
+            httpClient.addNetworkInterceptor(builder.build());
         }
 
         httpClient.retryOnConnectionFailure(false);
