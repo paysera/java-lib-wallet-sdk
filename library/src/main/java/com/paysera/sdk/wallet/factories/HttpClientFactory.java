@@ -23,11 +23,13 @@ public class HttpClientFactory {
     public HttpClientFactory(
         RequestSigner requestSigner,
         Logger logger,
+        String locale,
         TimestampProvider timestampProvider,
         List<String> certifiedHosts
     ) {
         this.requestSigner = requestSigner;
         this.logger = logger;
+        this.locale = locale;
         this.timestampProvider = timestampProvider;
         this.certifiedHosts = certifiedHosts;
     }
