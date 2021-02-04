@@ -90,11 +90,15 @@ public class HttpClientFactory {
                         parameters
                     );
 
-                    okhttp3.Request request = original.newBuilder()
-                        .header("Accept-Language", locale)
-                        .header("User-Agent", userAgent)
-                        .header("Authorization", signature)
-                        .build();
+                    Request.Builder builder = original.newBuilder();
+                    if (locale != null) {
+                        builder.header("Accept-Language", locale);
+                    }
+
+                    builder.header("User-Agent", userAgent);
+                    builder.header("Authorization", signature);
+
+                    okhttp3.Request request = builder.build();
 
                     return chain.proceed(request);
                 } catch (Exception exception) {
