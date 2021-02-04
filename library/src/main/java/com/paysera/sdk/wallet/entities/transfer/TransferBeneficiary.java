@@ -9,7 +9,7 @@ public class TransferBeneficiary {
     private TransferBeneficiaryTaxAccount taxAccount;
     private TransferBeneficiaryPayseraAccount payseraAccount;
     private TransferIdentifiers identifiers;
-    private TransferBeneficiaryAddress address;
+    private TransferAddress address;
     private TransferBeneficiaryAdditionalInformation additionalInformation;
 
     public Boolean isBankAccount() {
@@ -96,11 +96,11 @@ public class TransferBeneficiary {
         this.identifiers = identifiers;
     }
 
-    public TransferBeneficiaryAddress getAddress() {
+    public TransferAddress getAddress() {
         return address;
     }
 
-    public void setAddress(TransferBeneficiaryAddress address) {
+    public void setAddress(TransferAddress address) {
         this.address = address;
     }
 

@@ -1,6 +1,6 @@
 package com.paysera.sdk.wallet.entities.transfer;
 
-public class TransferBeneficiaryAddress {
+public class TransferAddress {
     private String addressLine;
     private String countryCode;
 

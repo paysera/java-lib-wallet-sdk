@@ -16,6 +16,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Date;
 
 public class GetWalletBalance {
@@ -46,7 +47,7 @@ public class GetWalletBalance {
         RetrofitFactory retrofitFactory = new RetrofitFactory(new Router());
 
         HttpClientFactory httpClientFactory =
-            new HttpClientFactory(requestSigner, null, timestampProvider);
+            new HttpClientFactory(requestSigner, null, timestampProvider, Arrays.asList("wallet-api.paysera.com", "wallet.paysera.com"));
 
         OkHttpClient okHttpClient = httpClientFactory.createHttpClient(credentials, userAgent);
         okHttpClient = okHttpClient.newBuilder().addInterceptor(httpLoggingInterceptor).build();

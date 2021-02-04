@@ -1,5 +1,7 @@
 package com.paysera.sdk.wallet.entities.notification;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,13 +15,19 @@ public class NotificationEvent {
     public static final String OBJECT_NAME_TRANSACTION_REQUEST = "transaction_request";
     public static final String OBJECT_NAME_INFORMATION = "information";
     public static final String OBJECT_NAME_CONFIRMATION = "confirmation";
+    public static final String OBJECT_NAME_CARD = "card";
 
     public static final String EVENT_NAME_REGISTERED = "registered";
     public static final String EVENT_NAME_CREATED = "created";
     public static final String EVENT_NAME_ALERT = "alert";
+    public static final String EVENT_NAME_TRANSACTION_SUCCESSFUL = "transaction_successful";
 
+    @SerializedName("event")
     protected String eventName;
+    @SerializedName("object")
     protected String objectName;
+    protected String androidChannel;
+    protected String priority;
     protected boolean silent = false;
     protected Map<String, Object> parameters = new HashMap<>();
 
@@ -50,6 +58,32 @@ public class NotificationEvent {
         this.silent = silent;
     }
 
+    public NotificationEvent(
+        String objectName,
+        String eventName,
+        String androidChannel,
+        String priority
+    ) {
+        this.objectName = objectName;
+        this.eventName = eventName;
+        this.androidChannel = androidChannel;
+        this.priority = priority;
+    }
+
+    public NotificationEvent(
+        String objectName,
+        String eventName,
+        String androidChannel,
+        String priority,
+        Map<String, Object> parameters
+    ) {
+        this.objectName = objectName;
+        this.eventName = eventName;
+        this.androidChannel = androidChannel;
+        this.priority = priority;
+        this.parameters = parameters;
+    }
+
     public String getEventName() {
         return eventName;
     }
@@ -64,6 +98,22 @@ public class NotificationEvent {
 
     public void setObjectName(String objectName) {
         this.objectName = objectName;
+    }
+
+    public String getAndroidChannel() {
+        return androidChannel;
+    }
+
+    public void setAndroidChannel(String androidChannel) {
+        this.androidChannel = androidChannel;
+    }
+
+    public String getPriority() {
+        return priority;
+    }
+
+    public void setPriority(String priority) {
+        this.priority = priority;
     }
 
     public boolean isSilent() {

@@ -1,1 +1,5 @@
 target
+.idea
+examples/wallet-sdk-examples.iml
+library/wallet-sdk.iml
+wallet-sdk-parent.iml

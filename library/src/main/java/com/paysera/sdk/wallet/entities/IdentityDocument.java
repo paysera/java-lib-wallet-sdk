@@ -6,6 +6,7 @@ package com.paysera.sdk.wallet.entities;
 public class IdentityDocument {
     private Integer id;
     private String comment;
+    private String reviewStatus;
 
     public Integer getId() {
         return id;
@@ -22,4 +23,8 @@ public class IdentityDocument {
     public void setComment(String comment) {
         this.comment = comment;
     }
+
+    public String getReviewStatus() { return reviewStatus; }
+
+    public void setReviewStatus(String reviewStatus) { this.reviewStatus = reviewStatus; }
 }

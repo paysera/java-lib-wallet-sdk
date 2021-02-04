@@ -1,15 +1,20 @@
 package com.paysera.sdk.wallet.clients;
 
+import com.google.gson.JsonObject;
 import com.paysera.sdk.wallet.entities.*;
 import com.paysera.sdk.wallet.entities.card.Card;
 import com.paysera.sdk.wallet.entities.client.Client;
 import com.paysera.sdk.wallet.entities.confirmations.Confirmation;
+import com.paysera.sdk.wallet.entities.generator.Generator;
 import com.paysera.sdk.wallet.entities.locations.Location;
 import com.paysera.sdk.wallet.entities.locations.LocationCategory;
+import com.paysera.sdk.wallet.entities.notification.NotificationSubscriber;
 import com.paysera.sdk.wallet.entities.pos.Spot;
 import com.paysera.sdk.wallet.entities.requests.*;
 import com.paysera.sdk.wallet.entities.transfer.Transfer;
 import com.paysera.sdk.wallet.entities.transfer.TransferPassword;
+import okhttp3.RequestBody;
+import org.json.JSONObject;
 import retrofit2.Call;
 import retrofit2.http.*;
 
@@ -40,9 +45,9 @@ public interface WalletApiClient {
     // Currency Conversion
     @GET("currency-conversion")
     Call<CurrencyConversionCalculation> calculateCurrencyConversion(
-        @Query("from_amount") Integer fromAmount,
+        @Query("from_amount_decimal") String fromAmountDecimal,
         @Query("from_currency") String fromCurrency,
-        @Query("to_amount") Integer toAmount,
+        @Query("to_amount_decimal") String toAmountDecimal,
         @Query("to_currency") String toCurrency,
         @Query("account_number") String accountNumber
     );
@@ -149,7 +154,10 @@ public interface WalletApiClient {
     );
 
     @PUT("user/{userId}/avatar")
-    Call<Void> setUserAvatar(@Path("userId") Integer userId, @Body byte[] bytes);
+    Call<Void> setUserAvatar(@Path("userId") Integer userId, @Body RequestBody avatar);
+
+    @PUT("user/me/avatar")
+    Call<Void> setUserAvatar(@Body RequestBody avatar);
 
     @DELETE("user/{userId}/avatar")
     Call<Void> deleteUserAvatar(@Path("userId") Integer userId);
@@ -444,4 +452,47 @@ public interface WalletApiClient {
 
     @PUT("spot/{spotId}/check-in")
     Call<Spot> checkIntoSpot(@Path("spotId") Long spotId, @Query("fields") String fields);
+
+    @POST("user/me/identification-request")
+    Call<IdentificationRequest> createIdentificationRequest();
+
+    @POST("identification-request/{identificationRequestId}/identity-document")
+    Call<CreateDocumentIdentificationRequest> createDocumentIdentificationRequest(
+        @Path("identificationRequestId") Long identificationRequestId,
+        @Body JSONObject body
+    );
+
+    @PUT("identification-request/{identificationRequestId}/face-photo/image/{order}")
+    Call<Void> identificationRequestFileUpload(
+        @Path("identificationRequestId") Long identificationRequestId,
+        @Path("order") Integer order,
+        @Body RequestBody body
+    );
+
+    @PUT("identity-document/{identificationDocumentId}/image/{order}")
+    Call<Void> identificationDocumentFileUpload(
+        @Path("identificationDocumentId") Long identificationDocumentId,
+        @Path("order") Integer order,
+        @Body RequestBody body
+    );
+
+    @PUT("identification-request/{identificationRequestId}/submit")
+    Call<IdentificationRequest> submitIdentificationRequest(
+        @Path("identificationRequestId") Long identificationRequestId
+    );
+
+    @GET("generator/{id}")
+    Call<Generator> getGenerator(@Path("id") Integer generatorId);
+
+    @POST("generator")
+    Call<Generator> createGenerator(@Body JsonObject body);
+
+    @POST("subscriber")
+    Call<NotificationSubscriber> createNotificationsSubscriber(@Body NotificationSubscriber notificationSubscriber);
+
+    @PUT("subscriber/{subscriberId}")
+    Call<NotificationSubscriber> editNotificationsSubscriber(
+        @Path("subscriberId") Integer subscriberId,
+        @Body NotificationSubscriber notificationSubscriber
+    );
 }

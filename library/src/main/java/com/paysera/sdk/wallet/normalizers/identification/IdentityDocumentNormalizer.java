@@ -21,6 +21,10 @@ public class IdentityDocumentNormalizer implements DenormalizerInterface<Identit
         if (data.has("comment")) {
             identityDocument.setComment(data.getString("comment"));
         }
+
+        if (data.has("review_status")) {
+            identityDocument.setReviewStatus(data.getString("review_status"));
+        }
         return identityDocument;
     }
 

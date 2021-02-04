@@ -67,6 +67,7 @@ public class NotificationSubscriberNormalizer implements NormalizerInterface<Not
             this.notificationRecipientNormalizer.mapToEntity(data.getJSONObject("recipient"))
         );
         notificationSubscriber.setLocale(data.getString("locale"));
+        notificationSubscriber.setType(data.getString("type"));
 
         return notificationSubscriber;
     }
