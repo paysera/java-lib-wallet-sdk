@@ -98,9 +98,7 @@ public class HttpClientFactory {
                     builder.header("User-Agent", userAgent);
                     builder.header("Authorization", signature);
 
-                    okhttp3.Request request = builder.build();
-
-                    return chain.proceed(request);
+                    return chain.proceed(builder.build());
                 } catch (Exception exception) {
                     if (logger != null) {
                         StringWriter errors = new StringWriter();
