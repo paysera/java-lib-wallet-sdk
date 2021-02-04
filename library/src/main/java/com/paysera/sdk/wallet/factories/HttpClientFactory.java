@@ -17,6 +17,7 @@ public class HttpClientFactory {
     private TimestampProvider timestampProvider;
     private RequestSigner requestSigner;
     private Logger logger;
+    private String locale;
     private List<String> certifiedHosts;
 
     public HttpClientFactory(
@@ -88,6 +89,7 @@ public class HttpClientFactory {
                     );
 
                     okhttp3.Request request = original.newBuilder()
+                        .header("Accept-Language", locale)
                         .header("User-Agent", userAgent)
                         .header("Authorization", signature)
                         .build();
