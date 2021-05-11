@@ -25,6 +25,7 @@ public class ApplicationClientInfo {
     private String androidPhoneFingerprint;
     private String webviewUserAgent;
     private String deviceHash;
+    private String appVersion;
 
     public String getTitle() {
         return title;
@@ -184,5 +185,13 @@ public class ApplicationClientInfo {
 
     public void setDeviceHash(String deviceHash) {
         this.deviceHash = deviceHash;
+    }
+
+    public String getAppVersion() {
+        return appVersion;
+    }
+
+    public void setAppVersion(String appVersion) {
+        this.appVersion = appVersion;
     }
 }
