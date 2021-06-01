@@ -46,12 +46,13 @@ public class AccessTokenRefresher {
     }
 
     public synchronized Task<Credentials> refreshAccessToken(GrantType grantType, final List<String> scopes, final String code) {
-        if (accessTokenRefreshTask != null || tokenRefreshSuspended) {
+        if (accessTokenRefreshTask != null) {
             return accessTokenRefreshTask;
         }
 
         final TaskCompletionSource<Credentials> taskCompletionSource = new TaskCompletionSource<Credentials>();
         final Task<Credentials> accessTokenRefreshTask = taskCompletionSource.getTask();
+
         this.accessTokenRefreshTask = accessTokenRefreshTask;
         tokenRefreshSuspended = true;
 
@@ -145,6 +146,10 @@ public class AccessTokenRefresher {
 
     public boolean willAccessTokenExpireSoon() {
         return activeCredentials.getValidUntil().before(new Date(System.currentTimeMillis() - 30000));
+    }
+
+    public void resetAttemptsCount() {
+        refreshAttempt = 0;
     }
 
     private void handleSuccessfulTokenRefresh(TaskCompletionSource<Credentials> taskCompletionSource, Task<Credentials> task) {
