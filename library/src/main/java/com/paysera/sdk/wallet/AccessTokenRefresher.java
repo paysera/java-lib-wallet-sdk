@@ -10,6 +10,10 @@ import com.paysera.sdk.wallet.exceptions.WalletApiException;
 import com.paysera.sdk.wallet.interfaces.AccessTokenRefresherDelegate;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class AccessTokenRefresher {
     private OAuthAsyncClient oAuthAsyncClient;
@@ -18,6 +22,8 @@ public class AccessTokenRefresher {
     private Credentials inactiveCredentials;
     private Task<Credentials> accessTokenRefreshTask;
     private Date accessTokenRefreshedAt;
+    private int refreshAttempt = 0;
+    private boolean tokenRefreshSuspended = false;
 
     public AccessTokenRefresher(
         OAuthAsyncClient oAuthAsyncClient,
@@ -32,7 +38,7 @@ public class AccessTokenRefresher {
     }
 
     public synchronized boolean isAccessTokenRefreshing() {
-        return accessTokenRefreshTask != null;
+        return accessTokenRefreshTask != null || tokenRefreshSuspended;
     }
 
     public synchronized Task<Credentials> refreshAccessToken() {
@@ -46,7 +52,9 @@ public class AccessTokenRefresher {
 
         final TaskCompletionSource<Credentials> taskCompletionSource = new TaskCompletionSource<Credentials>();
         final Task<Credentials> accessTokenRefreshTask = taskCompletionSource.getTask();
+
         this.accessTokenRefreshTask = accessTokenRefreshTask;
+        tokenRefreshSuspended = true;
 
         switch (grantType) {
             case REFRESH_TOKEN: {
@@ -140,10 +148,15 @@ public class AccessTokenRefresher {
         return activeCredentials.getValidUntil().before(new Date(System.currentTimeMillis() - 30000));
     }
 
+    public void resetAttemptsCount() {
+        refreshAttempt = 0;
+    }
+
     private void handleSuccessfulTokenRefresh(TaskCompletionSource<Credentials> taskCompletionSource, Task<Credentials> task) {
         Credentials renewedCredentials = task.getResult();
         accessTokenRefreshedAt = new Date();
         updateActiveCredentials(renewedCredentials);
+        tokenRefreshSuspended = false;
         taskCompletionSource.setResult(task.getResult());
     }
 
@@ -151,8 +164,12 @@ public class AccessTokenRefresher {
         WalletApiException walletApiException = (WalletApiException) task.getError();
         if (walletApiException.isRefreshTokenExpiredError()) {
             accessTokenRefresherDelegate.onRefreshTokenInvalid();
+            tokenRefreshSuspended = false;
         } else if (walletApiException.getStatusCode() != null && walletApiException.getStatusCode() >= 400 && walletApiException.getStatusCode() < 500) {
             updateInactiveCredentials(null);
+            scheduleRefreshUnblock();
+        } else if (walletApiException.getStatusCode() != null && walletApiException.getStatusCode() >= 500 && walletApiException.getStatusCode() < 600) {
+            scheduleRefreshUnblock();
         }
         taskCompletionSource.setError(task.getError());
     }
@@ -166,5 +183,30 @@ public class AccessTokenRefresher {
     private void updateInactiveCredentials(Credentials credentials) {
         inactiveCredentials = credentials;
         accessTokenRefresherDelegate.inactiveCredentialsDidUpdate(credentials);
+    }
+
+    private void scheduleRefreshUnblock() {
+        if (refreshAttempt + 1 <= 4) {
+            refreshAttempt += 1;
+        }
+
+        Random random = new Random();
+
+        double baseDelay = Math.pow(refreshAttempt, 3);
+        double randomDelay = baseDelay / 2 * random.nextDouble();
+        double finalDelay = baseDelay + randomDelay;
+        long milliseconds = Math.round(finalDelay * 1000);
+
+        ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
+        service.schedule(
+            new Runnable() {
+                @Override
+                public void run() {
+                    tokenRefreshSuspended = false;
+                }
+            },
+            milliseconds,
+            TimeUnit.MILLISECONDS
+        );
     }
 }

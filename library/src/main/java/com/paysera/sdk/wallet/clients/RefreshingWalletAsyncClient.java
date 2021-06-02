@@ -167,6 +167,7 @@ public class RefreshingWalletAsyncClient extends WalletAsyncClient {
     @Override
     public synchronized void cancelCalls() {
         this.cancelCallQueue(new WalletApiException("Call has been canceled"));
+        this.accessTokenRefresher.resetAttemptsCount();
         super.cancelCalls();
     }
 }
