@@ -1,14 +1,18 @@
 package com.paysera.lib.wallet.examples;
 
+import bolts.Continuation;
+import bolts.Task;
 import com.paysera.lib.wallet.*;
 import com.paysera.lib.wallet.clients.PublicWalletApiClient;
 import com.paysera.lib.wallet.clients.WalletApiClient;
 import com.paysera.lib.wallet.clients.WalletAsyncClient;
 import com.paysera.lib.wallet.entities.Credentials;
+import com.paysera.lib.wallet.entities.WalletBalance;
 import com.paysera.lib.wallet.entities.requests.GetWalletBalanceRequest;
 import com.paysera.lib.wallet.factories.HttpClientFactory;
 import com.paysera.lib.wallet.factories.RetrofitFactory;
 import com.paysera.lib.wallet.helpers.OkHTTPQueryStringConverter;
+import com.paysera.lib.wallet.interfaces.TimestampSynchronizedCallback;
 import com.paysera.lib.wallet.providers.TimestampProvider;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -32,7 +36,10 @@ public class GetWalletBalance {
             clientServerTimeSynchronizationConfiguration = new ClientServerTimeSynchronizationConfiguration();
         clientServerTimeSynchronizationConfiguration.setEnabled(true);
         clientServerTimeSynchronizationConfiguration.setTimestampSynchronizedCallback(
-            (serverTime, currentTime) -> {
+            new TimestampSynchronizedCallback() {
+                public void onTimestampUpdated(Date serverTime, Date currentTime) {
+
+                }
             });
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
         httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -69,12 +76,13 @@ public class GetWalletBalance {
             okHTTPQueryStringConverter
         );
 
-        walletClient.getWalletBalance(
-            new GetWalletBalanceRequest(
-                16,
-                "USD",
-                false
-            )
-        ).continueWith(task -> null);
+        walletClient.getWalletBalance(new GetWalletBalanceRequest(16, "USD", false)).continueWith(new Continuation<WalletBalance, Object>() {
+            @Override
+            public Object then(Task<WalletBalance> task) throws Exception {
+                WalletBalance balance = task.getResult();
+
+                return null;
+            }
+        });
     }
 }

@@ -1,5 +1,7 @@
 package com.paysera.lib.wallet.examples;
 
+import bolts.Continuation;
+import bolts.Task;
 import com.paysera.lib.wallet.*;
 import com.paysera.lib.wallet.clients.OAuthAsyncClient;
 import com.paysera.lib.wallet.clients.OAuthClient;
@@ -8,6 +10,7 @@ import com.paysera.lib.wallet.entities.Credentials;
 import com.paysera.lib.wallet.factories.HttpClientFactory;
 import com.paysera.lib.wallet.factories.RetrofitFactory;
 import com.paysera.lib.wallet.helpers.OkHTTPQueryStringConverter;
+import com.paysera.lib.wallet.interfaces.TimestampSynchronizedCallback;
 import com.paysera.lib.wallet.oauth.ScopeBuilder;
 import com.paysera.lib.wallet.providers.TimestampProvider;
 import okhttp3.OkHttpClient;
@@ -18,14 +21,6 @@ import java.util.Arrays;
 import java.util.Date;
 
 public class OAuthTokenWithPassword {
-    //TODO RequestSigner ir viską susijusią info į atskirą lib'ą perkelti
-
-    //TODO Prieš realeasinant versiją sutvarkyti EXAMPLES
-    //// todo: test with kotlin
-    //// todo normalizerius - panaikinant call'ą panaikinti ir normalizer'į
-    //TODO java-lib-mac-auth dar vienas todo: kaip sakėm, kad request-signer iškelti į atskirą lib'ą, tai taip pat galima iškelti retrofit į atskirą lib'ą
-    //TODO java-lib-retrofit-ext
-    //todo: wallet sdk proguard rules
 
     public static void main(String[] args) throws IOException {
         String userAgent = "Java wallet sdk library";
@@ -44,24 +39,23 @@ public class OAuthTokenWithPassword {
             clientServerTimeSynchronizationConfiguration = new ClientServerTimeSynchronizationConfiguration();
         clientServerTimeSynchronizationConfiguration.setEnabled(true);
         clientServerTimeSynchronizationConfiguration.setTimestampSynchronizedCallback(
-            (serverTime, currentTime) -> {
+            new TimestampSynchronizedCallback() {
+                public void onTimestampUpdated(Date serverTime, Date currentTime) {
+
+                }
             });
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
         httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
         OkHTTPQueryStringConverter okHTTPQueryStringConverter = new OkHTTPQueryStringConverter();
-        RequestSigner requestSigner = new RequestSigner(
-            new NonceGenerator(),
-            new MacDigestGenerator(),
-            okHTTPQueryStringConverter
-        );
+        RequestSigner requestSigner = new RequestSigner(new NonceGenerator(), new MacDigestGenerator(), okHTTPQueryStringConverter);
         RetrofitFactory retrofitFactory = new RetrofitFactory(new Router());
 
         HttpClientFactory httpClientFactory =
             new HttpClientFactory(
                 requestSigner,
                 null,
-                "en-uS",
+                "en-us",
                 timestampProvider,
                 Arrays.asList("wallet-api.paysera.com", "wallet.paysera.com")
             );
@@ -84,10 +78,12 @@ public class OAuthTokenWithPassword {
             okHTTPQueryStringConverter
         );
 
-        oAuthAsyncClient.exchangeCredentialsForAccessToken(
-            username,
-            password,
-            ScopeBuilder.builder().all().buildAsList()
-        ).continueWith(task -> null);
+        oAuthAsyncClient.exchangeCredentialsForAccessToken(username, password, ScopeBuilder.builder().all().buildAsList()).continueWith(
+            new Continuation<Credentials, Object>() {
+                @Override
+                public Object then(Task<Credentials> task) throws Exception {
+                    return null;
+                }
+            });
     }
 }
