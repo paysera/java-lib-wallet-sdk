@@ -62,19 +62,16 @@ public class AccessTokenRefresher {
                 if (activeCredentials != null && activeCredentials.getRefreshToken() != null) {
                     this.oAuthAsyncClient
                         .refreshToken(this.activeCredentials.getRefreshToken(), grantType, scopes, code)
-                        .continueWith(new Continuation<Credentials, Void>() {
-                            @Override
-                            public Void then(Task<Credentials> task) throws Exception {
-                                synchronized (AccessTokenRefresher.this) {
-                                    AccessTokenRefresher.this.accessTokenRefreshTask = null;
-                                    if (!task.isFaulted()) {
-                                        handleSuccessfulTokenRefresh(taskCompletionSource, task);
-                                    } else {
-                                        handleRefreshTokenError(taskCompletionSource, task);
-                                    }
+                        .continueWith((Continuation<Credentials, Void>) task -> {
+                            synchronized (AccessTokenRefresher.this) {
+                                AccessTokenRefresher.this.accessTokenRefreshTask = null;
+                                if (!task.isFaulted()) {
+                                    handleSuccessfulTokenRefresh(taskCompletionSource, task);
+                                } else {
+                                    handleRefreshTokenError(taskCompletionSource, task);
                                 }
-                                return null;
                             }
+                            return null;
                         });
                 } else {
                     taskCompletionSource.setError(new WalletApiException("Unknown"));
@@ -85,19 +82,16 @@ public class AccessTokenRefresher {
                 if (inactiveCredentials != null && inactiveCredentials.getAccessToken() != null) {
                     this.oAuthAsyncClient
                         .activate(inactiveCredentials.getAccessToken())
-                        .continueWith(new Continuation<Credentials, Void>() {
-                            @Override
-                            public Void then(Task<Credentials> task) throws Exception {
-                                synchronized (AccessTokenRefresher.this) {
-                                    AccessTokenRefresher.this.accessTokenRefreshTask = null;
-                                    if (!task.isFaulted()) {
-                                        handleSuccessfulTokenRefresh(taskCompletionSource, task);
-                                    } else {
-                                        handleRefreshTokenError(taskCompletionSource, task);
-                                    }
+                        .continueWith((Continuation<Credentials, Void>) task -> {
+                            synchronized (AccessTokenRefresher.this) {
+                                AccessTokenRefresher.this.accessTokenRefreshTask = null;
+                                if (!task.isFaulted()) {
+                                    handleSuccessfulTokenRefresh(taskCompletionSource, task);
+                                } else {
+                                    handleRefreshTokenError(taskCompletionSource, task);
                                 }
-                                return null;
                             }
+                            return null;
                         });
                 } else if (activeCredentials != null && activeCredentials.getRefreshToken() != null) {
                     this.oAuthAsyncClient
@@ -116,19 +110,16 @@ public class AccessTokenRefresher {
                                 }
                                 return null;
                             }
-                        }).continueWith(new Continuation<Credentials, Void>() {
-                        @Override
-                        public Void then(Task<Credentials> task) throws Exception {
-                            synchronized (AccessTokenRefresher.this) {
-                                AccessTokenRefresher.this.accessTokenRefreshTask = null;
-                                if (!task.isFaulted()) {
-                                    handleSuccessfulTokenRefresh(taskCompletionSource, task);
-                                } else {
-                                    handleRefreshTokenError(taskCompletionSource, task);
-                                }
+                        }).continueWith((Continuation<Credentials, Void>) task -> {
+                        synchronized (AccessTokenRefresher.this) {
+                            AccessTokenRefresher.this.accessTokenRefreshTask = null;
+                            if (!task.isFaulted()) {
+                                handleSuccessfulTokenRefresh(taskCompletionSource, task);
+                            } else {
+                                handleRefreshTokenError(taskCompletionSource, task);
                             }
-                            return null;
                         }
+                        return null;
                     });
                 } else {
                     taskCompletionSource.setError(new WalletApiException("Unknown"));
@@ -199,12 +190,8 @@ public class AccessTokenRefresher {
         long milliseconds = Math.round(finalDelay * 1000);
 
         ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
-        service.schedule(
-            new Runnable() {
-                @Override
-                public void run() {
-                    tokenRefreshSuspended = false;
-                }
+        service.schedule(() -> {
+                tokenRefreshSuspended = false;
             },
             milliseconds,
             TimeUnit.MILLISECONDS
