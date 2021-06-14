@@ -1,6 +1,5 @@
 package com.paysera.lib.wallet.clients;
 
-import bolts.Continuation;
 import bolts.Task;
 import bolts.TaskCompletionSource;
 import com.paysera.lib.wallet.ClientServerTimeSynchronizationConfiguration;
@@ -120,40 +119,39 @@ public abstract class BaseAsyncClient {
                             exception.isInvalidTimestampError()
                                 && clientServerTimeSynchronizationConfiguration.isEnabled()
                         ) {
-                            syncTimestamp()
-                                .continueWith(new Continuation<Void, Object>() {
-                                    @Override
-                                    public Object then(Task<Void> task)
-                                        throws Exception {
-                                        if (!task.isFaulted()) {
-                                            performCallWithTaskCompletionSource(
-                                                mainCall.clone(),
-                                                mainTaskCompletionSource
-                                            );
-                                        } else {
-                                            mainTaskCompletionSource.setError(exception);
-                                        }
-                                        return null;
-                                    }
-                                });
+                            syncTimestamp().continueWith(task -> {
+                                if (!task.isFaulted()) {
+                                    performCallWithTaskCompletionSource(
+                                        mainCall.clone(),
+                                        mainTaskCompletionSource
+                                    );
+                                } else {
+                                    mainTaskCompletionSource.setError(exception);
+                                }
+                                return null;
+                            });
                         } else {
                             mainTaskCompletionSource.setError(exception);
                         }
 
                     } catch (JSONException | IOException previousException) {
-                        mainTaskCompletionSource.setError(new WalletApiException(
-                            "An error occurred: " + responseBody,
-                            previousException
-                        ));
+                        mainTaskCompletionSource.setError(
+                            new WalletApiException(
+                                "An error occurred: " + responseBody,
+                                response.code()
+                            )
+                        );
                     }
                 }
             }
 
             public void onFailure(Call<T> call, Throwable throwable) {
-                mainTaskCompletionSource.setError(new WalletApiException(
-                    "An exception occurred",
-                    throwable
-                ));
+                mainTaskCompletionSource.setError(
+                    new WalletApiException(
+                        "An exception occurred",
+                        throwable
+                    )
+                );
             }
         });
     }
@@ -205,8 +203,7 @@ public abstract class BaseAsyncClient {
             }
 
             @Override
-            public void onResponse(final okhttp3.Call mainCall, final okhttp3.Response response)
-                throws IOException {
+            public void onResponse(final okhttp3.Call mainCall, final okhttp3.Response response) throws IOException {
                 synchronized (BaseAsyncClient.this) {
                     okhttpCalls.remove(call);
                 }
@@ -227,59 +224,57 @@ public abstract class BaseAsyncClient {
                     mainTaskCompletionSource.setResult(walletApiResponse);
                 } else {
                     try {
-                        String errorDescription = null;
-                        String errorCode = null;
                         List<WalletApiErrorProperty> errorProperties = null;
+                        WalletApiException walletApiException = null;
 
                         try {
                             if (responseBody != null) {
                                 JSONObject data = new JSONObject(responseBody);
-                                errorDescription = data.optString("error_description");
-                                errorCode = data.getString("error");
+                                String errorDescription = data.optString("error_description");
+                                String errorCode = data.getString("error");
                                 if (data.has("error_properties")) {
                                     errorProperties = getErrorProperties(data.getJSONObject("error_properties"));
                                 }
+
+                                walletApiException = new WalletApiException(
+                                    errorDescription,
+                                    errorCode,
+                                    response.code()
+                                );
                             }
                         } catch (JSONException exception) {
-                            // intentionally
+                            walletApiException = new WalletApiException(
+                                response.message(),
+                                response.code()
+                            );
                         }
 
-                        final WalletApiException exception = new WalletApiException(
-                            errorDescription,
-                            errorCode,
-                            response.code()
-                        );
                         if (errorProperties != null) {
-                            exception.setErrorProperties(errorProperties);
+                            walletApiException.setErrorProperties(errorProperties);
                         }
-                        if (
-                            exception.isInvalidTimestampError()
-                                && clientServerTimeSynchronizationConfiguration.isEnabled()
-                        ) {
-                            syncTimestamp()
-                                .continueWith(new Continuation<Void, Object>() {
-                                    @Override
-                                    public Object then(Task<Void> task)
-                                        throws Exception {
-                                        if (!task.isFaulted()) {
-                                            performCallWithTaskCompletionSource(
-                                                request,
-                                                mainTaskCompletionSource
-                                            );
-                                        } else {
-                                            mainTaskCompletionSource.setError(exception);
-                                        }
-                                        return null;
+                        if (walletApiException.isInvalidTimestampError() && clientServerTimeSynchronizationConfiguration.isEnabled()) {
+                            WalletApiException finalWalletApiException = walletApiException;
+                            syncTimestamp().continueWith(task -> {
+                                    if (!task.isFaulted()) {
+                                        performCallWithTaskCompletionSource(
+                                            request,
+                                            mainTaskCompletionSource
+                                        );
+                                    } else {
+                                        mainTaskCompletionSource.setError(finalWalletApiException);
                                     }
+                                    return null;
                                 });
                         } else {
-                            mainTaskCompletionSource.setError(exception);
+                            mainTaskCompletionSource.setError(walletApiException);
                         }
                     } catch (Exception exception) {
-                        mainTaskCompletionSource.setError(new WalletApiException(
-                            "An error occurred: " + responseBody,
-                            exception
-                        ));
+                        mainTaskCompletionSource.setError(
+                            new WalletApiException(
+                                "An error occurred: " + responseBody,
+                                response.code()
+                            )
+                        );
                     }
                 }
             }

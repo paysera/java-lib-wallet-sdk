@@ -50,6 +50,11 @@ public class WalletApiException extends WalletSdkException {
         super(detailMessage, throwable);
     }
 
+    public WalletApiException(String detailMessage, int statusCode) {
+        super(detailMessage);
+        this.statusCode = statusCode;
+    }
+
     public String getErrorDescription() {
         return errorDescription;
     }
@@ -68,6 +73,10 @@ public class WalletApiException extends WalletSdkException {
 
     public void setErrorProperties(List<WalletApiErrorProperty> errorProperties) {
         this.errorProperties = errorProperties;
+    }
+
+    public Boolean isServerError() {
+        return this.statusCode == 500;
     }
 
     public Boolean isNetworkError() {
