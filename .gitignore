@@ -1,5 +1,7 @@
-target
+.gradle
+/local.properties
 .idea
-examples/wallet-sdk-examples.iml
-library/wallet-sdk.iml
-wallet-sdk-parent.iml
+.DS_Store
+build
+*.iml
+.gradle/

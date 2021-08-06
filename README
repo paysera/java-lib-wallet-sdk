@@ -1,9 +1,0 @@
-Deprecated currencies are not automatically registered to Money library. If you want to use them you must:
-- have joda money version 0.12 at least
-- put this code in your application:
-
-```java
-CurrencyUnit.registerCurrency("BYR", 974, 0, Collections.singletonList("BY"), true);
-CurrencyUnit.registerCurrency("LTL", 440, 2, Collections.singletonList("LT"), true);
-CurrencyUnit.registerCurrency("LVL", 428, 2, Collections.singletonList("LV"), true);
-```
