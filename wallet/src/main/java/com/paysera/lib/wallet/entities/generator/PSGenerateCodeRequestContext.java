@@ -14,6 +14,19 @@ public class PSGenerateCodeRequestContext {
     @SerializedName("beneficiary_iban")
     public String beneficiaryIban;
 
+    public PSGenerateCodeRequestContext(String os, String osVersion) {
+        this.os = os;
+        this.osVersion = osVersion;
+    }
+
+    public PSGenerateCodeRequestContext(String os, String osVersion, String amount, String currency, String beneficiaryIban) {
+        this.os = os;
+        this.osVersion = osVersion;
+        this.amount = amount;
+        this.currency = currency;
+        this.beneficiaryIban = beneficiaryIban;
+    }
+
     public String getOs() {
         return os;
     }

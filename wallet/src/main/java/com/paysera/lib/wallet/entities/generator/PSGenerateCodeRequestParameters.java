@@ -8,6 +8,11 @@ public class PSGenerateCodeRequestParameters {
     @SerializedName("context")
     public PSGenerateCodeRequestContext context;
 
+    public PSGenerateCodeRequestParameters(String action, PSGenerateCodeRequestContext context) {
+        this.action = action;
+        this.context = context;
+    }
+
     public String getAction() {
         return action;
     }
