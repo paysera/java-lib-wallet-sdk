@@ -1,19 +1,26 @@
 package com.paysera.lib.wallet.entities.requests;
 
+import com.google.gson.annotations.SerializedName;
+import com.paysera.lib.wallet.entities.generator.PSGenerateCodeRequestContext;
+
 import java.util.List;
 
 public class GenerateCodeRequest {
 
     private List<String> scopes;
-    private PSGenerateCodeRequestParameters parameters;
+    @SerializedName("action")
+    public String action;
+    @SerializedName("context")
+    public PSGenerateCodeRequestContext context;
 
     public GenerateCodeRequest(List<String> scopes) {
         this.scopes = scopes;
     }
 
-    public GenerateCodeRequest(List<String> scopes, PSGenerateCodeRequestParameters parameters) {
+    public GenerateCodeRequest(List<String> scopes, String action, PSGenerateCodeRequestContext context) {
         this.scopes = scopes;
-        this.parameters = parameters;
+        this.action = action;
+        this.context = context;
     }
 
     public List<String> getScopes() {
@@ -24,11 +31,19 @@ public class GenerateCodeRequest {
         this.scopes = scopes;
     }
 
-    public PSGenerateCodeRequestParameters getParameters() {
-        return parameters;
+    public String getAction() {
+        return action;
     }
 
-    public void setParameters(PSGenerateCodeRequestParameters parameters) {
-        this.parameters = parameters;
+    public void setAction(String action) {
+        this.action = action;
+    }
+
+    public PSGenerateCodeRequestContext getContext() {
+        return context;
+    }
+
+    public void setContext(PSGenerateCodeRequestContext context) {
+        this.context = context;
     }
 }
