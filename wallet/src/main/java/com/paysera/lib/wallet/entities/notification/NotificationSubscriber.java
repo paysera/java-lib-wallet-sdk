@@ -120,11 +120,59 @@ public class NotificationSubscriber {
         return null;
     }
 
-    public NotificationEvent getTransactionRequestEvent() {
+    public NotificationEvent getTransactionRequestCreatedEvent() {
         for (NotificationEvent event : events) {
             if (
                    event.eventName.equals(NotificationEvent.EVENT_NAME_CREATED)
                 && event.objectName.equals(NotificationEvent.OBJECT_NAME_TRANSACTION_REQUEST)
+            ) {
+                return event;
+            }
+        }
+        return null;
+    }
+
+    public NotificationEvent getTransactionRequestCanceledEvent() {
+        for (NotificationEvent event : events) {
+            if (
+                event.eventName.equals(NotificationEvent.EVENT_NAME_CANCELED)
+                    && event.objectName.equals(NotificationEvent.OBJECT_NAME_TRANSACTION_REQUEST)
+            ) {
+                return event;
+            }
+        }
+        return null;
+    }
+
+    public NotificationEvent getTransactionRequestExpiredEvent() {
+        for (NotificationEvent event : events) {
+            if (
+                event.eventName.equals(NotificationEvent.EVENT_NAME_EXPIRED)
+                    && event.objectName.equals(NotificationEvent.OBJECT_NAME_TRANSACTION_REQUEST)
+            ) {
+                return event;
+            }
+        }
+        return null;
+    }
+
+    public NotificationEvent getIdentityDocumentReviewValidRequestEvent() {
+        for (NotificationEvent event : events) {
+            if (
+                event.eventName.equals(NotificationEvent.EVENT_NAME_REVIEW_STATUS_VALID)
+                    && event.objectName.equals(NotificationEvent.OBJECT_NAME_IDENTITY_DOCUMENT)
+            ) {
+                return event;
+            }
+        }
+        return null;
+    }
+
+    public NotificationEvent getIdentityDocumentReviewDeniedRequestEvent() {
+        for (NotificationEvent event : events) {
+            if (
+                event.eventName.equals(NotificationEvent.EVENT_NAME_REVIEW_STATUS_DENIED)
+                    && event.objectName.equals(NotificationEvent.OBJECT_NAME_IDENTITY_DOCUMENT)
             ) {
                 return event;
             }
