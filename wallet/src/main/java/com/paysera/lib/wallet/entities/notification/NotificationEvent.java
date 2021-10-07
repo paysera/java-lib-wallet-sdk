@@ -16,11 +16,16 @@ public class NotificationEvent {
     public static final String OBJECT_NAME_INFORMATION = "information";
     public static final String OBJECT_NAME_CONFIRMATION = "confirmation";
     public static final String OBJECT_NAME_CARD = "card";
+    public static final String OBJECT_NAME_IDENTITY_DOCUMENT = "identity_document";
 
     public static final String EVENT_NAME_REGISTERED = "registered";
     public static final String EVENT_NAME_CREATED = "created";
+    public static final String EVENT_NAME_CANCELED = "canceled";
+    public static final String EVENT_NAME_EXPIRED = "expired";
     public static final String EVENT_NAME_ALERT = "alert";
     public static final String EVENT_NAME_TRANSACTION_SUCCESSFUL = "transaction_successful";
+    public static final String EVENT_NAME_REVIEW_STATUS_VALID = "review_status_valid";
+    public static final String EVENT_NAME_REVIEW_STATUS_DENIED = "review_status_denied";
 
     @SerializedName("event")
     protected String eventName;
