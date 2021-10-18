@@ -20,6 +20,8 @@ public class ConfirmationTranslationParameters {
     private String beneficiaryAccount;
     @SerializedName("transfers_count")
     private Integer transfersCount;
+    @SerializedName("card_last_4_digits")
+    private String cardLastFourDigits;
 
     public String getPhone() {
         return phone;
@@ -59,5 +61,13 @@ public class ConfirmationTranslationParameters {
 
     public void setTransfersCount(Integer transfersCount) {
         this.transfersCount = transfersCount;
+    }
+
+    public String getCardLastFourDigits() {
+        return cardLastFourDigits;
+    }
+
+    public void setCardLastFourDigits(String cardLastFourDigits) {
+        this.cardLastFourDigits = cardLastFourDigits;
     }
 }
