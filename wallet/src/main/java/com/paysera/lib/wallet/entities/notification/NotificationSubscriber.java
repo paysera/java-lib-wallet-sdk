@@ -228,4 +228,28 @@ public class NotificationSubscriber {
         }
         return null;
     }
+
+    public NotificationEvent getRecurrenceTransferDoneEvent() {
+        for (NotificationEvent event : events) {
+            if (
+                    event.eventName.equals(NotificationEvent.EVENT_NAME_DONE)
+                 && event.objectName.equals(NotificationEvent.OBJECT_NAME_RECURRENCE_TRANSFER)
+            ) {
+                return event;
+            }
+        }
+        return null;
+    }
+
+    public NotificationEvent getRecurrenceTransferFailedEvent() {
+        for (NotificationEvent event : events) {
+            if (
+                    event.eventName.equals(NotificationEvent.EVENT_NAME_FAILED)
+                 && event.objectName.equals(NotificationEvent.OBJECT_NAME_RECURRENCE_TRANSFER)
+            ) {
+                return event;
+            }
+        }
+        return null;
+    }
 }
