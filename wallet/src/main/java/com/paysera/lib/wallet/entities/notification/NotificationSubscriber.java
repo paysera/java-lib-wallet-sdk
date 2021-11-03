@@ -232,8 +232,8 @@ public class NotificationSubscriber {
     public NotificationEvent getRecurrenceTransferDoneEvent() {
         for (NotificationEvent event : events) {
             if (
-                    event.eventName.equals(NotificationEvent.EVENT_NAME_DONE)
-                 && event.objectName.equals(NotificationEvent.OBJECT_NAME_RECURRENCE_TRANSFER)
+                event.eventName.equals(NotificationEvent.EVENT_NAME_DONE)
+                && event.objectName.equals(NotificationEvent.OBJECT_NAME_RECURRENCE_TRANSFER)
             ) {
                 return event;
             }
@@ -244,8 +244,8 @@ public class NotificationSubscriber {
     public NotificationEvent getRecurrenceTransferFailedEvent() {
         for (NotificationEvent event : events) {
             if (
-                    event.eventName.equals(NotificationEvent.EVENT_NAME_FAILED)
-                 && event.objectName.equals(NotificationEvent.OBJECT_NAME_RECURRENCE_TRANSFER)
+                event.eventName.equals(NotificationEvent.EVENT_NAME_FAILED)
+                && event.objectName.equals(NotificationEvent.OBJECT_NAME_RECURRENCE_TRANSFER)
             ) {
                 return event;
             }
