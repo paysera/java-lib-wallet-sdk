@@ -4,6 +4,7 @@ public class OtherParty {
     protected String displayName;
     protected Integer walletId;
     protected Integer userId;
+    protected Integer ownerId;
     protected String code;
     protected String accountNumber;
     protected String phone;
@@ -32,6 +33,14 @@ public class OtherParty {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    public Integer getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(Integer ownerId) {
+        this.ownerId = ownerId;
     }
 
     public String getCode() {
