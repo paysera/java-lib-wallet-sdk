@@ -156,35 +156,28 @@ public class NotificationSubscriber {
         return null;
     }
 
-    public NotificationEvent getIdentityDocumentReviewValidRequestEvent() {
-        for (NotificationEvent event : events) {
-            if (
-                event.eventName.equals(NotificationEvent.EVENT_NAME_REVIEW_STATUS_VALID)
-                    && event.objectName.equals(NotificationEvent.OBJECT_NAME_IDENTITY_DOCUMENT)
-            ) {
-                return event;
-            }
-        }
-        return null;
-    }
+    public List<NotificationEvent> getIdentityDocumentEvents() {
+        ArrayList<String> identityDocumentEvents = new ArrayList<>();
+        identityDocumentEvents.add(NotificationEvent.EVENT_NAME_REVIEW_STATUS_VALID);
+        identityDocumentEvents.add(NotificationEvent.EVENT_NAME_REVIEW_STATUS_DENIED);
 
-    public NotificationEvent getIdentityDocumentReviewDeniedRequestEvent() {
+        ArrayList<NotificationEvent> existingEvents = new ArrayList<>();
         for (NotificationEvent event : events) {
             if (
-                event.eventName.equals(NotificationEvent.EVENT_NAME_REVIEW_STATUS_DENIED)
-                    && event.objectName.equals(NotificationEvent.OBJECT_NAME_IDENTITY_DOCUMENT)
+                identityDocumentEvents.contains(event.eventName) &&
+                    event.objectName.equals(NotificationEvent.OBJECT_NAME_IDENTITY_DOCUMENT)
             ) {
-                return event;
+                existingEvents.add(event);
             }
         }
-        return null;
+        return existingEvents;
     }
 
     public NotificationEvent getConfirmationEvent() {
         for (NotificationEvent event : events) {
             if (
-                   event.eventName.equals(NotificationEvent.EVENT_NAME_CREATED)
-                && event.objectName.equals(NotificationEvent.OBJECT_NAME_CONFIRMATION)
+                event.eventName.equals(NotificationEvent.EVENT_NAME_CREATED)
+                    && event.objectName.equals(NotificationEvent.OBJECT_NAME_CONFIRMATION)
             ) {
                 return event;
             }
@@ -195,8 +188,8 @@ public class NotificationSubscriber {
     public NotificationEvent getUserSignUpEvent() {
         for (NotificationEvent event : events) {
             if (
-                   event.eventName.equals(NotificationEvent.EVENT_NAME_REGISTERED)
-                && event.objectName.equals(NotificationEvent.OBJECT_NAME_USER)
+                event.eventName.equals(NotificationEvent.EVENT_NAME_REGISTERED)
+                    && event.objectName.equals(NotificationEvent.OBJECT_NAME_USER)
             ) {
                 return event;
             }
@@ -208,8 +201,8 @@ public class NotificationSubscriber {
         List<NotificationEvent> walletEvents = new ArrayList<>();
         for (NotificationEvent event : events) {
             if (
-                   event.objectName.equals(NotificationEvent.OBJECT_NAME_PENDING_PAYMENT)
-                || event.objectName.equals(NotificationEvent.OBJECT_NAME_STATEMENT)
+                event.objectName.equals(NotificationEvent.OBJECT_NAME_PENDING_PAYMENT)
+                    || event.objectName.equals(NotificationEvent.OBJECT_NAME_STATEMENT)
             ) {
                 walletEvents.add(event);
             }
@@ -220,8 +213,8 @@ public class NotificationSubscriber {
     public NotificationEvent getCardTransactionSuccessfulEvent() {
         for (NotificationEvent event : events) {
             if (
-                    event.eventName.equals(NotificationEvent.EVENT_NAME_TRANSACTION_SUCCESSFUL)
-                && event.objectName.equals(NotificationEvent.OBJECT_NAME_CARD)
+                event.eventName.equals(NotificationEvent.EVENT_NAME_TRANSACTION_SUCCESSFUL)
+                    && event.objectName.equals(NotificationEvent.OBJECT_NAME_CARD)
             ) {
                 return event;
             }
@@ -229,27 +222,39 @@ public class NotificationSubscriber {
         return null;
     }
 
-    public NotificationEvent getRecurrenceTransferDoneEvent() {
+    public List<NotificationEvent> getRecurrenceTransferEvents() {
+        ArrayList<String> recurringPaymentEvents = new ArrayList<>();
+        recurringPaymentEvents.add(NotificationEvent.EVENT_NAME_DONE);
+        recurringPaymentEvents.add(NotificationEvent.EVENT_NAME_FAILED);
+
+        ArrayList<NotificationEvent> existingEvents = new ArrayList<>();
         for (NotificationEvent event : events) {
             if (
-                event.eventName.equals(NotificationEvent.EVENT_NAME_DONE)
-                && event.objectName.equals(NotificationEvent.OBJECT_NAME_RECURRENCE_TRANSFER)
+                recurringPaymentEvents.contains(event.eventName) &&
+                    event.objectName.equals(NotificationEvent.OBJECT_NAME_RECURRENCE_TRANSFER)
             ) {
-                return event;
+                existingEvents.add(event);
             }
         }
-        return null;
+        return existingEvents;
     }
 
-    public NotificationEvent getRecurrenceTransferFailedEvent() {
+    public List<NotificationEvent> getSavingsAccountPaymentEvents() {
+        ArrayList<String> savingsAccountPaymentEvents = new ArrayList<>();
+        savingsAccountPaymentEvents.add(NotificationEvent.EVENT_NAME_FILLED);
+        savingsAccountPaymentEvents.add(NotificationEvent.EVENT_NAME_WITHDREW);
+        savingsAccountPaymentEvents.add(NotificationEvent.EVENT_NAME_FILL_MADE);
+
+        ArrayList<NotificationEvent> existingEvents = new ArrayList<>();
+
         for (NotificationEvent event : events) {
             if (
-                event.eventName.equals(NotificationEvent.EVENT_NAME_FAILED)
-                && event.objectName.equals(NotificationEvent.OBJECT_NAME_RECURRENCE_TRANSFER)
+                savingsAccountPaymentEvents.contains(event.eventName) &&
+                    event.objectName.equals(NotificationEvent.OBJECT_NAME_SAVINGS_ACCOUNT_PAYMENT)
             ) {
-                return event;
+                existingEvents.add(event);
             }
         }
-        return null;
+        return existingEvents;
     }
 }
