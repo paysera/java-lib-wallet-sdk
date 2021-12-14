@@ -18,6 +18,7 @@ public class NotificationEvent {
     public static final String OBJECT_NAME_CARD = "card";
     public static final String OBJECT_NAME_IDENTITY_DOCUMENT = "identity_document";
     public static final String OBJECT_NAME_RECURRENCE_TRANSFER = "recurrence_transfer";
+    public static final String OBJECT_NAME_SAVINGS_ACCOUNT_PAYMENT = "savings_account_payment";
 
     public static final String EVENT_NAME_REGISTERED = "registered";
     public static final String EVENT_NAME_CREATED = "created";
@@ -29,6 +30,9 @@ public class NotificationEvent {
     public static final String EVENT_NAME_TRANSACTION_SUCCESSFUL = "transaction_successful";
     public static final String EVENT_NAME_REVIEW_STATUS_VALID = "review_status_valid";
     public static final String EVENT_NAME_REVIEW_STATUS_DENIED = "review_status_denied";
+    public static final String EVENT_NAME_FILLED = "filled";
+    public static final String EVENT_NAME_WITHDREW = "withdrew";
+    public static final String EVENT_NAME_FILL_MADE = "automated_fill_made";
 
     @SerializedName("event")
     protected String eventName;
