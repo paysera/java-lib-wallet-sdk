@@ -446,4 +446,12 @@ public interface WalletApiClient {
         @Path("subscriberId") Integer subscriberId,
         @Body NotificationSubscriber notificationSubscriber
     );
+
+    @FormUrlEncoded
+    @POST
+    Call<Void> unlockRecaptcha(
+        @Url String unlockUrl,
+        @Field("g-recaptcha-response") String gRecaptchaResponse,
+        @Field("phone") String phone
+    );
 }
