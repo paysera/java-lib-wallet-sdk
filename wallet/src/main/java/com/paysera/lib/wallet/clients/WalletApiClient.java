@@ -451,7 +451,6 @@ public interface WalletApiClient {
     @POST
     Call<Void> unlockRecaptcha(
         @Url String unlockUrl,
-        @Field("g-recaptcha-response") String gRecaptchaResponse,
-        @Field("phone") String phone
+        @Field("g-recaptcha-response") String gRecaptchaResponse
     );
 }
