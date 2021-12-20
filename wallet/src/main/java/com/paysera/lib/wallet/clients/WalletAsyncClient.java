@@ -743,4 +743,13 @@ public class WalletAsyncClient extends BaseAsyncClient {
             )
         );
     }
+
+    public Task<Void> unlockRecaptcha(String unlockUrl, String response) {
+        return this.execute(
+            this.walletApiClient.unlockRecaptcha(
+                unlockUrl,
+                response
+            )
+        );
+    }
 }

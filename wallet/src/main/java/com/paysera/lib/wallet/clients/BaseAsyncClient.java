@@ -4,8 +4,10 @@ import bolts.Task;
 import bolts.TaskCompletionSource;
 import com.paysera.lib.wallet.ClientServerTimeSynchronizationConfiguration;
 import com.paysera.lib.wallet.WalletApiResponse;
+import com.paysera.lib.wallet.entities.RecaptchaHeaders;
 import com.paysera.lib.wallet.entities.ServerInformation;
 import com.paysera.lib.wallet.entities.WalletApiErrorProperty;
+import com.paysera.lib.wallet.enums.RecaptchaHeader;
 import com.paysera.lib.wallet.exceptions.WalletApiException;
 import com.paysera.lib.wallet.helpers.OkHTTPQueryStringConverter;
 import com.paysera.lib.wallet.interfaces.TimestampSynchronizedCallback;
@@ -130,6 +132,14 @@ public abstract class BaseAsyncClient {
                                 }
                                 return null;
                             });
+                        } else if (exception.isRateLimitExceededError()) {
+                            exception.setRecaptchaHeaders(
+                                new RecaptchaHeaders(
+                                    response.headers().get(RecaptchaHeader.SITE_KEY.toString()),
+                                    response.headers().get(RecaptchaHeader.UNLOCK_URL.toString())
+                                )
+                            );
+                            mainTaskCompletionSource.setError(exception);
                         } else {
                             mainTaskCompletionSource.setError(exception);
                         }
@@ -255,16 +265,24 @@ public abstract class BaseAsyncClient {
                         if (walletApiException.isInvalidTimestampError() && clientServerTimeSynchronizationConfiguration.isEnabled()) {
                             WalletApiException finalWalletApiException = walletApiException;
                             syncTimestamp().continueWith(task -> {
-                                    if (!task.isFaulted()) {
-                                        performCallWithTaskCompletionSource(
-                                            request,
-                                            mainTaskCompletionSource
-                                        );
-                                    } else {
-                                        mainTaskCompletionSource.setError(finalWalletApiException);
-                                    }
-                                    return null;
-                                });
+                                if (!task.isFaulted()) {
+                                    performCallWithTaskCompletionSource(
+                                        request,
+                                        mainTaskCompletionSource
+                                    );
+                                } else {
+                                    mainTaskCompletionSource.setError(finalWalletApiException);
+                                }
+                                return null;
+                            });
+                        } else if (walletApiException.isRateLimitExceededError()) {
+                            walletApiException.setRecaptchaHeaders(
+                                new RecaptchaHeaders(
+                                    response.header(RecaptchaHeader.SITE_KEY.toString()),
+                                    response.header(RecaptchaHeader.UNLOCK_URL.toString())
+                                )
+                            );
+                            mainTaskCompletionSource.setError(walletApiException);
                         } else {
                             mainTaskCompletionSource.setError(walletApiException);
                         }

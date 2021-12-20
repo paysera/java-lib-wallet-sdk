@@ -1,5 +1,6 @@
 package com.paysera.lib.wallet.exceptions;
 
+import com.paysera.lib.wallet.entities.RecaptchaHeaders;
 import com.paysera.lib.wallet.entities.WalletApiErrorProperty;
 
 import java.util.List;
@@ -31,6 +32,7 @@ public class WalletApiException extends WalletSdkException {
     private String errorCode;
     private List<WalletApiErrorProperty> errorProperties;
     private Integer statusCode;
+    private RecaptchaHeaders recaptchaHeaders;
 
     public WalletApiException(String detailMessage) {
         super(detailMessage);
@@ -73,6 +75,14 @@ public class WalletApiException extends WalletSdkException {
 
     public void setErrorProperties(List<WalletApiErrorProperty> errorProperties) {
         this.errorProperties = errorProperties;
+    }
+
+    public RecaptchaHeaders getRecaptchaHeaders() {
+        return recaptchaHeaders;
+    }
+
+    public void setRecaptchaHeaders(RecaptchaHeaders recaptchaHeaders) {
+        this.recaptchaHeaders = recaptchaHeaders;
     }
 
     public Boolean isServerError() {
