@@ -257,4 +257,22 @@ public class NotificationSubscriber {
         }
         return existingEvents;
     }
+
+    public List<NotificationEvent> getNewDevicesEvents() {
+        ArrayList<String> newDevicesEvents = new ArrayList<>();
+        newDevicesEvents.add(NotificationEvent.EVENT_NAME_ATTEMPT);
+        newDevicesEvents.add(NotificationEvent.EVENT_NAME_REJECTED);
+
+        ArrayList<NotificationEvent> existingEvents = new ArrayList<>();
+
+        for (NotificationEvent event : events) {
+            if (
+                newDevicesEvents.contains(event.eventName) &&
+                    event.objectName.equals(NotificationEvent.OBJECT_NAME_NEW_DEVICE)
+            ) {
+                existingEvents.add(event);
+            }
+        }
+        return existingEvents;
+    }
 }
