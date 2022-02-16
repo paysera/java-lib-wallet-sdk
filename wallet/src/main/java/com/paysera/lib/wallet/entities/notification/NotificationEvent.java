@@ -19,6 +19,7 @@ public class NotificationEvent {
     public static final String OBJECT_NAME_IDENTITY_DOCUMENT = "identity_document";
     public static final String OBJECT_NAME_RECURRENCE_TRANSFER = "recurrence_transfer";
     public static final String OBJECT_NAME_SAVINGS_ACCOUNT_PAYMENT = "savings_account_payment";
+    public static final String OBJECT_NAME_NEW_DEVICE = "new_device";
 
     public static final String EVENT_NAME_REGISTERED = "registered";
     public static final String EVENT_NAME_CREATED = "created";
@@ -33,6 +34,8 @@ public class NotificationEvent {
     public static final String EVENT_NAME_FILLED = "filled";
     public static final String EVENT_NAME_WITHDREW = "withdrew";
     public static final String EVENT_NAME_FILL_MADE = "automated_fill_made";
+    public static final String EVENT_NAME_ATTEMPT = "attempt";
+    public static final String EVENT_NAME_REJECTED = "rejected";
 
     @SerializedName("event")
     protected String eventName;
