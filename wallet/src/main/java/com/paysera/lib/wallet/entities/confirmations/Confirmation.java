@@ -10,6 +10,7 @@ public class Confirmation {
     private String city;
     private String browser;
     private String os;
+    private String model;
 
     public String getChallengeId() {
         return challengeId;
@@ -66,4 +67,12 @@ public class Confirmation {
     public String getOs() { return os; }
 
     public void setOs(String os) { this.os = os; }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
 }
