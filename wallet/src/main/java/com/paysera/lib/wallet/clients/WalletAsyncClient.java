@@ -752,4 +752,8 @@ public class WalletAsyncClient extends BaseAsyncClient {
             )
         );
     }
+
+    public Task<Void> collectContact(ContactCollectionRequest contactCollectionRequest) {
+        return this.execute(this.walletApiClient.collectContact(contactCollectionRequest));
+    }
 }
