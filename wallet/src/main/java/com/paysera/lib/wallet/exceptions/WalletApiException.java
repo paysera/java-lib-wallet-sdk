@@ -19,6 +19,7 @@ public class WalletApiException extends WalletSdkException {
     public static final String ERROR_CODE_USER_ALREADY_EXISTS = "user_already_exists";
     public static final String ERROR_CODE_PASSWORD_TOO_SHORT = "password_too_short";
     public static final String ERROR_CODE_PASSWORD_TOO_RISKY = "password_too_risky";
+    public static final String ERROR_CODE_REGISTRATION_FROM_PROHIBITED_COUNTRY = "phone_from_prohibited_country";
 
     public static final String ERROR_DESCRIPTION_EXPIRED_TOKEN = "Token has expired";
     public static final String ERROR_DESCRIPTION_REFRESH_TOKEN_EXPIRED = "Refresh token expired";
@@ -184,6 +185,10 @@ public class WalletApiException extends WalletSdkException {
         return
             this.errorCode != null
                 && this.errorCode.equals(WalletApiException.ERROR_CODE_PASSWORD_TOO_RISKY);
+    }
+
+    public Boolean isRegistrationFromProhibitedCountry() {
+        return this.errorCode != null && this.errorCode.equals(WalletApiException.ERROR_CODE_REGISTRATION_FROM_PROHIBITED_COUNTRY);
     }
 
     @Override
