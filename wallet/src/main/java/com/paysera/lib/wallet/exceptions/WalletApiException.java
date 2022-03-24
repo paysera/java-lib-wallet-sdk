@@ -188,9 +188,7 @@ public class WalletApiException extends WalletSdkException {
     }
 
     public Boolean isRegistrationFromProhibitedCountry() {
-        return
-            this.errorCode != null
-                && this.errorCode.equals(WalletApiException.ERROR_CODE_REGISTRATION_FROM_PROHIBITED_COUNTRY);
+        return this.errorCode != null && this.errorCode.equals(WalletApiException.ERROR_CODE_REGISTRATION_FROM_PROHIBITED_COUNTRY);
     }
 
     @Override
