@@ -422,6 +422,12 @@ public interface WalletApiClient {
         @Body RequestBody body
     );
 
+    @POST("identity-document/{identificationDocumentId}/file")
+    Call<Void> identificationAdditionalDocumentFileUpload(
+        @Path("identificationDocumentId") Long identificationDocumentId,
+        @Body RequestBody body
+    );
+
     @PUT("identity-document/{identificationDocumentId}/image/{order}")
     Call<Void> identificationDocumentFileUpload(
         @Path("identificationDocumentId") Long identificationDocumentId,

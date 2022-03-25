@@ -675,9 +675,16 @@ public class WalletAsyncClient extends BaseAsyncClient {
         return this.execute(this.walletApiClient.createIdentificationRequest());
     }
 
-    public Task<CreateDocumentIdentificationRequest> createDocumentIdentificationRequest(Long requestId, String type) {
+    public Task<CreateDocumentIdentificationRequest> createDocumentIdentificationRequest(
+        Long requestId,
+        String type,
+        String countryOfIssue
+    ) {
         JSONObject body = new JSONObject();
         body.put("type", type);
+        if (countryOfIssue != null) {
+            body.put("country_of_issue", countryOfIssue);
+        }
         return this.execute(
             this.walletApiClient.createDocumentIdentificationRequest(
                 requestId,
@@ -709,6 +716,18 @@ public class WalletAsyncClient extends BaseAsyncClient {
             this.walletApiClient.identificationDocumentFileUpload(
                 identificationDocumentId,
                 order,
+                requestBody
+            )
+        );
+    }
+
+    public Task<Void> identificationAdditionalDocumentFileUpload(
+        Long identificationDocumentId,
+        RequestBody requestBody
+    ) {
+        return this.execute(
+            this.walletApiClient.identificationAdditionalDocumentFileUpload(
+                identificationDocumentId,
                 requestBody
             )
         );
