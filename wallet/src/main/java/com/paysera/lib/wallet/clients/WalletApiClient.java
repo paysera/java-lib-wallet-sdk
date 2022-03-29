@@ -39,6 +39,11 @@ public interface WalletApiClient {
         @Body Client client
     );
 
+    @GET("client/info/{clientId}/status")
+    Call<UnknownDevice> getClientStatus(
+        @Path("clientId") Integer clientId
+    );
+
     @GET("client/locations")
     Call<List<Location>> getClientLocations();
 
