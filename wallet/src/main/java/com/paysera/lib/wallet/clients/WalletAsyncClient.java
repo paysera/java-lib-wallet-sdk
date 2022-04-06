@@ -328,6 +328,10 @@ public class WalletAsyncClient extends BaseAsyncClient {
         return this.execute(this.walletApiClient.createClient(client));
     }
 
+    public Task<UnknownDevice> getClientStatus(Integer clientId) {
+        return this.execute(this.walletApiClient.getClientStatus(clientId));
+    }
+
     public Task<User> createUser(
         UserRegistrationRequest userRegistrationRequest
     ) {

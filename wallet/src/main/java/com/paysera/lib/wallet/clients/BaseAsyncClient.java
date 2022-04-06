@@ -114,6 +114,9 @@ public abstract class BaseAsyncClient {
                             data.getString("error"),
                             response.code()
                         );
+                        if (data.has("error_data")){
+                            exception.setErrorData(data.getJSONObject("error_data"));
+                        }
                         if (data.has("error_properties")) {
                             exception.setErrorProperties(getErrorProperties(data.getJSONObject("error_properties")));
                         }
@@ -251,6 +254,9 @@ public abstract class BaseAsyncClient {
                                     errorCode,
                                     response.code()
                                 );
+                                if (data.has("error_data")){
+                                    walletApiException.setErrorData(data.getJSONObject("error_data"));
+                                }
                             }
                         } catch (JSONException exception) {
                             walletApiException = new WalletApiException(
