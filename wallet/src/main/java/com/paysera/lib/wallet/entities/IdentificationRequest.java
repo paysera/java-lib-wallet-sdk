@@ -2,10 +2,10 @@ package com.paysera.lib.wallet.entities;
 
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-import com.paysera.lib.wallet.adapters.InstantAdapter;
+import com.paysera.lib.wallet.adapters.DateUnixTimestampSecondsAdapter;
 
-import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,9 +21,9 @@ public class IdentificationRequest {
     private Integer userId;
     private String status;
     private FaceDocument facePhotoDocument;
-    @JsonAdapter(InstantAdapter.class)
+    @JsonAdapter(DateUnixTimestampSecondsAdapter.class)
     @SerializedName("created")
-    private Instant createdAt;
+    private Date createdAt;
     @SerializedName("identity_documents")
     private List<IdentityDocument> identityDocumentList = new ArrayList<>();
 
@@ -84,7 +84,7 @@ public class IdentificationRequest {
         this.identityDocumentList.addAll(identityDocumentList);
     }
 
-    public Instant getCreatedAt() {
+    public Date getCreatedAt() {
         return createdAt;
     }
 }
