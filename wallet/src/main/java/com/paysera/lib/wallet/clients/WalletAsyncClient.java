@@ -27,6 +27,7 @@ import okhttp3.RequestBody;
 import org.json.JSONObject;
 import retrofit2.Retrofit;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -566,7 +567,8 @@ public class WalletAsyncClient extends BaseAsyncClient {
                 identificationRequestFilter.getStatuses(),
                 identificationRequestFilter.getOrderBy(),
                 orderDirectionValue,
-                identificationRequestFilter.getLimit()
+                identificationRequestFilter.getLimit(),
+                identificationRequestFilter.getOffset()
             )
         );
     }
@@ -699,6 +701,34 @@ public class WalletAsyncClient extends BaseAsyncClient {
             this.walletApiClient.identificationRequestFileUpload(
                 identificationRequestId,
                 order,
+                requestBody
+            )
+        );
+    }
+
+    public Task<CreateDocumentIdentificationRequest> createAdditionalDocumentRequest(
+        Long identificationDocumentId,
+        String type,
+        String countryOfIssue
+    ) {
+        HashMap<String, String> body = new HashMap<>();
+        body.put("type", type);
+        body.put("country_of_issue", countryOfIssue);
+        return this.execute(
+            this.walletApiClient.createAdditionalDocumentRequest(
+                identificationDocumentId,
+                body
+            )
+        );
+    }
+
+    public Task<Void> additionalDocumentUpload(
+        Long additionalDocumentId,
+        RequestBody requestBody
+    ) {
+        return this.execute(
+            this.walletApiClient.additionalDocumentUpload(
+                additionalDocumentId,
                 requestBody
             )
         );

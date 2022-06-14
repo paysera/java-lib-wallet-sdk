@@ -4,15 +4,17 @@ package com.paysera.lib.wallet.entities;
  * @author Vytautas Gimbutas <v.gimbutas@evp.lt>
  */
 public class IdentityDocument {
-    private Integer id;
+    private Long id;
     private String comment;
     private String reviewStatus;
+    private String type;
+    private String countryOfIssue;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -27,4 +29,12 @@ public class IdentityDocument {
     public String getReviewStatus() { return reviewStatus; }
 
     public void setReviewStatus(String reviewStatus) { this.reviewStatus = reviewStatus; }
+
+    public String getType() {
+        return type;
+    }
+
+    public String getCountryOfIssue() {
+        return countryOfIssue;
+    }
 }
