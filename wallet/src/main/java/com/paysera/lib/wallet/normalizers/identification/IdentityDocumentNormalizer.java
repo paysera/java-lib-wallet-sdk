@@ -17,7 +17,7 @@ public class IdentityDocumentNormalizer implements DenormalizerInterface<Identit
     public IdentityDocument mapToEntity(JSONObject data) throws NormalizerException {
         IdentityDocument identityDocument = new IdentityDocument();
 
-        identityDocument.setId(data.getInt("id"));
+        identityDocument.setId(data.getLong("id"));
 
         if (data.has("comment")) {
             identityDocument.setComment(data.getString("comment"));
