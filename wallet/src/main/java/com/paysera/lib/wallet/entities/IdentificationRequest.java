@@ -26,6 +26,7 @@ public class IdentificationRequest {
     private Date createdAt;
     @SerializedName("identity_documents")
     private List<IdentityDocument> identityDocumentList = new ArrayList<>();
+    private IdentityDocument additionalDocument;
 
     public Long getId() {
         return id;
@@ -86,5 +87,13 @@ public class IdentificationRequest {
 
     public Date getCreatedAt() {
         return createdAt;
+    }
+
+    public IdentityDocument getAdditionalDocument() {
+        return additionalDocument;
+    }
+
+    public void setAdditionalDocument(IdentityDocument additionalDocument) {
+        this.additionalDocument = additionalDocument;
     }
 }
