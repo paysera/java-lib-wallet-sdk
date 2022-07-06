@@ -17,7 +17,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Date;
 
 public class GetUser {
@@ -52,8 +51,7 @@ public class GetUser {
                 requestSigner,
                 null,
                 "en-us",
-                timestampProvider,
-                Arrays.asList("wallet-api.paysera.com", "wallet.paysera.com")
+                timestampProvider
             );
 
         OkHttpClient okHttpClient = httpClientFactory.createHttpClient(credentials, userAgent);
