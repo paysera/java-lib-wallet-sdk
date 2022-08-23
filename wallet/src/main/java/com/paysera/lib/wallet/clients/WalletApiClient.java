@@ -416,9 +416,9 @@ public interface WalletApiClient {
     Call<IdentificationRequest> createIdentificationRequest();
 
     @POST("identification-request/{identificationRequestId}/identity-document")
-    Call<CreateDocumentIdentificationRequest> createDocumentIdentificationRequest(
+    Call<CreateDocumentIdentificationResponse> createDocumentIdentificationRequest(
         @Path("identificationRequestId") Long identificationRequestId,
-        @Body JSONObject body
+        @Body CreateDocumentIdentificationRequest request
     );
 
     @PUT("identification-request/{identificationRequestId}/face-photo/image/{order}")
@@ -439,9 +439,9 @@ public interface WalletApiClient {
     Call<IdentificationRequest> submitIdentificationRequest(@Path("identificationRequestId") Long identificationRequestId);
 
     @POST("identification-request/{identificationRequestId}/additional-document")
-    Call<CreateDocumentIdentificationRequest> createAdditionalDocumentRequest(
+    Call<CreateDocumentIdentificationResponse> createAdditionalDocumentRequest(
         @Path("identificationRequestId") Long identificationDocumentId,
-        @Body Map<String, String> body
+        @Body CreateDocumentIdentificationRequest request
     );
 
     @POST("additional-document/{additionalDocumentId}/file")

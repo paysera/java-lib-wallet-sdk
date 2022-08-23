@@ -2,22 +2,19 @@ package com.paysera.lib.wallet.entities;
 
 public class CreateDocumentIdentificationRequest {
 
-    public Long id;
-    public Long identificationRequestId;
+    public String type;
+    public String countryOfIssue;
 
-    public Long getId() {
-        return id;
+    public CreateDocumentIdentificationRequest(String type, String countryOfIssue) {
+        this.type = type;
+        this.countryOfIssue = countryOfIssue;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public String getType() {
+        return type;
     }
 
-    public Long getIdentificationRequestId() {
-        return identificationRequestId;
-    }
-
-    public void setIdentificationRequestId(Long identificationRequestId) {
-        this.identificationRequestId = identificationRequestId;
+    public String getCountryOfIssue() {
+        return countryOfIssue;
     }
 }
