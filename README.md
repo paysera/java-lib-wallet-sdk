@@ -1,0 +1,1 @@
+# Paysera Java Walet SDK [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.paysera.lib/java-lib-wallet-sdk/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.paysera.lib/java-lib-wallet-sdk)
