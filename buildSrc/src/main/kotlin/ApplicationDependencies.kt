@@ -2,7 +2,6 @@ object ApplicationDependencies {
 
     private const val gson = "com.google.code.gson:gson:${ApplicationDependencyVersions.gson}"
     private const val jodaMoney = "org.joda:joda-money:${ApplicationDependencyVersions.jodaMoney}"
-    private const val certificateTransparency = "com.appmattus.certificatetransparency:certificatetransparency:${ApplicationDependencyVersions.certificateTransparency}"
     private const val json = "org.json:json:${ApplicationDependencyVersions.json}"
     private const val bolts = "com.parse.bolts:bolts-tasks:${ApplicationDependencyVersions.bolts}"
     private const val retrofit = "com.squareup.retrofit2:retrofit:${ApplicationDependencyVersions.retrofit}"
@@ -17,7 +16,6 @@ object ApplicationDependencies {
     val dependencies = arrayListOf(
         gson,
         jodaMoney,
-        certificateTransparency,
         json,
         bolts,
         retrofit,

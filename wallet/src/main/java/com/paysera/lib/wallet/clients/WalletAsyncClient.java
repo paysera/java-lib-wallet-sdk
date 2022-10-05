@@ -27,6 +27,7 @@ import okhttp3.RequestBody;
 import org.json.JSONObject;
 import retrofit2.Retrofit;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -566,7 +567,8 @@ public class WalletAsyncClient extends BaseAsyncClient {
                 identificationRequestFilter.getStatuses(),
                 identificationRequestFilter.getOrderBy(),
                 orderDirectionValue,
-                identificationRequestFilter.getLimit()
+                identificationRequestFilter.getLimit(),
+                identificationRequestFilter.getOffset()
             )
         );
     }
@@ -679,13 +681,14 @@ public class WalletAsyncClient extends BaseAsyncClient {
         return this.execute(this.walletApiClient.createIdentificationRequest());
     }
 
-    public Task<CreateDocumentIdentificationRequest> createDocumentIdentificationRequest(Long requestId, String type) {
-        JSONObject body = new JSONObject();
-        body.put("type", type);
+    public Task<CreateDocumentIdentificationResponse> createDocumentIdentificationRequest(
+        Long requestId,
+        CreateDocumentIdentificationRequest request
+    ) {
         return this.execute(
             this.walletApiClient.createDocumentIdentificationRequest(
                 requestId,
-                body
+                request
             )
         );
     }
@@ -699,6 +702,30 @@ public class WalletAsyncClient extends BaseAsyncClient {
             this.walletApiClient.identificationRequestFileUpload(
                 identificationRequestId,
                 order,
+                requestBody
+            )
+        );
+    }
+
+    public Task<CreateDocumentIdentificationResponse> createAdditionalDocumentRequest(
+        Long identificationDocumentId,
+        CreateDocumentIdentificationRequest request
+    ) {
+        return this.execute(
+            this.walletApiClient.createAdditionalDocumentRequest(
+                identificationDocumentId,
+                request
+            )
+        );
+    }
+
+    public Task<Void> additionalDocumentUpload(
+        Long additionalDocumentId,
+        RequestBody requestBody
+    ) {
+        return this.execute(
+            this.walletApiClient.additionalDocumentUpload(
+                additionalDocumentId,
                 requestBody
             )
         );

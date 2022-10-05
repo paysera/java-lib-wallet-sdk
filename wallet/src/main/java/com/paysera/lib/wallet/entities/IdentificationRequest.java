@@ -1,8 +1,11 @@
 package com.paysera.lib.wallet.entities;
 
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
+import com.paysera.lib.wallet.adapters.DateUnixTimestampSecondsAdapter;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -18,8 +21,12 @@ public class IdentificationRequest {
     private Integer userId;
     private String status;
     private FaceDocument facePhotoDocument;
+    @JsonAdapter(DateUnixTimestampSecondsAdapter.class)
+    @SerializedName("created")
+    private Date createdAt;
     @SerializedName("identity_documents")
     private List<IdentityDocument> identityDocumentList = new ArrayList<>();
+    private IdentityDocument additionalDocument;
 
     public Long getId() {
         return id;
@@ -76,5 +83,17 @@ public class IdentificationRequest {
     public void setIdentityDocumentList(List<IdentityDocument> identityDocumentList) {
         this.identityDocumentList.clear();
         this.identityDocumentList.addAll(identityDocumentList);
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public IdentityDocument getAdditionalDocument() {
+        return additionalDocument;
+    }
+
+    public void setAdditionalDocument(IdentityDocument additionalDocument) {
+        this.additionalDocument = additionalDocument;
     }
 }

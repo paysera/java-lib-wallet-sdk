@@ -53,8 +53,7 @@ public class GetWalletBalance {
                 requestSigner,
                 null,
                 "en-us",
-                timestampProvider,
-                Arrays.asList("wallet-api.paysera.com", "wallet.paysera.com")
+                timestampProvider
             );
 
         OkHttpClient okHttpClient = httpClientFactory.createHttpClient(credentials, userAgent);

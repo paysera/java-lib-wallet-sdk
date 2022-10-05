@@ -1,6 +1,5 @@
 package com.paysera.lib.wallet.factories;
 
-import com.babylon.certificatetransparency.CTInterceptorBuilder;
 import com.paysera.lib.wallet.RequestSigner;
 import com.paysera.lib.wallet.entities.Credentials;
 import com.paysera.lib.wallet.providers.TimestampProvider;
@@ -11,7 +10,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -20,20 +18,17 @@ public class HttpClientFactory {
     private RequestSigner requestSigner;
     private Logger logger;
     private String locale;
-    private List<String> certifiedHosts;
 
     public HttpClientFactory(
         RequestSigner requestSigner,
         Logger logger,
         String locale,
-        TimestampProvider timestampProvider,
-        List<String> certifiedHosts
+        TimestampProvider timestampProvider
     ) {
         this.requestSigner = requestSigner;
         this.logger = logger;
         this.locale = locale;
         this.timestampProvider = timestampProvider;
-        this.certifiedHosts = certifiedHosts;
     }
 
     public OkHttpClient createHttpClient(
@@ -53,14 +48,6 @@ public class HttpClientFactory {
         final Map<String, String> parameters
     ) {
         final OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-
-        if (!certifiedHosts.isEmpty()) {
-            CTInterceptorBuilder builder = new CTInterceptorBuilder();
-            for (String hostname : certifiedHosts) {
-                builder.includeHost(hostname);
-            }
-            httpClient.addNetworkInterceptor(builder.build());
-        }
 
         httpClient.retryOnConnectionFailure(false);
         httpClient.addInterceptor(new Interceptor() {

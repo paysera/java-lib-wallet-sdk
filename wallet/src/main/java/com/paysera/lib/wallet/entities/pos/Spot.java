@@ -38,7 +38,7 @@ public class Spot {
     public List<Order> getPendingOrders() {
         List<Order> pendingOrders = new ArrayList<>();
         for (Order order : this.orders) {
-            if (order.getStatus() == Order.STATUS_PENDING) {
+            if (order.getStatus().equals(Order.STATUS_PENDING)) {
                 pendingOrders.add(order);
             }
         }

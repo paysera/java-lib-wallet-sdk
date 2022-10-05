@@ -135,7 +135,8 @@ public interface WalletApiClient {
         @Query("statuses[]") List<String> statuses,
         @Query("order_by") String orderBy,
         @Query("order_direction") String orderDirection,
-        @Query("limit") Integer limit
+        @Query("limit") Integer limit,
+        @Query("offset") Integer offset
     );
 
     @GET("user/{userId}/identification-requests")
@@ -415,9 +416,9 @@ public interface WalletApiClient {
     Call<IdentificationRequest> createIdentificationRequest();
 
     @POST("identification-request/{identificationRequestId}/identity-document")
-    Call<CreateDocumentIdentificationRequest> createDocumentIdentificationRequest(
+    Call<CreateDocumentIdentificationResponse> createDocumentIdentificationRequest(
         @Path("identificationRequestId") Long identificationRequestId,
-        @Body JSONObject body
+        @Body CreateDocumentIdentificationRequest request
     );
 
     @PUT("identification-request/{identificationRequestId}/face-photo/image/{order}")
@@ -436,6 +437,18 @@ public interface WalletApiClient {
 
     @PUT("identification-request/{identificationRequestId}/submit")
     Call<IdentificationRequest> submitIdentificationRequest(@Path("identificationRequestId") Long identificationRequestId);
+
+    @POST("identification-request/{identificationRequestId}/additional-document")
+    Call<CreateDocumentIdentificationResponse> createAdditionalDocumentRequest(
+        @Path("identificationRequestId") Long identificationDocumentId,
+        @Body CreateDocumentIdentificationRequest request
+    );
+
+    @POST("additional-document/{additionalDocumentId}/file")
+    Call<Void> additionalDocumentUpload(
+        @Path("additionalDocumentId") Long additionalDocumentId,
+        @Body RequestBody body
+    );
 
     @GET("generator/{id}")
     Call<Generator> getGenerator(@Path("id") Integer generatorId);
