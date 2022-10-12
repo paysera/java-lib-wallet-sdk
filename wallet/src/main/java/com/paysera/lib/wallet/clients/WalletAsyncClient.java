@@ -24,10 +24,7 @@ import com.paysera.lib.wallet.helpers.OkHTTPQueryStringConverter;
 import com.paysera.lib.wallet.helpers.StringHelper;
 import com.paysera.lib.wallet.providers.TimestampProvider;
 import okhttp3.RequestBody;
-import org.json.JSONObject;
 import retrofit2.Retrofit;
-
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -780,6 +777,26 @@ public class WalletAsyncClient extends BaseAsyncClient {
             this.walletApiClient.unlockRecaptcha(
                 unlockUrl,
                 response
+            )
+        );
+    }
+
+    public Task<Void> unlockRecaptcha(
+        String unlockUrl,
+        String response,
+        String grantType,
+        String username,
+        String password,
+        List<String> scopes
+    ) {
+        return this.execute(
+            this.walletApiClient.unlockRecaptcha(
+                unlockUrl,
+                response,
+                grantType,
+                username,
+                password,
+                StringHelper.listToString(scopes, " ")
             )
         );
     }
