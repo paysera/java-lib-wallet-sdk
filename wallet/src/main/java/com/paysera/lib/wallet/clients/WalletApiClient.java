@@ -14,7 +14,6 @@ import com.paysera.lib.wallet.entities.requests.*;
 import com.paysera.lib.wallet.entities.transfer.Transfer;
 import com.paysera.lib.wallet.entities.transfer.TransferPassword;
 import okhttp3.RequestBody;
-import org.json.JSONObject;
 import retrofit2.Call;
 import retrofit2.http.*;
 
@@ -470,6 +469,17 @@ public interface WalletApiClient {
     Call<Void> unlockRecaptcha(
         @Url String unlockUrl,
         @Field("g-recaptcha-response") String gRecaptchaResponse
+    );
+
+    @FormUrlEncoded
+    @POST
+    Call<Void> unlockRecaptcha(
+        @Url String unlockUrl,
+        @Header("g-recaptcha-response") String gRecaptchaResponse,
+        @Field("grant_type") String grantType,
+        @Field("username") String username,
+        @Field("password") String password,
+        @Field("scope") String scopes
     );
 
     @POST("contacts")
