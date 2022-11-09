@@ -1,9 +1,7 @@
 package com.paysera.lib.wallet.factories;
 
 import com.paysera.lib.wallet.Router;
-import com.paysera.lib.wallet.clients.OAuthClient;
-import com.paysera.lib.wallet.clients.PublicWalletApiClient;
-import com.paysera.lib.wallet.clients.WalletApiClient;
+import com.paysera.lib.wallet.clients.*;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -20,10 +18,28 @@ public class RetrofitFactory {
     public OAuthClient createOAuthClient(OkHttpClient httpClient) {
         return this
             .createRetrofit(
-                this.router.getoAuthApiEndpoint(),
+                this.router.getOAuthApiEndpoint(),
                 httpClient
             )
             .create(OAuthClient.class);
+    }
+
+    public PartnerOauthApiClient createPartnerOAuthApiClient(OkHttpClient httpClient) {
+        return this
+            .createRetrofit(
+                this.router.getPartnerOAuthApiEndpoint(),
+                httpClient
+            )
+            .create(PartnerOauthApiClient.class);
+    }
+
+    public PartnerTokenApiClient createPartnerTokenApiClient(OkHttpClient httpClient) {
+        return this
+            .createRetrofit(
+                this.router.getPartnerTokenApiEndpoint(),
+                httpClient
+            )
+            .create(PartnerTokenApiClient.class);
     }
 
     public Retrofit createWalletApiRetrofit(OkHttpClient httpClient) {
@@ -33,8 +49,6 @@ public class RetrofitFactory {
                 httpClient
             );
     }
-
-    ;
 
     public WalletApiClient createWalletApiClient(OkHttpClient httpClient) {
         return this
