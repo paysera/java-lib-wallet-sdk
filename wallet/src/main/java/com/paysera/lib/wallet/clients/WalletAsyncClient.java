@@ -8,6 +8,10 @@ import com.paysera.lib.wallet.entities.card.Card;
 import com.paysera.lib.wallet.entities.client.Client;
 import com.paysera.lib.wallet.entities.confirmations.Confirmation;
 import com.paysera.lib.wallet.entities.confirmations.ConfirmationFilter;
+import com.paysera.lib.wallet.entities.easypay.EasyPayCreateTransfer;
+import com.paysera.lib.wallet.entities.easypay.EasyPayFees;
+import com.paysera.lib.wallet.entities.easypay.EasyPayTransferFilter;
+import com.paysera.lib.wallet.entities.easypay.EasyPayTransfer;
 import com.paysera.lib.wallet.entities.generator.Generator;
 import com.paysera.lib.wallet.entities.identifications.IdentificationRequestFilter;
 import com.paysera.lib.wallet.entities.locations.Location;
@@ -24,6 +28,7 @@ import com.paysera.lib.wallet.helpers.OkHTTPQueryStringConverter;
 import com.paysera.lib.wallet.helpers.StringHelper;
 import com.paysera.lib.wallet.providers.TimestampProvider;
 import okhttp3.RequestBody;
+import org.joda.money.Money;
 import retrofit2.Retrofit;
 import java.util.List;
 import java.util.Map;
@@ -803,5 +808,34 @@ public class WalletAsyncClient extends BaseAsyncClient {
 
     public Task<Void> collectContact(ContactCollectionRequest contactCollectionRequest) {
         return this.execute(this.walletApiClient.collectContact(contactCollectionRequest));
+    }
+
+    public Task<EasyPayFees> getEasyPayFees(Money transferAmount) {
+        String amount = transferAmount.getAmount().toPlainString();
+        String currency = transferAmount.getCurrencyUnit().getCode();
+        return this.execute(this.walletApiClient.getEasyPayFees(amount, currency));
+    }
+
+    public Task<MetadataAwareResponse<EasyPayTransfer>> getEasyPayTransfers(EasyPayTransferFilter filter) {
+        String orderDirectionValue = null;
+        if (filter.getOrderDirection() != null) {
+            orderDirectionValue = filter.getOrderDirection().toString();
+        }
+        return this.execute(this.walletApiClient.getEasyPayTransfers(
+            filter.getStatus(),
+            filter.getBeneficiaryUserId(),
+            filter.getPayerWalletId(),
+            filter.getLimit(),
+            filter.getOffset(),
+            filter.getOrderBy(),
+            orderDirectionValue
+        ));
+    }
+    public Task<EasyPayCreateTransfer> createEasyPayTransfer(EasyPayCreateTransfer transferRequest) {
+        return this.execute(this.walletApiClient.createEasyPayTransfer(transferRequest));
+    }
+
+    public Task<Void> cancelEasyPayTransfer(String transferId) {
+        return this.execute(this.walletApiClient.cancelEasyPayTransfer(transferId));
     }
 }
