@@ -11,6 +11,8 @@ public class Confirmation {
     private String browser;
     private String os;
     private String model;
+    private String ip;
+    private String appClientInfoId;
 
     public String getChallengeId() {
         return challengeId;
@@ -74,5 +76,21 @@ public class Confirmation {
 
     public void setModel(String model) {
         this.model = model;
+    }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
+
+    public String getAppClientInfoId() {
+        return appClientInfoId;
+    }
+
+    public void setAppClientInfoId(String appClientInfoId) {
+        this.appClientInfoId = appClientInfoId;
     }
 }
