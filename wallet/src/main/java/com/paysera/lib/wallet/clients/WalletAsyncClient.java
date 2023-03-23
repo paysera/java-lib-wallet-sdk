@@ -10,8 +10,8 @@ import com.paysera.lib.wallet.entities.confirmations.Confirmation;
 import com.paysera.lib.wallet.entities.confirmations.ConfirmationFilter;
 import com.paysera.lib.wallet.entities.easypay.EasyPayCreateTransfer;
 import com.paysera.lib.wallet.entities.easypay.EasyPayFees;
-import com.paysera.lib.wallet.entities.easypay.EasyPayTransferFilter;
 import com.paysera.lib.wallet.entities.easypay.EasyPayTransfer;
+import com.paysera.lib.wallet.entities.easypay.EasyPayTransferFilter;
 import com.paysera.lib.wallet.entities.generator.Generator;
 import com.paysera.lib.wallet.entities.identifications.IdentificationRequestFilter;
 import com.paysera.lib.wallet.entities.locations.Location;
@@ -816,26 +816,48 @@ public class WalletAsyncClient extends BaseAsyncClient {
         return this.execute(this.walletApiClient.getEasyPayFees(amount, currency));
     }
 
-    public Task<MetadataAwareResponse<EasyPayTransfer>> getEasyPayTransfers(EasyPayTransferFilter filter) {
+    public Task<CommonMetadataAwareResponse<EasyPayTransfer>> getEasyPayTransfers(EasyPayTransferFilter filter) {
         String orderDirectionValue = null;
+        String status = null;
         if (filter.getOrderDirection() != null) {
             orderDirectionValue = filter.getOrderDirection().toString();
         }
-        return this.execute(this.walletApiClient.getEasyPayTransfers(
-            filter.getStatus(),
-            filter.getBeneficiaryUserId(),
-            filter.getPayerWalletId(),
-            filter.getLimit(),
-            filter.getOffset(),
-            filter.getOrderBy(),
-            orderDirectionValue
-        ));
-    }
-    public Task<EasyPayCreateTransfer> createEasyPayTransfer(EasyPayCreateTransfer transferRequest) {
-        return this.execute(this.walletApiClient.createEasyPayTransfer(transferRequest));
+        if (filter.getStatus() != null) {
+            switch (filter.getStatus()) {
+                case NEW:
+                    status = "new";
+                    break;
+                case CREATED:
+                    status = "created";
+                    break;
+                case FAILED:
+                    status = "failed";
+                    break;
+                case CANCELLED:
+                    status = "cancelled";
+                    break;
+                case DONE:
+                    status = "done";
+                    break;
+                case EXPIRED:
+                    status = "expired";
+                    break;
+                case PROCESSING_CANCELLATION:
+                    status = "processing_cancellation";
+                    break;
+                case CANCELLATION_DENIED:
+                    status = "cancellation_denied";
+                    break;
+            }
+        }
+        return this.execute(this.walletApiClient.getEasyPayTransfers(status, filter.getBeneficiaryUserId(), filter.getPayerWalletId(), filter.getLimit(), filter.getOffset(), filter.getOrderBy(), orderDirectionValue));
     }
 
-    public Task<Void> cancelEasyPayTransfer(String transferId) {
-        return this.execute(this.walletApiClient.cancelEasyPayTransfer(transferId));
+    public Task<EasyPayTransfer> createEasyPayTransfer(EasyPayCreateTransfer createEasyPayTransfer) {
+        return this.execute(this.walletApiClient.createEasyPayTransfer(createEasyPayTransfer));
+    }
+
+    public Task<Void> cancelEasyPayTransfer(Integer easyPayTransferId) {
+        return this.execute(this.walletApiClient.cancelEasyPayTransfer(easyPayTransferId));
     }
 }

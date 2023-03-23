@@ -10,12 +10,12 @@ import java.util.Date;
 public class EasyPayTransfer {
     private Integer id;
     private Integer payerWalletId;
-    private String status;
+    private EasyPayStatus status;
     private Integer beneficiaryUserId;
     @JsonAdapter(MoneyAdapter.class)
     private Money amount;
-    private Integer invoice;
-    private Integer revId;
+    private String invoice;
+    private String revId;
     @JsonAdapter(DateUnixTimestampSecondsAdapter.class)
     private Date validUntil;
 
@@ -35,11 +35,11 @@ public class EasyPayTransfer {
         this.payerWalletId = payerWalletId;
     }
 
-    public String getStatus() {
+    public EasyPayStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(EasyPayStatus status) {
         this.status = status;
     }
 
@@ -59,19 +59,19 @@ public class EasyPayTransfer {
         this.amount = amount;
     }
 
-    public Integer getInvoice() {
+    public String getInvoice() {
         return invoice;
     }
 
-    public void setInvoice(Integer invoice) {
+    public void setInvoice(String invoice) {
         this.invoice = invoice;
     }
 
-    public Integer getRevId() {
+    public String getRevId() {
         return revId;
     }
 
-    public void setRevId(Integer revId) {
+    public void setRevId(String revId) {
         this.revId = revId;
     }
 

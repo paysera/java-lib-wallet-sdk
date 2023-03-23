@@ -497,7 +497,7 @@ public interface WalletApiClient {
     );
 
     @GET("epay/transfers")
-    Call<MetadataAwareResponse<EasyPayTransfer>> getEasyPayTransfers(
+    Call<CommonMetadataAwareResponse<EasyPayTransfer>> getEasyPayTransfers(
         @Query("status") String status,
         @Query("beneficiary_user_id") Integer beneficiaryUserId,
         @Query("payer_wallet_id") Integer payerWalletId,
@@ -508,13 +508,13 @@ public interface WalletApiClient {
     );
 
     @POST("epay/transfers")
-    Call<EasyPayCreateTransfer> createEasyPayTransfer(
-        @Body EasyPayCreateTransfer transferRequest
+    Call<EasyPayTransfer> createEasyPayTransfer(
+        @Body EasyPayCreateTransfer easyPayCreateTransfer
     );
 
-    @PUT("epay/transfers/{transfer_id}/cancel")
+    @PUT("epay/transfers/{easy_pay_transfer_id}/cancel")
     Call<Void> cancelEasyPayTransfer(
-        @Path("transfer_id") String transferId
+        @Path("easy_pay_transfer_id") Integer easyPayTransferId
     );
 
     // End of EasyPay endpoints
