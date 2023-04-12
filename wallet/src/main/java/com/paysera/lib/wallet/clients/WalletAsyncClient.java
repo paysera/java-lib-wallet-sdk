@@ -818,39 +818,20 @@ public class WalletAsyncClient extends BaseAsyncClient {
 
     public Task<CommonMetadataAwareResponse<EasyPayTransfer>> getEasyPayTransfers(EasyPayTransferFilter filter) {
         String orderDirectionValue = null;
-        String status = null;
         if (filter.getOrderDirection() != null) {
             orderDirectionValue = filter.getOrderDirection().toString();
         }
-        if (filter.getStatus() != null) {
-            switch (filter.getStatus()) {
-                case NEW:
-                    status = "new";
-                    break;
-                case CREATED:
-                    status = "created";
-                    break;
-                case FAILED:
-                    status = "failed";
-                    break;
-                case CANCELLED:
-                    status = "cancelled";
-                    break;
-                case DONE:
-                    status = "done";
-                    break;
-                case EXPIRED:
-                    status = "expired";
-                    break;
-                case PROCESSING_CANCELLATION:
-                    status = "processing_cancellation";
-                    break;
-                case CANCELLATION_DENIED:
-                    status = "cancellation_denied";
-                    break;
-            }
-        }
-        return this.execute(this.walletApiClient.getEasyPayTransfers(status, filter.getBeneficiaryUserId(), filter.getPayerWalletId(), filter.getLimit(), filter.getOffset(), filter.getOrderBy(), orderDirectionValue));
+        return this.execute(
+            this.walletApiClient.getEasyPayTransfers(
+                filter.getStatus(),
+                filter.getBeneficiaryUserId(),
+                filter.getPayerWalletId(),
+                filter.getLimit(),
+                filter.getOffset(),
+                filter.getOrderBy(),
+                orderDirectionValue
+            )
+        );
     }
 
     public Task<EasyPayTransfer> createEasyPayTransfer(EasyPayCreateTransfer createEasyPayTransfer) {

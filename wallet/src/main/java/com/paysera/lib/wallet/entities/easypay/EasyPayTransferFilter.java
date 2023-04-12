@@ -3,15 +3,15 @@ package com.paysera.lib.wallet.entities.easypay;
 import com.paysera.lib.wallet.filters.BaseFilter;
 
 public class EasyPayTransferFilter extends BaseFilter {
-    private EasyPayStatus status;
+    private String status;
     private Integer beneficiaryUserId;
     private Integer payerWalletId;
 
-    public EasyPayStatus getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(EasyPayStatus status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

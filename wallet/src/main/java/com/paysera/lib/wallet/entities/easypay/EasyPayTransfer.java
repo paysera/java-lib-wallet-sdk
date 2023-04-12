@@ -10,7 +10,7 @@ import java.util.Date;
 public class EasyPayTransfer {
     private Integer id;
     private Integer payerWalletId;
-    private EasyPayStatus status;
+    private String status;
     private Integer beneficiaryUserId;
     @JsonAdapter(MoneyAdapter.class)
     private Money amount;
@@ -35,11 +35,11 @@ public class EasyPayTransfer {
         this.payerWalletId = payerWalletId;
     }
 
-    public EasyPayStatus getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(EasyPayStatus status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
