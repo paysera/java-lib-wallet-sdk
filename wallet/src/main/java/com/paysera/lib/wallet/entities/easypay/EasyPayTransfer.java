@@ -8,7 +8,7 @@ import org.joda.money.Money;
 import java.util.Date;
 
 public class EasyPayTransfer {
-    private Integer id;
+    private Long id;
     private Integer payerWalletId;
     private String status;
     private Integer beneficiaryUserId;
@@ -19,11 +19,11 @@ public class EasyPayTransfer {
     @JsonAdapter(DateUnixTimestampSecondsAdapter.class)
     private Date validUntil;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

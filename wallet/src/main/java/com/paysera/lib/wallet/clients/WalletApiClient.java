@@ -513,7 +513,7 @@ public interface WalletApiClient {
     );
 
     @PUT("epay/transfers/{easy_pay_transfer_id}/cancel")
-    Call<Void> cancelEasyPayTransfer(
+    Call<EasyPayTransfer> cancelEasyPayTransfer(
         @Path("easy_pay_transfer_id") Integer easyPayTransferId
     );
 
