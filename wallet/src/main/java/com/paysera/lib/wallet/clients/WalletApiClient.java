@@ -514,7 +514,7 @@ public interface WalletApiClient {
 
     @PUT("epay/transfers/{easy_pay_transfer_id}/cancel")
     Call<EasyPayTransfer> cancelEasyPayTransfer(
-        @Path("easy_pay_transfer_id") Integer easyPayTransferId
+        @Path("easy_pay_transfer_id") Long easyPayTransferId
     );
 
     // End of EasyPay endpoints

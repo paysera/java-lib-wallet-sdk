@@ -838,7 +838,7 @@ public class WalletAsyncClient extends BaseAsyncClient {
         return this.execute(this.walletApiClient.createEasyPayTransfer(createEasyPayTransfer));
     }
 
-    public Task<EasyPayTransfer> cancelEasyPayTransfer(Integer easyPayTransferId) {
+    public Task<EasyPayTransfer> cancelEasyPayTransfer(Long easyPayTransferId) {
         return this.execute(this.walletApiClient.cancelEasyPayTransfer(easyPayTransferId));
     }
 }
