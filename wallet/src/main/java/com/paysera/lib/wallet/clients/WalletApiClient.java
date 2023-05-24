@@ -5,6 +5,9 @@ import com.paysera.lib.wallet.entities.*;
 import com.paysera.lib.wallet.entities.card.Card;
 import com.paysera.lib.wallet.entities.client.Client;
 import com.paysera.lib.wallet.entities.confirmations.Confirmation;
+import com.paysera.lib.wallet.entities.easypay.EasyPayCreateTransfer;
+import com.paysera.lib.wallet.entities.easypay.EasyPayFees;
+import com.paysera.lib.wallet.entities.easypay.EasyPayTransfer;
 import com.paysera.lib.wallet.entities.generator.Generator;
 import com.paysera.lib.wallet.entities.locations.Location;
 import com.paysera.lib.wallet.entities.locations.LocationCategory;
@@ -484,4 +487,35 @@ public interface WalletApiClient {
 
     @POST("contacts")
     Call<Void> collectContact(@Body ContactCollectionRequest contactCollectionRequest);
+
+    // EasyPay endpoints
+
+    @GET("epay/fees")
+    Call<EasyPayFees> getEasyPayFees(
+        @Query("amount") String amount,
+        @Query("currency") String currency
+    );
+
+    @GET("epay/transfers")
+    Call<CommonMetadataAwareResponse<EasyPayTransfer>> getEasyPayTransfers(
+        @Query("status") String status,
+        @Query("beneficiary_user_id") Integer beneficiaryUserId,
+        @Query("payer_wallet_id") Integer payerWalletId,
+        @Query("limit") Integer limit,
+        @Query("offset") Integer offset,
+        @Query("order_by") String orderBy,
+        @Query("order_direction") String orderDirection
+    );
+
+    @POST("epay/transfers")
+    Call<EasyPayTransfer> createEasyPayTransfer(
+        @Body EasyPayCreateTransfer easyPayCreateTransfer
+    );
+
+    @PUT("epay/transfers/{easy_pay_transfer_id}/cancel")
+    Call<EasyPayTransfer> cancelEasyPayTransfer(
+        @Path("easy_pay_transfer_id") Long easyPayTransferId
+    );
+
+    // End of EasyPay endpoints
 }
