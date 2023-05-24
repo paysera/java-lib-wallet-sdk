@@ -134,7 +134,8 @@ public class WalletApiException extends WalletSdkException {
     public Boolean isRateLimitExceededError() {
         return
             this.errorCode != null
-                && this.errorCode.equals(WalletApiException.ERROR_CODE_RATE_LIMIT_EXCEEDED);
+                && this.errorCode.equals(WalletApiException.ERROR_CODE_RATE_LIMIT_EXCEEDED)
+                && this.statusCode == 429;
     }
 
     public Boolean isPhoneAlreadyAssignedError() {
