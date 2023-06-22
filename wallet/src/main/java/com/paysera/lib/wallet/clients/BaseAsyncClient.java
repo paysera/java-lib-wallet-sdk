@@ -174,14 +174,11 @@ public abstract class BaseAsyncClient {
         Iterator<String> iterator = jsonObject.keys();
         while (iterator.hasNext()) {
             String code = iterator.next();
-            String description = null;
             if (jsonObject.optJSONArray(code) != null) {
-                description = jsonObject.getJSONArray(code).get(0).toString();
-            } else if (jsonObject.optString(code) != null) {
-                description = jsonObject.getString(code);
+                String description = jsonObject.getJSONArray(code).get(0).toString();
+                WalletApiErrorProperty walletApiErrorProperty = new WalletApiErrorProperty(code, description);
+                errorProperties.add(walletApiErrorProperty);
             }
-            WalletApiErrorProperty walletApiErrorProperty = new WalletApiErrorProperty(code, description);
-            errorProperties.add(walletApiErrorProperty);
         }
         return errorProperties;
     }
