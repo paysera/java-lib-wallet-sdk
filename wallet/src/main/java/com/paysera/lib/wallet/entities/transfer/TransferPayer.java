@@ -2,16 +2,9 @@ package com.paysera.lib.wallet.entities.transfer;
 
 public class TransferPayer {
     private String accountNumber;
-    private String reference;
     private Integer userId;
 
-    public String getReference() {
-        return reference;
-    }
-
-    public void setReference(String reference) {
-        this.reference = reference;
-    }
+    private TransferPayerClientIdentifier clientIdentifier;
 
     public String getAccountNumber() {
         return accountNumber;
@@ -27,5 +20,13 @@ public class TransferPayer {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    public TransferPayerClientIdentifier getClientIdentifier() {
+        return clientIdentifier;
+    }
+
+    public void setClientIdentifier(TransferPayerClientIdentifier clientIdentifier) {
+        this.clientIdentifier = clientIdentifier;
     }
 }
