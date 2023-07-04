@@ -2,6 +2,7 @@ package com.paysera.lib.wallet.factories;
 
 import com.paysera.lib.wallet.RequestSigner;
 import com.paysera.lib.wallet.entities.Credentials;
+import com.paysera.lib.wallet.exceptions.WalletApiException;
 import com.paysera.lib.wallet.providers.TimestampProvider;
 import okhttp3.*;
 import okio.Buffer;
@@ -96,7 +97,7 @@ public class HttpClientFactory {
                         logger.severe(errors.toString());
                     }
 
-                    throw new IOException("An error occurred while signing the request", exception);
+                    throw new IOException(WalletApiException.ERROR_CODE_SIGNING_REQUEST);
                 }
             }
         });

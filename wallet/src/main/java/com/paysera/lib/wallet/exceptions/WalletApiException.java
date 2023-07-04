@@ -21,6 +21,7 @@ public class WalletApiException extends WalletSdkException {
     public static final String ERROR_CODE_PASSWORD_TOO_SHORT = "password_too_short";
     public static final String ERROR_CODE_PASSWORD_TOO_RISKY = "password_too_risky";
     public static final String ERROR_CODE_REGISTRATION_FROM_PROHIBITED_COUNTRY = "phone_from_prohibited_country";
+    public static final String ERROR_CODE_SIGNING_REQUEST = "signing_request";
 
     public static final String ERROR_DESCRIPTION_EXPIRED_TOKEN = "Token has expired";
     public static final String ERROR_DESCRIPTION_REFRESH_TOKEN_EXPIRED = "Refresh token expired";
@@ -29,6 +30,7 @@ public class WalletApiException extends WalletSdkException {
 
     private static final String ERROR_DESCRIPTION_TIMESTAMP_IS_IN_THE_FUTURE = "Timestamp is in future";
     private static final String ERROR_DESCRIPTION_TIMESTAMP_LIFETIME_EXCEEDED = "Timestamp lifetime exceeded";
+    public static final String ERROR_DESCRIPTION_SIGNING_REQUEST = "An error occurred while signing the request";
 
     private String errorDescription;
     private String errorCode;
@@ -200,6 +202,10 @@ public class WalletApiException extends WalletSdkException {
 
     public Boolean isRegistrationFromProhibitedCountry() {
         return this.errorCode != null && this.errorCode.equals(WalletApiException.ERROR_CODE_REGISTRATION_FROM_PROHIBITED_COUNTRY);
+    }
+
+    public Boolean isSigningRequest() {
+        return errorCode != null && errorCode.equals(ERROR_CODE_SIGNING_REQUEST);
     }
 
     @Override

@@ -159,12 +159,17 @@ public abstract class BaseAsyncClient {
             }
 
             public void onFailure(Call<T> call, Throwable throwable) {
-                mainTaskCompletionSource.setError(
-                    new WalletApiException(
-                        "An exception occurred",
-                        throwable
-                    )
-                );
+                WalletApiException exception;
+                if (throwable.getMessage() == WalletApiException.ERROR_CODE_SIGNING_REQUEST) {
+                    exception = new WalletApiException(
+                            WalletApiException.ERROR_DESCRIPTION_SIGNING_REQUEST,
+                            WalletApiException.ERROR_CODE_SIGNING_REQUEST,
+                            0
+                    );
+                } else {
+                    exception = new WalletApiException("An exception occurred", throwable);
+                }
+                mainTaskCompletionSource.setError(exception);
             }
         });
     }
