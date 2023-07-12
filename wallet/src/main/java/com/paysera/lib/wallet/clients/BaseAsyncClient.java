@@ -179,8 +179,6 @@ public abstract class BaseAsyncClient {
                 description = jsonObject.getJSONArray(code).get(0).toString();
             } else if (jsonObject.opt(code) != null) {
                 description = jsonObject.get(code).toString();
-            } else if (jsonObject.optJSONObject(code) != null) {
-                description = jsonObject.getJSONObject(code).toString();
             }
             if (description != null) {
                 WalletApiErrorProperty walletApiErrorProperty = new WalletApiErrorProperty(code, description);
