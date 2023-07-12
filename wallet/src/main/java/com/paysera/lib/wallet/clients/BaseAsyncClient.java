@@ -177,8 +177,8 @@ public abstract class BaseAsyncClient {
             String description = null;
             if (jsonObject.optJSONArray(code) != null) {
                 description = jsonObject.getJSONArray(code).get(0).toString();
-            } else if (jsonObject.optString(code) != null) {
-                description = jsonObject.getString(code);
+            } else if (jsonObject.opt(code) != null) {
+                description = jsonObject.get(code).toString();
             } else if (jsonObject.optJSONObject(code) != null) {
                 description = jsonObject.getJSONObject(code).toString();
             }
