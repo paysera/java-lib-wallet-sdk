@@ -29,6 +29,7 @@ public class WalletApiException extends WalletSdkException {
 
     private static final String ERROR_DESCRIPTION_TIMESTAMP_IS_IN_THE_FUTURE = "Timestamp is in future";
     private static final String ERROR_DESCRIPTION_TIMESTAMP_LIFETIME_EXCEEDED = "Timestamp lifetime exceeded";
+    private static final String ERROR_LIVENESS_CHECKED_MAX_ATTEMPTS_REACHED = "rate_limit_exceeded_ge";
 
     private String errorDescription;
     private String errorCode;
@@ -200,6 +201,10 @@ public class WalletApiException extends WalletSdkException {
 
     public Boolean isRegistrationFromProhibitedCountry() {
         return this.errorCode != null && this.errorCode.equals(WalletApiException.ERROR_CODE_REGISTRATION_FROM_PROHIBITED_COUNTRY);
+    }
+
+    public Boolean isLivenessCheckMaxAttemptsReached() {
+        return this.errorCode != null && this.errorCode.equals(WalletApiException.ERROR_LIVENESS_CHECKED_MAX_ATTEMPTS_REACHED);
     }
 
     @Override
