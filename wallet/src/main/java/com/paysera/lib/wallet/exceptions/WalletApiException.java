@@ -22,6 +22,7 @@ public class WalletApiException extends WalletSdkException {
     public static final String ERROR_CODE_PASSWORD_TOO_RISKY = "password_too_risky";
     public static final String ERROR_CODE_REGISTRATION_FROM_PROHIBITED_COUNTRY = "phone_from_prohibited_country";
     public static final String ERROR_CODE_SIGNING_REQUEST = "signing_request";
+    private static final String ERROR_LIVENESS_CHECKED_MAX_ATTEMPTS_REACHED = "rate_limit_exceeded_ge";
 
     public static final String ERROR_DESCRIPTION_EXPIRED_TOKEN = "Token has expired";
     public static final String ERROR_DESCRIPTION_REFRESH_TOKEN_EXPIRED = "Refresh token expired";
@@ -206,6 +207,10 @@ public class WalletApiException extends WalletSdkException {
 
     public Boolean isSigningRequest() {
         return errorCode != null && errorCode.equals(ERROR_CODE_SIGNING_REQUEST);
+    }
+  
+    public Boolean isLivenessCheckMaxAttemptsReached() {
+        return this.errorCode != null && this.errorCode.equals(WalletApiException.ERROR_LIVENESS_CHECKED_MAX_ATTEMPTS_REACHED);
     }
 
     @Override
