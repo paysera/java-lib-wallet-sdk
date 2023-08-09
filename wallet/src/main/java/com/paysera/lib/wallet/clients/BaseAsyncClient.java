@@ -24,6 +24,8 @@ import retrofit2.Retrofit;
 import java.io.IOException;
 import java.util.*;
 
+import static com.paysera.lib.wallet.exceptions.WalletApiException.ERROR_HEADER_PAYSERA_CORRELATION_ID;
+
 public abstract class BaseAsyncClient {
     private Queue<Call> retrofitCalls = new LinkedList<>();
     private Queue<okhttp3.Call> okhttpCalls = new LinkedList<>();
@@ -105,6 +107,7 @@ public abstract class BaseAsyncClient {
                 } else {
                     final WalletApiException exception;
                     String responseBody = null;
+                    String payseraCorrelationId = response.headers().get(ERROR_HEADER_PAYSERA_CORRELATION_ID);
                     try {
                         responseBody = response.errorBody().string();
 
@@ -112,7 +115,8 @@ public abstract class BaseAsyncClient {
                         exception = new WalletApiException(
                             data.optString("error_description"),
                             data.getString("error"),
-                            response.code()
+                            response.code(),
+                            payseraCorrelationId
                         );
                         if (data.has("error_data")){
                             exception.setErrorData(data.getJSONObject("error_data"));
@@ -151,7 +155,8 @@ public abstract class BaseAsyncClient {
                         mainTaskCompletionSource.setError(
                             new WalletApiException(
                                 "An error occurred: " + responseBody,
-                                response.code()
+                                response.code(),
+                                payseraCorrelationId
                             )
                         );
                     }
@@ -164,7 +169,8 @@ public abstract class BaseAsyncClient {
                     exception = new WalletApiException(
                             WalletApiException.ERROR_DESCRIPTION_SIGNING_REQUEST,
                             WalletApiException.ERROR_CODE_SIGNING_REQUEST,
-                            0
+                            0,
+                            null
                     );
                 } else {
                     exception = new WalletApiException("An exception occurred", throwable);
@@ -234,6 +240,7 @@ public abstract class BaseAsyncClient {
                 }
 
                 String responseBody = null;
+                String payseraCorrelationId = response.headers().get(ERROR_HEADER_PAYSERA_CORRELATION_ID);
                 try {
                     responseBody = response.body().string();
                 } catch (IOException exception) {
@@ -264,7 +271,8 @@ public abstract class BaseAsyncClient {
                                 walletApiException = new WalletApiException(
                                     errorDescription,
                                     errorCode,
-                                    response.code()
+                                    response.code(),
+                                    payseraCorrelationId
                                 );
                                 if (data.has("error_data")){
                                     walletApiException.setErrorData(data.getJSONObject("error_data"));
@@ -273,7 +281,8 @@ public abstract class BaseAsyncClient {
                         } catch (JSONException exception) {
                             walletApiException = new WalletApiException(
                                 response.message(),
-                                response.code()
+                                response.code(),
+                                payseraCorrelationId
                             );
                         }
 
@@ -308,7 +317,8 @@ public abstract class BaseAsyncClient {
                         mainTaskCompletionSource.setError(
                             new WalletApiException(
                                 "An error occurred: " + responseBody,
-                                response.code()
+                                response.code(),
+                                payseraCorrelationId
                             )
                         );
                     }

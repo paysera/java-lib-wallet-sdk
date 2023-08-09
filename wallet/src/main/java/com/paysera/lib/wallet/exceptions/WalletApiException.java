@@ -33,21 +33,25 @@ public class WalletApiException extends WalletSdkException {
     private static final String ERROR_DESCRIPTION_TIMESTAMP_LIFETIME_EXCEEDED = "Timestamp lifetime exceeded";
     public static final String ERROR_DESCRIPTION_SIGNING_REQUEST = "An error occurred while signing the request";
 
+    public static final String ERROR_HEADER_PAYSERA_CORRELATION_ID = "paysera-correlation-id";
+
     private String errorDescription;
     private String errorCode;
     private List<WalletApiErrorProperty> errorProperties;
     private Integer statusCode;
     private RecaptchaHeaders recaptchaHeaders;
     private JSONObject errorData;
+    private String payseraCorrelationId;
 
     public WalletApiException(String detailMessage) {
         super(detailMessage);
     }
 
-    public WalletApiException(String errorDescription, String errorCode, Integer statusCode) {
+    public WalletApiException(String errorDescription, String errorCode, Integer statusCode, String payseraCorrelationId) {
         this.errorDescription = errorDescription;
         this.errorCode = errorCode;
         this.statusCode = statusCode;
+        this.payseraCorrelationId = payseraCorrelationId;
     }
 
     public WalletApiException(Throwable throwable) {
@@ -58,9 +62,14 @@ public class WalletApiException extends WalletSdkException {
         super(detailMessage, throwable);
     }
 
-    public WalletApiException(String detailMessage, int statusCode) {
+    public WalletApiException(String detailMessage, int statusCode, String payseraCorrelationId) {
         super(detailMessage);
         this.statusCode = statusCode;
+        this.payseraCorrelationId = payseraCorrelationId;
+    }
+
+    public String getPayseraCorrelationId() {
+        return payseraCorrelationId;
     }
 
     public String getErrorDescription() {

@@ -841,4 +841,9 @@ public class WalletAsyncClient extends BaseAsyncClient {
     public Task<EasyPayTransfer> cancelEasyPayTransfer(Long easyPayTransferId) {
         return this.execute(this.walletApiClient.cancelEasyPayTransfer(easyPayTransferId));
     }
+
+    // TEMP - WILL BE REMOVED AFTER TESTING
+    public Task<Void> get500Error() {
+        return this.execute(this.walletApiClient.get500Error());
+    }
 }

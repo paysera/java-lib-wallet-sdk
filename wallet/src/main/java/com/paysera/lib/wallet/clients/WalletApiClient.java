@@ -518,4 +518,8 @@ public interface WalletApiClient {
     );
 
     // End of EasyPay endpoints
+
+    // TEMP - WILL BE REMOVED AFTER TESTING
+    @GET("user/test-internal")
+    Call<Void> get500Error();
 }
