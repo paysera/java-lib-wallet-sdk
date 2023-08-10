@@ -14,6 +14,7 @@ import com.paysera.lib.wallet.entities.locations.LocationCategory;
 import com.paysera.lib.wallet.entities.notification.NotificationSubscriber;
 import com.paysera.lib.wallet.entities.pos.Spot;
 import com.paysera.lib.wallet.entities.requests.*;
+import com.paysera.lib.wallet.entities.transfer.IbanToEvp;
 import com.paysera.lib.wallet.entities.transfer.Transfer;
 import com.paysera.lib.wallet.entities.transfer.TransferPassword;
 import okhttp3.RequestBody;
@@ -518,4 +519,7 @@ public interface WalletApiClient {
     );
 
     // End of EasyPay endpoints
+
+    @GET("account/{iban}")
+    Call<IbanToEvp> getAccountNumberByIban(@Path("iban") String iban);
 }

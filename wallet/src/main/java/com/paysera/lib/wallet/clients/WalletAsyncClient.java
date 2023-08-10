@@ -19,6 +19,7 @@ import com.paysera.lib.wallet.entities.locations.LocationCategory;
 import com.paysera.lib.wallet.entities.notification.NotificationSubscriber;
 import com.paysera.lib.wallet.entities.pos.Spot;
 import com.paysera.lib.wallet.entities.requests.*;
+import com.paysera.lib.wallet.entities.transfer.IbanToEvp;
 import com.paysera.lib.wallet.entities.transfer.Transfer;
 import com.paysera.lib.wallet.entities.transfer.TransferPassword;
 import com.paysera.lib.wallet.filters.*;
@@ -840,5 +841,9 @@ public class WalletAsyncClient extends BaseAsyncClient {
 
     public Task<EasyPayTransfer> cancelEasyPayTransfer(Long easyPayTransferId) {
         return this.execute(this.walletApiClient.cancelEasyPayTransfer(easyPayTransferId));
+    }
+
+    public Task<IbanToEvp> getAccountNumberByIban(String iban) {
+        return this.execute(this.walletApiClient.getAccountNumberByIban(iban));
     }
 }
