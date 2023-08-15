@@ -54,6 +54,12 @@ public class WalletApiException extends WalletSdkException {
         this.payseraCorrelationId = payseraCorrelationId;
     }
 
+    public WalletApiException(String errorDescription, String errorCode, Integer statusCode) {
+        this.errorDescription = errorDescription;
+        this.errorCode = errorCode;
+        this.statusCode = statusCode;
+    }
+
     public WalletApiException(Throwable throwable) {
         super(throwable);
     }
@@ -66,6 +72,11 @@ public class WalletApiException extends WalletSdkException {
         super(detailMessage);
         this.statusCode = statusCode;
         this.payseraCorrelationId = payseraCorrelationId;
+    }
+
+    public WalletApiException(String detailMessage, int statusCode) {
+        super(detailMessage);
+        this.statusCode = statusCode;
     }
 
     public String getPayseraCorrelationId() {
