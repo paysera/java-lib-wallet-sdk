@@ -169,8 +169,7 @@ public abstract class BaseAsyncClient {
                     exception = new WalletApiException(
                             WalletApiException.ERROR_DESCRIPTION_SIGNING_REQUEST,
                             WalletApiException.ERROR_CODE_SIGNING_REQUEST,
-                            0,
-                            null
+                            0
                     );
                 } else {
                     exception = new WalletApiException("An exception occurred", throwable);
