@@ -14,6 +14,7 @@ import com.paysera.lib.wallet.entities.locations.LocationCategory;
 import com.paysera.lib.wallet.entities.notification.NotificationSubscriber;
 import com.paysera.lib.wallet.entities.pos.Spot;
 import com.paysera.lib.wallet.entities.requests.*;
+import com.paysera.lib.wallet.entities.transfer.IbanToEvp;
 import com.paysera.lib.wallet.entities.transfer.Transfer;
 import com.paysera.lib.wallet.entities.transfer.TransferPassword;
 import okhttp3.RequestBody;
@@ -38,12 +39,12 @@ public interface WalletApiClient {
     // Client endpoint
     @POST("client")
     Call<Client> createClient(
-        @Body Client client
+            @Body Client client
     );
 
     @GET("client/info/{clientId}/status")
     Call<UnknownDevice> getClientStatus(
-        @Path("clientId") Integer clientId
+            @Path("clientId") Integer clientId
     );
 
     @GET("client/locations")
@@ -52,11 +53,11 @@ public interface WalletApiClient {
     // Currency Conversion
     @GET("currency-conversion")
     Call<CurrencyConversionCalculation> calculateCurrencyConversion(
-        @Query("from_amount_decimal") String fromAmountDecimal,
-        @Query("from_currency") String fromCurrency,
-        @Query("to_amount_decimal") String toAmountDecimal,
-        @Query("to_currency") String toCurrency,
-        @Query("account_number") String accountNumber
+            @Query("from_amount_decimal") String fromAmountDecimal,
+            @Query("from_currency") String fromCurrency,
+            @Query("to_amount_decimal") String toAmountDecimal,
+            @Query("to_currency") String toCurrency,
+            @Query("account_number") String accountNumber
     );
 
     @POST("currency-conversion")
@@ -75,7 +76,7 @@ public interface WalletApiClient {
 
     @GET("user/{id}")
     Call<User> getUser(
-        @Path("id") Integer userId
+            @Path("id") Integer userId
     );
 
     @GET("user/me/projects")
@@ -83,12 +84,12 @@ public interface WalletApiClient {
 
     @GET("user/me/projects")
     Call<List<Project>> getUserProjects(
-        @Query("fields") String fields
+            @Query("fields") String fields
     );
 
     @GET("user/{id}/projects")
     Call<List<Project>> getUserProjects(
-        @Path("id") Integer userId
+            @Path("id") Integer userId
     );
 
     @POST("user")
@@ -105,28 +106,28 @@ public interface WalletApiClient {
 
     @PUT("user/{userId}/password")
     Call<User> resetPassword(
-        @Path("userId") Integer id,
-        @Body ResetPasswordConfirmRequest userPasswordResetConfirm
+            @Path("userId") Integer id,
+            @Body ResetPasswordConfirmRequest userPasswordResetConfirm
     );
 
     @PUT("user/{userId}/password")
     Call<User> changePassword(
-        @Path("userId") Integer id,
-        @Body ChangePasswordRequest changePasswordRequest
+            @Path("userId") Integer id,
+            @Body ChangePasswordRequest changePasswordRequest
     );
 
     @GET("user")
     Call<User> getUser(
-        @Query("email") String email,
-        @Query("phone") String phone,
-        @Query("person_code") String personCode,
-        @Query("nationality") String nationality
+            @Query("email") String email,
+            @Query("phone") String phone,
+            @Query("person_code") String personCode,
+            @Query("nationality") String nationality
     );
 
     @PUT("user/{userId}/phone/confirm")
     Call<User> confirmPhone(
-        @Path("userId") Integer userId,
-        @Body ConfirmPhoneRequest confirmPhoneRequest
+            @Path("userId") Integer userId,
+            @Body ConfirmPhoneRequest confirmPhoneRequest
     );
 
     @PUT("user/me/email/confirm")
@@ -134,23 +135,23 @@ public interface WalletApiClient {
 
     @GET("user/me/identification-requests")
     Call<MetadataAwareResponse<IdentificationRequest>> getIdentificationRequests(
-        @Query("statuses[]") List<String> statuses,
-        @Query("order_by") String orderBy,
-        @Query("order_direction") String orderDirection,
-        @Query("limit") Integer limit,
-        @Query("offset") Integer offset
+            @Query("statuses[]") List<String> statuses,
+            @Query("order_by") String orderBy,
+            @Query("order_direction") String orderDirection,
+            @Query("limit") Integer limit,
+            @Query("offset") Integer offset
     );
 
     @GET("user/{userId}/identification-requests")
     Call<MetadataAwareResponse<IdentificationRequest>> getIdentificationRequests(
-        @Path("userId") Integer userId,
-        @Query("statuses[]") List<String> statuses
+            @Path("userId") Integer userId,
+            @Query("statuses[]") List<String> statuses
     );
 
     @POST("user/{userId}/phone")
     Call<User> assignPhoneNumber(
-        @Path("userId") Integer userId,
-        @Body AssignPhoneNumberRequest assignPhoneNumberRequest
+            @Path("userId") Integer userId,
+            @Body AssignPhoneNumberRequest assignPhoneNumberRequest
     );
 
     @POST("user/me/email")
@@ -173,8 +174,8 @@ public interface WalletApiClient {
 
     @PUT("user/{userId}/service/{service}")
     Call<Void> enableUserService(
-        @Path("userId") Integer userId,
-        @Path("service") String service
+            @Path("userId") Integer userId,
+            @Path("service") String service
     );
 
     // Wallet endpoint
@@ -183,10 +184,10 @@ public interface WalletApiClient {
 
     @GET("wallet/{id}/balance")
     Call<WalletBalance> getWalletBalance(
-        @Path("id") Integer walletId,
-        @Query("convert_to") String convertToCurrency,
-        @Query("include_convert_to_currency") Boolean includeConvertToCurrency,
-        @Query("show_historical_currencies") Boolean showHistoricalCurrencies
+            @Path("id") Integer walletId,
+            @Query("convert_to") String convertToCurrency,
+            @Query("include_convert_to_currency") Boolean includeConvertToCurrency,
+            @Query("show_historical_currencies") Boolean showHistoricalCurrencies
     );
 
     @DELETE("wallet/{id}/description")
@@ -194,61 +195,61 @@ public interface WalletApiClient {
 
     @PUT("wallet/{walletId}")
     Call<Wallet> changeWalletDescription(
-        @Path("walletId") Integer id,
-        @Body ChangeWalletDescriptionRequest changeWalletDescriptionRequest
+            @Path("walletId") Integer id,
+            @Body ChangeWalletDescriptionRequest changeWalletDescriptionRequest
     );
 
     @GET("wallet")
     Call<Wallet> getWallet(
-        @Query("account_number") String accountNumber,
-        @Query("phone") String phone,
-        @Query("email") String email,
-        @Query("user_id") Integer userId
+            @Query("account_number") String accountNumber,
+            @Query("phone") String phone,
+            @Query("email") String email,
+            @Query("user_id") Integer userId
     );
 
     @GET("wallets")
     Call<Map<String, Wallet>> getWallets(
-        @Query("email") String emailList,
-        @Query("phone") String phoneList,
-        @Query("email_hash") String emailHashList,
-        @Query("phone_hash") String phoneHashList,
-        @Query("limit") Integer limit
+            @Query("email") String emailList,
+            @Query("phone") String phoneList,
+            @Query("email_hash") String emailHashList,
+            @Query("phone_hash") String phoneHashList,
+            @Query("limit") Integer limit
     );
 
     @GET("wallet/{id}/statements")
     Call<MetadataAwareResponse<Statement>> getStatements(
-        @Path("id") Integer walletId,
-        @Query("currency") String currencies,
-        @Query("direction") String direction,
-        @Query("text") String text,
-        @Query("from") Long from,
-        @Query("to") Long to,
-        @Query("limit") Integer limit,
-        @Query("offset") Integer offset,
-        @Query("after") String after,
-        @Query("before") String before,
-        @Query("order_by") String orderBy,
-        @Query("order_direction") String orderDirection
+            @Path("id") Integer walletId,
+            @Query("currency") String currencies,
+            @Query("direction") String direction,
+            @Query("text") String text,
+            @Query("from") Long from,
+            @Query("to") Long to,
+            @Query("limit") Integer limit,
+            @Query("offset") Integer offset,
+            @Query("after") String after,
+            @Query("before") String before,
+            @Query("order_by") String orderBy,
+            @Query("order_direction") String orderDirection
     );
 
     @GET("wallet/{id}/pending-payments")
     Call<MetadataAwareResponse<PendingPayment>> getPendingPayments(
-        @Path("id") Integer walletId,
-        @Query("limit") Integer limit,
-        @Query("offset") Integer offset
+            @Path("id") Integer walletId,
+            @Query("limit") Integer limit,
+            @Query("offset") Integer offset
     );
 
     @GET("wallet/{id}/reservation-statements")
     Call<MetadataAwareResponse<ReservationStatement>> getReservationStatements(
-        @Path("id") Integer walletId,
-        @Query("limit") Integer limit,
-        @Query("offset") Integer offset
+            @Path("id") Integer walletId,
+            @Query("limit") Integer limit,
+            @Query("offset") Integer offset
     );
 
     @DELETE("wallet/{walletId}/pending-payment/{pendingPaymentId}")
     Call<Void> cancelPendingPayment(
-        @Path("walletId") Integer walletId,
-        @Path("pendingPaymentId") long pendingPaymentId
+            @Path("walletId") Integer walletId,
+            @Path("pendingPaymentId") long pendingPaymentId
     );
 
     // Card endpoint
@@ -257,9 +258,9 @@ public interface WalletApiClient {
 
     @GET("cards")
     Call<MetadataAwareResponse<Card>> getCards(
-        @Query("user_id") Integer userId,
-        @Query("limit") Integer limit,
-        @Query("offset") Integer offset
+            @Query("user_id") Integer userId,
+            @Query("limit") Integer limit,
+            @Query("offset") Integer offset
     );
 
     @GET("card/{id}")
@@ -274,21 +275,21 @@ public interface WalletApiClient {
 
     @GET("locations")
     Call<MetadataAwareResponse<Location>> getLocations(
-        @Query("locale") String locale,
-        @Query("lat") Float lat,
-        @Query("lng") Float lng,
-        @Query("distance") Float distance,
-        @Query("updated_after") Long updatedAfter,
-        @Query("status") String status,
-        @Query("limit") Integer limit,
-        @Query("offset") Integer offset
+            @Query("locale") String locale,
+            @Query("lat") Float lat,
+            @Query("lng") Float lng,
+            @Query("distance") Float distance,
+            @Query("updated_after") Long updatedAfter,
+            @Query("status") String status,
+            @Query("limit") Integer limit,
+            @Query("offset") Integer offset
     );
 
     // Transaction endpoint
     @POST("transaction/{transactionKey}/request")
     Call<TransactionRequest> createTransactionRequest(
-        @Path("transactionKey") String transactionKey,
-        @Body TransactionRequest transactionRequest
+            @Path("transactionKey") String transactionKey,
+            @Body TransactionRequest transactionRequest
     );
 
     @POST("transaction")
@@ -299,18 +300,18 @@ public interface WalletApiClient {
 
     @GET("transaction/{transactionKey}")
     Call<Transaction> getTransaction(
-        @Path("transactionKey") String transactionKey,
-        @Query("fields") String fields
+            @Path("transactionKey") String transactionKey,
+            @Query("fields") String fields
     );
 
     @GET("transactions")
     Call<MetadataAwareResponse<Transaction>> getTransactions(
-        @Query("project_id") Integer projectId,
-        @Query("location_id") Integer locationId,
-        @Query("status") String status,
-        @Query("limit") Integer limit,
-        @Query("offset") Integer offset,
-        @Query("from") Integer from
+            @Query("project_id") Integer projectId,
+            @Query("location_id") Integer locationId,
+            @Query("status") String status,
+            @Query("limit") Integer limit,
+            @Query("offset") Integer offset,
+            @Query("from") Integer from
     );
 
     @PUT("transaction/{transactionKey}/confirm")
@@ -322,17 +323,17 @@ public interface WalletApiClient {
     // Contact book endpoint
     @PUT("contact-book/{contactBookId}/append")
     Call<Void> appendContactsToContactBook(
-        @Path("contactBookId") Integer contactBookId,
-        @Body AppendContactsToContactBookRequest request
+            @Path("contactBookId") Integer contactBookId,
+            @Body AppendContactsToContactBookRequest request
     );
 
     @DELETE("contact-book/{contactBookId}/contacts")
     Call<Void> removeFromContactBook(
-        @Path("contactBookId") Integer contactBookId,
-        @Query("email") String emailList,
-        @Query("phone") String phoneList,
-        @Query("email_hash") String emailHashList,
-        @Query("phone_hash") String phoneHashList
+            @Path("contactBookId") Integer contactBookId,
+            @Query("email") String emailList,
+            @Query("phone") String phoneList,
+            @Query("email_hash") String emailHashList,
+            @Query("phone_hash") String phoneHashList
     );
 
     // Subscriber endpoint
@@ -363,16 +364,16 @@ public interface WalletApiClient {
 
     @GET("transfers")
     Call<MetadataAwareResponse<Transfer>> getTransfers(
-        @Query("credit_account_number") String creditAccountNumber,
-        @Query("statuses[]") List<String> statuses,
-        @Query("offset") Integer offset,
-        @Query("limit") Integer limit
+            @Query("credit_account_number") String creditAccountNumber,
+            @Query("statuses[]") List<String> statuses,
+            @Query("offset") Integer offset,
+            @Query("limit") Integer limit
     );
 
     @PUT("transfers/{transferId}/provide-password")
     Call<Transfer> provideTransferPassword(
-        @Path("transferId") Long transferId,
-        @Body TransferPassword password
+            @Path("transferId") Long transferId,
+            @Body TransferPassword password
     );
 
     @POST("jwt/tokens")
@@ -380,11 +381,11 @@ public interface WalletApiClient {
 
     @GET("confirmations/me")
     Call<MetadataAwareResponse<Confirmation>> getConfirmations(
-        @Query("limit") Integer limit,
-        @Query("offset") Integer offset,
-        @Query("order_by") String orderBy,
-        @Query("order_direction") String orderDirection,
-        @Query("status") String status
+            @Query("limit") Integer limit,
+            @Query("offset") Integer offset,
+            @Query("order_by") String orderBy,
+            @Query("order_direction") String orderDirection,
+            @Query("status") String status
     );
 
     @GET("confirmations/{identifier}")
@@ -401,8 +402,8 @@ public interface WalletApiClient {
 
     @PUT("transaction/{transactionKey}/reserve")
     Call<Void> reserveTransaction(
-        @Path("transactionKey") String transactionKey,
-        @Body ReserveTransactionRequest reserveTransactionRequest
+            @Path("transactionKey") String transactionKey,
+            @Body ReserveTransactionRequest reserveTransactionRequest
     );
 
     @POST("auth-token/token")
@@ -419,22 +420,22 @@ public interface WalletApiClient {
 
     @POST("identification-request/{identificationRequestId}/identity-document")
     Call<CreateDocumentIdentificationResponse> createDocumentIdentificationRequest(
-        @Path("identificationRequestId") Long identificationRequestId,
-        @Body CreateDocumentIdentificationRequest request
+            @Path("identificationRequestId") Long identificationRequestId,
+            @Body CreateDocumentIdentificationRequest request
     );
 
     @PUT("identification-request/{identificationRequestId}/face-photo/image/{order}")
     Call<Void> identificationRequestFileUpload(
-        @Path("identificationRequestId") Long identificationRequestId,
-        @Path("order") Integer order,
-        @Body RequestBody body
+            @Path("identificationRequestId") Long identificationRequestId,
+            @Path("order") Integer order,
+            @Body RequestBody body
     );
 
     @PUT("identity-document/{identificationDocumentId}/image/{order}")
     Call<Void> identificationDocumentFileUpload(
-        @Path("identificationDocumentId") Long identificationDocumentId,
-        @Path("order") Integer order,
-        @Body RequestBody body
+            @Path("identificationDocumentId") Long identificationDocumentId,
+            @Path("order") Integer order,
+            @Body RequestBody body
     );
 
     @PUT("identification-request/{identificationRequestId}/submit")
@@ -442,14 +443,14 @@ public interface WalletApiClient {
 
     @POST("identification-request/{identificationRequestId}/additional-document")
     Call<CreateDocumentIdentificationResponse> createAdditionalDocumentRequest(
-        @Path("identificationRequestId") Long identificationDocumentId,
-        @Body CreateDocumentIdentificationRequest request
+            @Path("identificationRequestId") Long identificationDocumentId,
+            @Body CreateDocumentIdentificationRequest request
     );
 
     @POST("additional-document/{additionalDocumentId}/file")
     Call<Void> additionalDocumentUpload(
-        @Path("additionalDocumentId") Long additionalDocumentId,
-        @Body RequestBody body
+            @Path("additionalDocumentId") Long additionalDocumentId,
+            @Body RequestBody body
     );
 
     @GET("generator/{id}")
@@ -463,26 +464,26 @@ public interface WalletApiClient {
 
     @PUT("subscriber/{subscriberId}")
     Call<NotificationSubscriber> editNotificationsSubscriber(
-        @Path("subscriberId") Integer subscriberId,
-        @Body NotificationSubscriber notificationSubscriber
+            @Path("subscriberId") Integer subscriberId,
+            @Body NotificationSubscriber notificationSubscriber
     );
 
     @FormUrlEncoded
     @POST
     Call<Void> unlockRecaptcha(
-        @Url String unlockUrl,
-        @Field("g-recaptcha-response") String gRecaptchaResponse
+            @Url String unlockUrl,
+            @Field("g-recaptcha-response") String gRecaptchaResponse
     );
 
     @FormUrlEncoded
     @POST
     Call<Void> unlockRecaptcha(
-        @Url String unlockUrl,
-        @Header("g-recaptcha-response") String gRecaptchaResponse,
-        @Field("grant_type") String grantType,
-        @Field("username") String username,
-        @Field("password") String password,
-        @Field("scope") String scopes
+            @Url String unlockUrl,
+            @Header("g-recaptcha-response") String gRecaptchaResponse,
+            @Field("grant_type") String grantType,
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("scope") String scopes
     );
 
     @POST("contacts")
@@ -492,32 +493,35 @@ public interface WalletApiClient {
 
     @GET("epay/fees")
     Call<EasyPayFees> getEasyPayFees(
-        @Query("amount") String amount,
-        @Query("currency") String currency
+            @Query("amount") String amount,
+            @Query("currency") String currency
     );
 
     @GET("epay/transfers")
     Call<CommonMetadataAwareResponse<EasyPayTransfer>> getEasyPayTransfers(
-        @Query("status") String status,
-        @Query("beneficiary_user_id") Integer beneficiaryUserId,
-        @Query("payer_wallet_id") Integer payerWalletId,
-        @Query("limit") Integer limit,
-        @Query("offset") Integer offset,
-        @Query("order_by") String orderBy,
-        @Query("order_direction") String orderDirection
+            @Query("status") String status,
+            @Query("beneficiary_user_id") Integer beneficiaryUserId,
+            @Query("payer_wallet_id") Integer payerWalletId,
+            @Query("limit") Integer limit,
+            @Query("offset") Integer offset,
+            @Query("order_by") String orderBy,
+            @Query("order_direction") String orderDirection
     );
 
     @POST("epay/transfers")
     Call<EasyPayTransfer> createEasyPayTransfer(
-        @Body EasyPayCreateTransfer easyPayCreateTransfer
+            @Body EasyPayCreateTransfer easyPayCreateTransfer
     );
 
     @PUT("epay/transfers/{easy_pay_transfer_id}/cancel")
     Call<EasyPayTransfer> cancelEasyPayTransfer(
-        @Path("easy_pay_transfer_id") Long easyPayTransferId
+            @Path("easy_pay_transfer_id") Long easyPayTransferId
     );
 
     // End of EasyPay endpoints
+
+    @GET("account/{iban}")
+    Call<IbanToEvp> getAccountNumberByIban(@Path("iban") String iban);
 
     // TEMP - WILL BE REMOVED AFTER TESTING
     @GET("user/test-internal")
