@@ -39,19 +39,19 @@ public class WalletAsyncClient extends BaseAsyncClient {
     private WalletApiClient walletApiClient;
 
     public WalletAsyncClient(
-            TimestampProvider timestampProvider,
-            ClientServerTimeSynchronizationConfiguration clientServerTimeSynchronizationConfiguration,
-            PublicWalletApiClient publicWalletApiClient,
-            WalletApiClient walletApiClient,
-            Retrofit retrofit,
-            OkHTTPQueryStringConverter okHTTPQueryStringConverter
+        TimestampProvider timestampProvider,
+        ClientServerTimeSynchronizationConfiguration clientServerTimeSynchronizationConfiguration,
+        PublicWalletApiClient publicWalletApiClient,
+        WalletApiClient walletApiClient,
+        Retrofit retrofit,
+        OkHTTPQueryStringConverter okHTTPQueryStringConverter
     ) {
         super(
-                timestampProvider,
-                clientServerTimeSynchronizationConfiguration,
-                publicWalletApiClient,
-                retrofit,
-                okHTTPQueryStringConverter
+            timestampProvider,
+            clientServerTimeSynchronizationConfiguration,
+            publicWalletApiClient,
+            retrofit,
+            okHTTPQueryStringConverter
         );
         this.walletApiClient = walletApiClient;
     }
@@ -66,13 +66,13 @@ public class WalletAsyncClient extends BaseAsyncClient {
 
     public Task<CurrencyConversionCalculation> calculateCurrencyConversion(CurrencyConversionCalculation request) {
         return this.execute(
-                this.walletApiClient.calculateCurrencyConversion(
-                        request.getFromAmountDecimal(),
-                        request.getFromCurrency(),
-                        request.getToAmountDecimal(),
-                        request.getToCurrency(),
-                        request.getAccountNumber()
-                )
+            this.walletApiClient.calculateCurrencyConversion(
+                request.getFromAmountDecimal(),
+                request.getFromCurrency(),
+                request.getToAmountDecimal(),
+                request.getToCurrency(),
+                request.getAccountNumber()
+            )
         );
     }
 
@@ -131,23 +131,23 @@ public class WalletAsyncClient extends BaseAsyncClient {
         boolean showHistoricalCurrency = getWalletBalanceRequest.isShowHistoricalCurrencies();
 
         return this.execute(
-                this.walletApiClient.getWalletBalance(
-                        walletId,
-                        convertToCurrency,
-                        includeConvertToCurrency,
-                        showHistoricalCurrency
-                )
+            this.walletApiClient.getWalletBalance(
+                walletId,
+                convertToCurrency,
+                includeConvertToCurrency,
+                showHistoricalCurrency
+            )
         ).continueWithTask(task -> {
-                    if (convertToCurrency == null) {
-                        return task;
-                    }
-
-                    for (CurrencyBalance currencyBalance : task.getResult().getCurrencyBalances()) {
-                        currencyBalance.setConvertedCurrency(convertToCurrency);
-                    }
-
+                if (convertToCurrency == null) {
                     return task;
                 }
+
+                for (CurrencyBalance currencyBalance : task.getResult().getCurrencyBalances()) {
+                    currencyBalance.setConvertedCurrency(convertToCurrency);
+                }
+
+                return task;
+            }
         );
     }
 
@@ -157,12 +157,12 @@ public class WalletAsyncClient extends BaseAsyncClient {
 
     public Task<Wallet> getWallet(WalletFilter walletFilter) {
         return execute(
-                walletApiClient.getWallet(
-                        walletFilter.getAccountNumber(),
-                        walletFilter.getPhone(),
-                        walletFilter.getEmail(),
-                        walletFilter.getUserId()
-                )
+            walletApiClient.getWallet(
+                walletFilter.getAccountNumber(),
+                walletFilter.getPhone(),
+                walletFilter.getEmail(),
+                walletFilter.getUserId()
+            )
         );
     }
 
@@ -179,14 +179,14 @@ public class WalletAsyncClient extends BaseAsyncClient {
     }
 
     public Task<MetadataAwareResponse<Card>> getCards(
-            CardFilter cardFilter
+        CardFilter cardFilter
     ) {
         return this.execute(
-                this.walletApiClient.getCards(
-                        cardFilter.getUserId(),
-                        cardFilter.getLimit(),
-                        cardFilter.getOffset()
-                )
+            this.walletApiClient.getCards(
+                cardFilter.getUserId(),
+                cardFilter.getLimit(),
+                cardFilter.getOffset()
+            )
         );
     }
 
@@ -195,69 +195,69 @@ public class WalletAsyncClient extends BaseAsyncClient {
     }
 
     public Task<Wallet> changeWalletDescription(
-            Integer walletId,
-            String description
+        Integer walletId,
+        String description
     ) {
         ChangeWalletDescriptionRequest
-                changeWalletDescriptionRequest = new ChangeWalletDescriptionRequest(description);
+            changeWalletDescriptionRequest = new ChangeWalletDescriptionRequest(description);
         return this.execute(this.walletApiClient.changeWalletDescription(
-                walletId, changeWalletDescriptionRequest
+            walletId, changeWalletDescriptionRequest
         ));
     }
 
     public Task<User> assignPhoneNumber(
-            Integer userId,
-            String phone,
-            UserPhoneConfirmationParameters parameters
+        Integer userId,
+        String phone,
+        UserPhoneConfirmationParameters parameters
     ) {
         AssignPhoneNumberRequest assignPhoneNumberRequest = new AssignPhoneNumberRequest(phone, parameters);
         return this.execute(
-                this.walletApiClient.assignPhoneNumber(
-                        userId,
-                        assignPhoneNumberRequest
-                )
+            this.walletApiClient.assignPhoneNumber(
+                userId,
+                assignPhoneNumberRequest
+            )
         );
     }
 
     public Task<User> assignPhoneNumber(
-            Integer userId,
-            String phone
+        Integer userId,
+        String phone
     ) {
         AssignPhoneNumberRequest assignPhoneNumberRequest = new AssignPhoneNumberRequest(phone);
         return this.execute(
-                this.walletApiClient.assignPhoneNumber(
-                        userId, assignPhoneNumberRequest
-                )
+            this.walletApiClient.assignPhoneNumber(
+                userId, assignPhoneNumberRequest
+            )
         );
     }
 
     public Task<User> assignEmail(
-            String email,
-            UserEmailConfirmationParameters parameters
+        String email,
+        UserEmailConfirmationParameters parameters
     ) {
         AssignEmailRequest assignEmailRequest = new AssignEmailRequest(email, parameters);
         return this.execute(this.walletApiClient.assignEmail(assignEmailRequest));
     }
 
     public Task<User> assignEmail(
-            String email
+        String email
     ) {
         AssignEmailRequest assignEmailRequest = new AssignEmailRequest(email);
         return this.execute(this.walletApiClient.assignEmail(assignEmailRequest));
     }
 
     public Task<User> confirmPhone(
-            Integer userId,
-            String code
+        Integer userId,
+        String code
     ) {
         ConfirmPhoneRequest confirmPhoneRequestRequestBody = new ConfirmPhoneRequest(code);
         return this.execute(this.walletApiClient.confirmPhone(
-                userId, confirmPhoneRequestRequestBody
+            userId, confirmPhoneRequestRequestBody
         ));
     }
 
     public Task<User> confirmEmail(
-            String code
+        String code
     ) {
         ConfirmEmailRequest confirmEmailRequest = new ConfirmEmailRequest(code);
         return this.execute(this.walletApiClient.confirmEmail(confirmEmailRequest));
@@ -269,14 +269,14 @@ public class WalletAsyncClient extends BaseAsyncClient {
 
     public Task<Void> setUserAvatar(Integer userId, RequestBody requestBody) {
         return this.execute(this.walletApiClient.setUserAvatar(
-                userId,
-                requestBody
+            userId,
+            requestBody
         ));
     }
 
     public Task<Void> setUserAvatar(RequestBody requestBody) {
         return this.execute(this.walletApiClient.setUserAvatar(
-                requestBody
+            requestBody
         ));
     }
 
@@ -285,9 +285,9 @@ public class WalletAsyncClient extends BaseAsyncClient {
     }
 
     public Task<UserPosition> provideUserPosition(
-            float lat,
-            float lng,
-            String type
+        float lat,
+        float lng,
+        String type
     ) {
         UserPosition userPosition = new UserPosition(lat, lng, type);
         return this.execute(this.walletApiClient.provideUserPosition(userPosition));
@@ -302,25 +302,25 @@ public class WalletAsyncClient extends BaseAsyncClient {
     }
 
     public Task<Void> cancelPendingPayment(
-            Integer walletId,
-            long pendingPaymentId
+        Integer walletId,
+        long pendingPaymentId
     ) {
         return this.execute(
-                this.walletApiClient.cancelPendingPayment(
-                        walletId,
-                        pendingPaymentId
-                )
+            this.walletApiClient.cancelPendingPayment(
+                walletId,
+                pendingPaymentId
+            )
         );
     }
 
     public Task<TransactionRequest> createTransactionRequest(
-            TransactionRequest transactionRequest
+        TransactionRequest transactionRequest
     ) {
         return this.execute(
-                this.walletApiClient.createTransactionRequest(
-                        transactionRequest.getTransactionKey(),
-                        transactionRequest
-                )
+            this.walletApiClient.createTransactionRequest(
+                transactionRequest.getTransactionKey(),
+                transactionRequest
+            )
         );
     }
 
@@ -337,7 +337,7 @@ public class WalletAsyncClient extends BaseAsyncClient {
     }
 
     public Task<User> createUser(
-            UserRegistrationRequest userRegistrationRequest
+        UserRegistrationRequest userRegistrationRequest
     ) {
         return this.execute(this.walletApiClient.createUser(userRegistrationRequest));
     }
@@ -347,55 +347,55 @@ public class WalletAsyncClient extends BaseAsyncClient {
     }
 
     public Task<User> resetPassword(
-            Integer userId,
-            String code,
-            String password
+        Integer userId,
+        String code,
+        String password
     ) {
         ResetPasswordConfirmRequest resetPasswordConfirmRequest = new ResetPasswordConfirmRequest();
         resetPasswordConfirmRequest.setCode(code);
         resetPasswordConfirmRequest.setPassword(password);
         return this.execute(
-                this.walletApiClient.resetPassword(
-                        userId,
-                        resetPasswordConfirmRequest
-                )
+            this.walletApiClient.resetPassword(
+                userId,
+                resetPasswordConfirmRequest
+            )
         );
     }
 
     public Task<User> changePassword(
-            Integer userId,
-            String oldPassword,
-            String newPassword
+        Integer userId,
+        String oldPassword,
+        String newPassword
     ) {
         ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest();
         changePasswordRequest.setOldPassword(oldPassword);
         changePasswordRequest.setPassword(newPassword);
         return this.execute(
-                this.walletApiClient.changePassword(
-                        userId,
-                        changePasswordRequest
-                )
+            this.walletApiClient.changePassword(
+                userId,
+                changePasswordRequest
+            )
         );
     }
 
     public Task<User> getUser(UserFilter userFilter) {
         return this.execute(this.walletApiClient.getUser(
-                userFilter.getEmail(),
-                userFilter.getPhone(),
-                userFilter.getPersonCode(),
-                userFilter.getCountryCode()
+            userFilter.getEmail(),
+            userFilter.getPhone(),
+            userFilter.getPersonCode(),
+            userFilter.getCountryCode()
         ));
     }
 
     public Task<Map<String, Wallet>> getWallets(WalletsFilter walletsFilter) {
         return this.execute(
-                this.walletApiClient.getWallets(
-                        StringHelper.listToString(walletsFilter.getEmailList(), ","),
-                        StringHelper.listToString(walletsFilter.getPhoneList(), ","),
-                        StringHelper.listToString(walletsFilter.getEmailHashList(), ","),
-                        StringHelper.listToString(walletsFilter.getPhoneHashList(), ","),
-                        walletsFilter.getLimit()
-                )
+            this.walletApiClient.getWallets(
+                StringHelper.listToString(walletsFilter.getEmailList(), ","),
+                StringHelper.listToString(walletsFilter.getPhoneList(), ","),
+                StringHelper.listToString(walletsFilter.getEmailHashList(), ","),
+                StringHelper.listToString(walletsFilter.getPhoneHashList(), ","),
+                walletsFilter.getLimit()
+            )
         );
     }
 
@@ -404,65 +404,65 @@ public class WalletAsyncClient extends BaseAsyncClient {
     }
 
     public Task<MetadataAwareResponse<Location>> getLocations(
-            LocationsFilter locationsFilter
+        LocationsFilter locationsFilter
     ) {
         return this.execute(
-                this.walletApiClient.getLocations(
-                        locationsFilter.getLocale(),
-                        locationsFilter.getLat(),
-                        locationsFilter.getLng(),
-                        locationsFilter.getDistance(),
-                        DateHelper.convertDateToUnixTimestampSeconds(locationsFilter.getUpdatedAfter()),
-                        StringHelper.listToString(locationsFilter.getStatuses(), ","),
-                        locationsFilter.getLimit(),
-                        locationsFilter.getOffset()
-                )
+            this.walletApiClient.getLocations(
+                locationsFilter.getLocale(),
+                locationsFilter.getLat(),
+                locationsFilter.getLng(),
+                locationsFilter.getDistance(),
+                DateHelper.convertDateToUnixTimestampSeconds(locationsFilter.getUpdatedAfter()),
+                StringHelper.listToString(locationsFilter.getStatuses(), ","),
+                locationsFilter.getLimit(),
+                locationsFilter.getOffset()
+            )
         );
     }
 
     public Task<MetadataAwareResponse<Statement>> getStatements(
-            StatementsFilter statementsFilter
+        StatementsFilter statementsFilter
     ) {
         String orderDirectionValue = null;
         if (statementsFilter.getOrderDirection() != null) {
             orderDirectionValue = statementsFilter.getOrderDirection().toString();
         }
         return this.execute(
-                this.walletApiClient.getStatements(
-                        statementsFilter.getWalletId(),
-                        StringHelper.listToString(statementsFilter.getCurrencies(), ","),
-                        EnumHelper.enumToString(statementsFilter.getDirection()),
-                        statementsFilter.getText(),
-                        DateHelper.convertDateToUnixTimestampSeconds(statementsFilter.getFrom()),
-                        DateHelper.convertDateToUnixTimestampSeconds(statementsFilter.getTo()),
-                        statementsFilter.getLimit(),
-                        statementsFilter.getOffset(),
-                        statementsFilter.getAfter(),
-                        statementsFilter.getBefore(),
-                        statementsFilter.getOrderBy(),
-                        orderDirectionValue
-                )
+            this.walletApiClient.getStatements(
+                statementsFilter.getWalletId(),
+                StringHelper.listToString(statementsFilter.getCurrencies(), ","),
+                EnumHelper.enumToString(statementsFilter.getDirection()),
+                statementsFilter.getText(),
+                DateHelper.convertDateToUnixTimestampSeconds(statementsFilter.getFrom()),
+                DateHelper.convertDateToUnixTimestampSeconds(statementsFilter.getTo()),
+                statementsFilter.getLimit(),
+                statementsFilter.getOffset(),
+                statementsFilter.getAfter(),
+                statementsFilter.getBefore(),
+                statementsFilter.getOrderBy(),
+                orderDirectionValue
+            )
         );
     }
 
     public Task<MetadataAwareResponse<PendingPayment>> getPendingPayments(
-            StatementsFilter statementsFilter
+        StatementsFilter statementsFilter
     ) {
         return this.execute(this.walletApiClient.getPendingPayments(
-                statementsFilter.getWalletId(),
-                statementsFilter.getLimit(),
-                statementsFilter.getOffset()
+            statementsFilter.getWalletId(),
+            statementsFilter.getLimit(),
+            statementsFilter.getOffset()
         ));
     }
 
     public Task<MetadataAwareResponse<ReservationStatement>> getReservationStatements(
-            StatementsFilter statementsFilter
+        StatementsFilter statementsFilter
     ) {
         return this.execute(
-                this.walletApiClient.getReservationStatements(
-                        statementsFilter.getWalletId(),
-                        statementsFilter.getLimit(), statementsFilter.getOffset()
-                )
+            this.walletApiClient.getReservationStatements(
+                statementsFilter.getWalletId(),
+                statementsFilter.getLimit(), statementsFilter.getOffset()
+            )
         );
     }
 
@@ -475,11 +475,11 @@ public class WalletAsyncClient extends BaseAsyncClient {
     }
 
     public Task<Void> appendContactsToContactBook(
-            Integer contactBookId,
-            List<String> emails,
-            List<String> phones,
-            List<String> emailHashes,
-            List<String> phoneHashes
+        Integer contactBookId,
+        List<String> emails,
+        List<String> phones,
+        List<String> emailHashes,
+        List<String> phoneHashes
     ) {
         AppendContactsToContactBookRequest request = new AppendContactsToContactBookRequest();
         request.setEmails(emails);
@@ -487,32 +487,32 @@ public class WalletAsyncClient extends BaseAsyncClient {
         request.setEmailHashes(emailHashes);
         request.setPhoneHashes(phoneHashes);
         return this.execute(
-                this.walletApiClient.appendContactsToContactBook(
-                        contactBookId,
-                        request
-                )
+            this.walletApiClient.appendContactsToContactBook(
+                contactBookId,
+                request
+            )
         );
     }
 
     public Task<Void> removeFromContactBook(
-            Integer contactBookId,
-            List<String> emailList,
-            List<String> phoneList,
-            List<String> emailHashList,
-            List<String> phoneHashList
+        Integer contactBookId,
+        List<String> emailList,
+        List<String> phoneList,
+        List<String> emailHashList,
+        List<String> phoneHashList
     ) {
         return this.execute(
-                this.walletApiClient.removeFromContactBook(
-                        contactBookId,
-                        StringHelper.listToString(emailList, ","),
-                        StringHelper.listToString(phoneList, ","),
-                        StringHelper.listToString(emailHashList, ","),
-                        StringHelper.listToString(phoneHashList, ","))
+            this.walletApiClient.removeFromContactBook(
+                contactBookId,
+                StringHelper.listToString(emailList, ","),
+                StringHelper.listToString(phoneList, ","),
+                StringHelper.listToString(emailHashList, ","),
+                StringHelper.listToString(phoneHashList, ","))
         );
     }
 
     public Task<Void> unregisterSubscriber(
-            Integer subscriberId
+        Integer subscriberId
     ) {
         return this.execute(this.walletApiClient.unregisterSubscriber(subscriberId));
     }
@@ -547,12 +547,12 @@ public class WalletAsyncClient extends BaseAsyncClient {
 
     public Task<MetadataAwareResponse<Transfer>> getTransfers(TransfersFilter filter) {
         return this.execute(
-                this.walletApiClient.getTransfers(
-                        filter.getCreditAccountNumber(),
-                        filter.getStatuses(),
-                        filter.getOffset(),
-                        filter.getLimit()
-                )
+            this.walletApiClient.getTransfers(
+                filter.getCreditAccountNumber(),
+                filter.getStatuses(),
+                filter.getOffset(),
+                filter.getLimit()
+            )
         );
     }
 
@@ -566,22 +566,22 @@ public class WalletAsyncClient extends BaseAsyncClient {
             orderDirectionValue = identificationRequestFilter.getOrderDirection().toString();
         }
         return this.execute(
-                this.walletApiClient.getIdentificationRequests(
-                        identificationRequestFilter.getStatuses(),
-                        identificationRequestFilter.getOrderBy(),
-                        orderDirectionValue,
-                        identificationRequestFilter.getLimit(),
-                        identificationRequestFilter.getOffset()
-                )
+            this.walletApiClient.getIdentificationRequests(
+                identificationRequestFilter.getStatuses(),
+                identificationRequestFilter.getOrderBy(),
+                orderDirectionValue,
+                identificationRequestFilter.getLimit(),
+                identificationRequestFilter.getOffset()
+            )
         );
     }
 
     public Task<MetadataAwareResponse<IdentificationRequest>> getIdentificationRequests(Integer userId, List<String> statuses) {
         return this.execute(
-                this.walletApiClient.getIdentificationRequests(
-                        userId,
-                        statuses
-                )
+            this.walletApiClient.getIdentificationRequests(
+                userId,
+                statuses
+            )
         );
     }
 
@@ -591,10 +591,10 @@ public class WalletAsyncClient extends BaseAsyncClient {
 
     public Task<Transaction> getTransaction(String transactionKey, List<String> fields) {
         return this.execute(
-                this.walletApiClient.getTransaction(
-                        transactionKey,
-                        StringHelper.listToString(fields, ",")
-                )
+            this.walletApiClient.getTransaction(
+                transactionKey,
+                StringHelper.listToString(fields, ",")
+            )
         );
     }
 
@@ -607,17 +607,17 @@ public class WalletAsyncClient extends BaseAsyncClient {
     }
 
     public Task<MetadataAwareResponse<Transaction>> getTransactions(
-            TransactionFilter transactionFilter
+        TransactionFilter transactionFilter
     ) {
         return this.execute(
-                this.walletApiClient.getTransactions(
-                        transactionFilter.getProjectId(),
-                        transactionFilter.getLocationId(),
-                        transactionFilter.getStatus(),
-                        transactionFilter.getLimit(),
-                        transactionFilter.getOffset(),
-                        transactionFilter.getFrom()
-                )
+            this.walletApiClient.getTransactions(
+                transactionFilter.getProjectId(),
+                transactionFilter.getLocationId(),
+                transactionFilter.getStatus(),
+                transactionFilter.getLimit(),
+                transactionFilter.getOffset(),
+                transactionFilter.getFrom()
+            )
         );
     }
 
@@ -627,13 +627,13 @@ public class WalletAsyncClient extends BaseAsyncClient {
             orderDirectionValue = confirmationFilter.getOrderDirection().toString();
         }
         return this.execute(
-                this.walletApiClient.getConfirmations(
-                        confirmationFilter.getLimit(),
-                        confirmationFilter.getOffset(),
-                        confirmationFilter.getOrderBy(),
-                        orderDirectionValue,
-                        confirmationFilter.getStatus()
-                )
+            this.walletApiClient.getConfirmations(
+                confirmationFilter.getLimit(),
+                confirmationFilter.getOffset(),
+                confirmationFilter.getOrderBy(),
+                orderDirectionValue,
+                confirmationFilter.getStatus()
+            )
         );
     }
 
@@ -655,28 +655,28 @@ public class WalletAsyncClient extends BaseAsyncClient {
 
     public Task<Void> reserveTransaction(String transactionKey, ReserveTransactionRequest reserveTransactionRequest) {
         return this.execute(
-                this.walletApiClient.reserveTransaction(
-                        transactionKey,
-                        reserveTransactionRequest
-                )
+            this.walletApiClient.reserveTransaction(
+                transactionKey,
+                reserveTransactionRequest
+            )
         );
     }
 
     public Task<Spot> getSpotById(long spotId, String fields) {
         return this.execute(
-                this.walletApiClient.getSpotById(
-                        spotId,
-                        fields
-                )
+            this.walletApiClient.getSpotById(
+                spotId,
+                fields
+            )
         );
     }
 
     public Task<Spot> checkIntoSpot(Long spotId, String fields) {
         return this.execute(
-                this.walletApiClient.checkIntoSpot(
-                        spotId,
-                        fields
-                )
+            this.walletApiClient.checkIntoSpot(
+                spotId,
+                fields
+            )
         );
     }
 
@@ -685,66 +685,66 @@ public class WalletAsyncClient extends BaseAsyncClient {
     }
 
     public Task<CreateDocumentIdentificationResponse> createDocumentIdentificationRequest(
-            Long requestId,
-            CreateDocumentIdentificationRequest request
+        Long requestId,
+        CreateDocumentIdentificationRequest request
     ) {
         return this.execute(
-                this.walletApiClient.createDocumentIdentificationRequest(
-                        requestId,
-                        request
-                )
+            this.walletApiClient.createDocumentIdentificationRequest(
+                requestId,
+                request
+            )
         );
     }
 
     public Task<Void> identificationRequestFileUpload(
-            Long identificationRequestId,
-            Integer order,
-            RequestBody requestBody
+        Long identificationRequestId,
+        Integer order,
+        RequestBody requestBody
     ) {
         return this.execute(
-                this.walletApiClient.identificationRequestFileUpload(
-                        identificationRequestId,
-                        order,
-                        requestBody
-                )
+            this.walletApiClient.identificationRequestFileUpload(
+                identificationRequestId,
+                order,
+                requestBody
+            )
         );
     }
 
     public Task<CreateDocumentIdentificationResponse> createAdditionalDocumentRequest(
-            Long identificationDocumentId,
-            CreateDocumentIdentificationRequest request
+        Long identificationDocumentId,
+        CreateDocumentIdentificationRequest request
     ) {
         return this.execute(
-                this.walletApiClient.createAdditionalDocumentRequest(
-                        identificationDocumentId,
-                        request
-                )
+            this.walletApiClient.createAdditionalDocumentRequest(
+                identificationDocumentId,
+                request
+            )
         );
     }
 
     public Task<Void> additionalDocumentUpload(
-            Long additionalDocumentId,
-            RequestBody requestBody
+        Long additionalDocumentId,
+        RequestBody requestBody
     ) {
         return this.execute(
-                this.walletApiClient.additionalDocumentUpload(
-                        additionalDocumentId,
-                        requestBody
-                )
+            this.walletApiClient.additionalDocumentUpload(
+                additionalDocumentId,
+                requestBody
+            )
         );
     }
 
     public Task<Void> identificationDocumentFileUpload(
-            Long identificationDocumentId,
-            Integer order,
-            RequestBody requestBody
+        Long identificationDocumentId,
+        Integer order,
+        RequestBody requestBody
     ) {
         return this.execute(
-                this.walletApiClient.identificationDocumentFileUpload(
-                        identificationDocumentId,
-                        order,
-                        requestBody
-                )
+            this.walletApiClient.identificationDocumentFileUpload(
+                identificationDocumentId,
+                order,
+                requestBody
+            )
         );
     }
 
@@ -761,49 +761,49 @@ public class WalletAsyncClient extends BaseAsyncClient {
     }
 
     public Task<NotificationSubscriber> createNotificationsSubscriber(
-            NotificationSubscriber notificationSubscriber
+        NotificationSubscriber notificationSubscriber
     ) {
         return this.execute(this.walletApiClient.createNotificationsSubscriber(notificationSubscriber));
     }
 
     public Task<NotificationSubscriber> editNotificationsSubscriber(
-            Integer subscriberId,
-            NotificationSubscriber notificationSubscriber
+        Integer subscriberId,
+        NotificationSubscriber notificationSubscriber
     ) {
         return this.execute(
-                this.walletApiClient.editNotificationsSubscriber(
-                        subscriberId,
-                        notificationSubscriber
-                )
+            this.walletApiClient.editNotificationsSubscriber(
+                subscriberId,
+                notificationSubscriber
+            )
         );
     }
 
     public Task<Void> unlockRecaptcha(String unlockUrl, String response) {
         return this.execute(
-                this.walletApiClient.unlockRecaptcha(
-                        unlockUrl,
-                        response
-                )
+            this.walletApiClient.unlockRecaptcha(
+                unlockUrl,
+                response
+            )
         );
     }
 
     public Task<Void> unlockRecaptcha(
-            String unlockUrl,
-            String response,
-            String grantType,
-            String username,
-            String password,
-            List<String> scopes
+        String unlockUrl,
+        String response,
+        String grantType,
+        String username,
+        String password,
+        List<String> scopes
     ) {
         return this.execute(
-                this.walletApiClient.unlockRecaptcha(
-                        unlockUrl,
-                        response,
-                        grantType,
-                        username,
-                        password,
-                        StringHelper.listToString(scopes, " ")
-                )
+            this.walletApiClient.unlockRecaptcha(
+                unlockUrl,
+                response,
+                grantType,
+                username,
+                password,
+                StringHelper.listToString(scopes, " ")
+            )
         );
     }
 
@@ -823,15 +823,15 @@ public class WalletAsyncClient extends BaseAsyncClient {
             orderDirectionValue = filter.getOrderDirection().toString();
         }
         return this.execute(
-                this.walletApiClient.getEasyPayTransfers(
-                        filter.getStatus(),
-                        filter.getBeneficiaryUserId(),
-                        filter.getPayerWalletId(),
-                        filter.getLimit(),
-                        filter.getOffset(),
-                        filter.getOrderBy(),
-                        orderDirectionValue
-                )
+            this.walletApiClient.getEasyPayTransfers(
+                filter.getStatus(),
+                filter.getBeneficiaryUserId(),
+                filter.getPayerWalletId(),
+                filter.getLimit(),
+                filter.getOffset(),
+                filter.getOrderBy(),
+                orderDirectionValue
+            )
         );
     }
 
