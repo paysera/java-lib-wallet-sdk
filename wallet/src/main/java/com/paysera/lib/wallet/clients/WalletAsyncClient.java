@@ -846,9 +846,4 @@ public class WalletAsyncClient extends BaseAsyncClient {
     public Task<IbanToEvp> getAccountNumberByIban(String iban) {
         return this.execute(this.walletApiClient.getAccountNumberByIban(iban));
     }
-
-    // TEMP - WILL BE REMOVED AFTER TESTING
-    public Task<Void> get500Error() {
-        return this.execute(this.walletApiClient.get500Error());
-    }
 }

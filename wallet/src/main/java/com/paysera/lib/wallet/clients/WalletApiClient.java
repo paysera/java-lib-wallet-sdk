@@ -522,8 +522,4 @@ public interface WalletApiClient {
 
     @GET("account/{iban}")
     Call<IbanToEvp> getAccountNumberByIban(@Path("iban") String iban);
-
-    // TEMP - WILL BE REMOVED AFTER TESTING
-    @GET("user/test-internal")
-    Call<Void> get500Error();
 }
