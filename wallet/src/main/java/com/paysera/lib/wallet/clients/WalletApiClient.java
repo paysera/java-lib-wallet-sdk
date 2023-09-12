@@ -518,6 +518,14 @@ public interface WalletApiClient {
         @Path("easy_pay_transfer_id") Long easyPayTransferId
     );
 
+    @GET("epay/transfers/updated-transfers")
+    Call<CommonMetadataAwareResponse<EasyPayTransfer>> getEasyPayUpdatedTransfers(
+            @Query("payer_wallet_id") Integer payerWalletId
+    );
+
+    @POST("epay/transfers/mark-updated-transfers-as-seen")
+    Call<Void> markUpdatedTransfersAsSeen();
+
     // End of EasyPay endpoints
 
     @GET("account/{iban}")

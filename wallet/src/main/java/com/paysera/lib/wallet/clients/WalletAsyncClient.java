@@ -835,6 +835,20 @@ public class WalletAsyncClient extends BaseAsyncClient {
         );
     }
 
+    public Task<CommonMetadataAwareResponse<EasyPayTransfer>> getEasyPayUpdatedTransfers(Integer payerWalletId) {
+        return this.execute(
+                this.walletApiClient.getEasyPayUpdatedTransfers(
+                        payerWalletId
+                )
+        );
+    }
+
+    public Task<Void> markUpdatedTransfersAsSeen() {
+        return this.execute(
+                this.walletApiClient.markUpdatedTransfersAsSeen()
+        );
+    }
+
     public Task<EasyPayTransfer> createEasyPayTransfer(EasyPayCreateTransfer createEasyPayTransfer) {
         return this.execute(this.walletApiClient.createEasyPayTransfer(createEasyPayTransfer));
     }
