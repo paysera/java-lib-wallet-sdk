@@ -523,7 +523,7 @@ public interface WalletApiClient {
             @Query("payer_wallet_id") Integer payerWalletId
     );
 
-    @POST("epay/transfers/mark-updated-transfers-as-seen")
+    @PUT("epay/transfers/mark-updated-transfers-as-seen")
     Call<Void> markUpdatedTransfersAsSeen();
 
     // End of EasyPay endpoints
