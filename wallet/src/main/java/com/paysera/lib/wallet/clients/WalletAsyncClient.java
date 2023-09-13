@@ -843,7 +843,7 @@ public class WalletAsyncClient extends BaseAsyncClient {
         );
     }
 
-    public Task<Void> markUpdatedTransfersAsSeen() {
+    public Task<Void> markEasyPayUpdatedTransfersAsSeen() {
         return this.execute(
                 this.walletApiClient.markUpdatedTransfersAsSeen()
         );
