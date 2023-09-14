@@ -3,15 +3,15 @@ package com.paysera.lib.wallet.entities.transfer;
 import com.paysera.lib.wallet.enums.ClientIdentifierType;
 
 public class TransferPayerClientIdentifier {
-    private ClientIdentifierType type;
+    private String type;
     private String value;
 
     public ClientIdentifierType getType() {
-        return type;
+        return ClientIdentifierType.valueOf(type.toUpperCase());
     }
 
     public void setType(ClientIdentifierType type) {
-        this.type = type;
+        this.type = type.toString();
     }
 
     public String getValue() {
