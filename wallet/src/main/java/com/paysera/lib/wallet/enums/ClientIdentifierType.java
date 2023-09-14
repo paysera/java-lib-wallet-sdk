@@ -1,13 +1,11 @@
 package com.paysera.lib.wallet.enums;
 
 public enum ClientIdentifierType {
-//    personal_number,
-//    customer_code,
-//    tax_payer_code,
-//    passport_number,
-//    company_code
+    PERSONAL_NUMBER("personal_number"),
+    CUSTOMER_CODE("customer_code"),
+    TAX_PAYER_CODE("tax_payer_code"),
     PASSPORT_NUMBER("passport_number"),
-    TAX_PAYER_CODE("tax_payer_code");
+    COMPANY_CODE("company_code");
 
     private final String value;
 
