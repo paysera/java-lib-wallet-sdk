@@ -10,6 +10,7 @@ import com.paysera.lib.wallet.entities.confirmations.Confirmation;
 import com.paysera.lib.wallet.entities.confirmations.ConfirmationFilter;
 import com.paysera.lib.wallet.entities.easypay.EasyPayCreateTransfer;
 import com.paysera.lib.wallet.entities.easypay.EasyPayFees;
+import com.paysera.lib.wallet.entities.easypay.EasyPayMarkUpdatedTransfersAsSeen;
 import com.paysera.lib.wallet.entities.easypay.EasyPayTransfer;
 import com.paysera.lib.wallet.entities.easypay.EasyPayTransferFilter;
 import com.paysera.lib.wallet.entities.generator.Generator;
@@ -843,9 +844,11 @@ public class WalletAsyncClient extends BaseAsyncClient {
         );
     }
 
-    public Task<Void> markEasyPayUpdatedTransfersAsSeen() {
+    public Task<Void> markEasyPayUpdatedTransfersAsSeen(
+            EasyPayMarkUpdatedTransfersAsSeen easyPayMarkUpdatedTransfersAsSeen
+    ) {
         return this.execute(
-                this.walletApiClient.markUpdatedTransfersAsSeen()
+                this.walletApiClient.markUpdatedTransfersAsSeen(easyPayMarkUpdatedTransfersAsSeen)
         );
     }
 
