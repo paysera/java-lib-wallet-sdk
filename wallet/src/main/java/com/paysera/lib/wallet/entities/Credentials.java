@@ -15,7 +15,15 @@ public class Credentials {
     private String macKey;
     private String macAlgorithm;
     private String refreshToken;
+    private Date deletionRequestAt;
 
+    public Date getDeletionRequestAt() {
+        return deletionRequestAt;
+    }
+
+    public void setDeletionRequestAt(Date deletionRequestAt) {
+        this.deletionRequestAt = deletionRequestAt;
+    }
 
     public String getAccessToken() {
         return accessToken;
