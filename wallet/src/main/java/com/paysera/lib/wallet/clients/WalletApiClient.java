@@ -521,12 +521,12 @@ public interface WalletApiClient {
 
     @GET("epay/transfers/updated-transfers")
     Call<CommonMetadataAwareResponse<EasyPayTransfer>> getEasyPayUpdatedTransfers(
-            @Query("payer_wallet_id") Integer payerWalletId
+        @Query("payer_wallet_id") Integer payerWalletId
     );
 
     @PUT("epay/transfers/mark-updated-transfers-as-seen")
     Call<Void> markUpdatedTransfersAsSeen(
-            @Body EasyPayMarkUpdatedTransfersAsSeen easyPayMarkUpdatedTransfersAsSeen
+        @Body EasyPayMarkUpdatedTransfersAsSeen easyPayMarkUpdatedTransfersAsSeen
     );
 
     // End of EasyPay endpoints
