@@ -7,6 +7,7 @@ import com.paysera.lib.wallet.entities.client.Client;
 import com.paysera.lib.wallet.entities.confirmations.Confirmation;
 import com.paysera.lib.wallet.entities.easypay.EasyPayCreateTransfer;
 import com.paysera.lib.wallet.entities.easypay.EasyPayFees;
+import com.paysera.lib.wallet.entities.easypay.EasyPayMarkUpdatedTransfersAsSeen;
 import com.paysera.lib.wallet.entities.easypay.EasyPayTransfer;
 import com.paysera.lib.wallet.entities.generator.Generator;
 import com.paysera.lib.wallet.entities.locations.Location;
@@ -516,6 +517,16 @@ public interface WalletApiClient {
     @PUT("epay/transfers/{easy_pay_transfer_id}/cancel")
     Call<EasyPayTransfer> cancelEasyPayTransfer(
         @Path("easy_pay_transfer_id") Long easyPayTransferId
+    );
+
+    @GET("epay/transfers/updated-transfers")
+    Call<CommonMetadataAwareResponse<EasyPayTransfer>> getEasyPayUpdatedTransfers(
+        @Query("payer_wallet_id") Integer payerWalletId
+    );
+
+    @PUT("epay/transfers/mark-updated-transfers-as-seen")
+    Call<Void> markUpdatedTransfersAsSeen(
+        @Body EasyPayMarkUpdatedTransfersAsSeen easyPayMarkUpdatedTransfersAsSeen
     );
 
     // End of EasyPay endpoints
